@@ -33,16 +33,16 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
 
 * **Usuario Anónimo**: 
-  - Permisos: [Ej: Visualización de catálogo, búsqueda de productos, registro]
+  - Permisos: navegación por la página de inicio, visualización de catálogo y producto, busqueda de productos y registro.
   - No es dueño de ninguna entidad
 
 * **Usuario Registrado**: 
-  - Permisos: [Ej: Gestión de perfil, realizar pedidos, crear valoraciones]
-  - Es dueño de: [Ej: Sus propios Pedidos, su Perfil de Usuario, sus Valoraciones]
+  - Permisos: gestión de perfil, realizar pedido, realizar valoraciones y crear caja personalizada.
+  - Es dueño de: sus pedidos, su perfil y sus valoraciones.
 
 * **Administrador**: 
-  - Permisos: [Ej: Gestión completa de productos (CRUD), visualización de estadísticas, moderación de contenido]
-  - Es dueño de: [Ej: Productos, Categorías, puede gestionar todos los Pedidos y Usuarios]
+  - Permisos: gestión de productos, visualizacion de pedidos y moderación de reseñas y usuarios.
+  - Es dueño de: productos, usuarios y pedidos.
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:

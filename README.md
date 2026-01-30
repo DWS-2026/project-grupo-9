@@ -18,16 +18,16 @@ Nuestra aplicación consiste en una tienda de bombones, donde el usuario puede e
 ### **Entidades**
 Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
 
-1. **[Entidad 1]**: [Ej: Usuario]
-2. **[Entidad 2]**: [Ej: Producto]
-3. **[Entidad 3]**: [Ej: Pedido]
-4. **[Entidad 4]**: [Ej: Categoría]
+1. **[Entidad 1]**: USER
+2. **[Entidad 2]**: BOX
+3. **[Entidad 3]**: CHOCOLATE
+4. **[Entidad 4]**: ORDER
 
 **Relaciones entre entidades:**
-- [Ej: Usuario - Pedido: Un usuario puede tener múltiples pedidos (1:N)]
-- [Ej: Pedido - Producto: Un pedido puede contener múltiples productos y un producto puede estar en múltiples pedidos (N:M)]
-- [Ej: Producto - Categoría: Un producto pertenece a una categoría (N:1)]
-- [Descripción de otras relaciones relevantes]
+- User - order: Un user puede tener múltiples order (1:N)
+- Box - chocolate: Un box puede tener múltiples chocolate (1:N)
+- Order - box: Un order puede contener múltiples boxes y un box puede estar en múltiples orders (N:M)
+- Order - chocolate: Un order puede contener múltiples chocolates y un chcolate puede estar en múltiples orders (N:M)
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:

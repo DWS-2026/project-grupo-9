@@ -5,7 +5,7 @@
 |:--- |:--- |:--- |
 | Sandra | s.garciaro.2024@alumnos.urjc.es | sagarUr |
 | Inés | i.ucles.2024@alumnos.urjc.es | iness1899 |
-| Ángela | a.briceno.2024alumnos.urjc.es | angelaurjc |
+| Ángela | a.briceno.2024@alumnos.urjc.es | angelaurjc |
 | Ainoa | a.acosta.2024@alumnos.urjc.es | Ainoa-AS |
 
 ---

@@ -3,10 +3,10 @@
 ## 👥 Miembros del Equipo
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
 |:--- |:--- |:--- |
-| [Nombre 1] | [email1]@alumnos.urjc.es | [User1] |
-| [Nombre 2] | [email2]@alumnos.urjc.es | [User2] |
-| [Nombre 3] | [email3]@alumnos.urjc.es | [User3] |
-| [Nombre 4] | [email4]@alumnos.urjc.es | [User4] |
+| Sandra | s.garciaro.2024@alumnos.urjc.es | sagarUr |
+| Inés | i.ucles.2024@alumnos.urjc.es | iness1899 |
+| Ángela | a.briceno.2024alumnos.urjc.es | angelaurjc |
+| Ainoa | a.acosta.2024@alumnos.urjc.es | Ainoa-AS |
 
 ---
 

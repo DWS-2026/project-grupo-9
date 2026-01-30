@@ -13,7 +13,7 @@
 ## 🎭 **Preparación: Definición del Proyecto**
 
 ### **Descripción del Tema**
-[Escribe aquí una descripción breve y concisa de qué trata tu aplicación, el sector al que pertenece y qué valor aporta al usuario].
+Nuestra aplicación consiste en una tienda de bombones, donde el usuario puede elegir entre bombones sueltos o cajas de bombones. Dentro de las cajas, el usuario puede elegir entre una predeterminada, personalizada o elegirla aleatoriamente.
 
 ### **Entidades**
 Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:

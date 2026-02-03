@@ -11145,15 +11145,3 @@ p {
   background-color: rgb(13, 7, 2, 0.70);
 }
 
-.product-page-background{
-  background-image: url('../assets/Background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-}
-section,
-.bg-tabs{
-  background: transparent;
-}

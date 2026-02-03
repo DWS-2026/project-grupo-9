@@ -9,7 +9,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     <main class="flex-grow-1">
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-5 mx-5">
             <div class="card mb-4 px-lg-4 py-5">
                 <h1>Crear cuenta</h1>
                 <form class="row g-3">
@@ -29,21 +29,30 @@
                         <label for="inputEmail4" class="form-label">Correo electrónico</label>
                         <input type="email" class="form-control" id="inputEmail4">
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <label for="inputPassword4" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="inputPassword4">
                     </div>
-                    <div class="col-12">
+                    <div class="col-md-4 mt-4">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">Foto de perfil</label>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-12 mt-4">
                         <button type="submit" class="btn btn-primary">Crear cuenta</button>
                     </div>
                 </form>
             </div>
         </div>
     </main>
-    
-    <div id ="footer"></div>
-    <script src = "./footer.js"></script>
-    
+
+    <div id="footer"></div>
+    <script src="./footer.js"></script>
+
 </body>
 
 </html>

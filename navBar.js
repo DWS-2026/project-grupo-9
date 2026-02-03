@@ -11,11 +11,11 @@ bar.innerHTML = `<nav class="navbar navbar-expand-lg navbar-light" style="backgr
                             class="navbar-toggler-icon"></span></button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                                <li class="nav-item fw-bold"><a class="nav-link" aria-current="page" href="#!">HOME</a>
+                                <li class="nav-item fw-bold"><a class="nav-link" aria-current="page" href="./index.html">INICIO</a>
                                 </li>
-                                <li class="nav-item fw-bold"><a class="nav-link" href="#!">ABOUT</a></li>
-                                <li class="nav-item fw-bold"><a class="nav-link" href="#!">PRODUCTS</a></li>
-                                <li class="nav-item fw-bold"><a class="nav-link" href="#!">STORE</a></li>
+                                <li class="nav-item fw-bold"><a class="nav-link" href="./productsPage.html">PRODUCTOS</a></li>
+                                <li class="nav-item fw-bold"><a class="nav-link" href="./customBox.html">PERSONALIZAR</a></li>
+                                <li class="nav-item fw-bold"><a class="nav-link" href="./admin.html">ADMIN</a></li>
                             </ul>
                             <a class="btn btn-outline-dark me-1" href="./cart.html">
                                 <i class="bi-cart-fill me-1"></i>

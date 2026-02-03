@@ -11312,3 +11312,15 @@ display: inline-block;    /* Permite que el botón tenga dimensiones */
 /*--------------------------------------------------------------PAGINA DE PAGO FALLIDA*/
 ._failed{ border-bottom: solid 4px red !important; }
 ._failed i{  color:red !important;  }
+
+.cartProfile{
+    margin: 10px auto;
+    max-width: 1000px;
+    width: 95%;
+    border-radius: 1rem;
+    border: transparent;
+    display: flex;         /* Activa el modo "uno al lado del otro" */
+    flex-direction: row;   /* Los alinea en fila (es el valor por defecto) */
+    align-items: stretch;
+    justify-content: center;
+}

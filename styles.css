@@ -11297,7 +11297,7 @@ input:focus::-webkit-input-placeholder
     font-weight: 500;
 }
 .container-end{
-  background-color:#cfb278 ;
+  background-image:linear-gradient(#ffffff, #f7ecd1, #dbb66c);
 }
 .btn-back-shop{
   width: 75px;

@@ -20,7 +20,7 @@ bar.innerHTML = `<nav class="navbar navbar-expand-lg navbar-light" style="backgr
                             <a class="btn btn-outline-dark me-1" href="./cart.html">
                                 <i class="bi-cart-fill me-1"></i>
                                 Carrito
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">2</span>
                             </a>
                             <a class="btn btn-outline-dark me-1" href="./logInPage.html">
                                 <i class="bi-person-fill me-1"></i>

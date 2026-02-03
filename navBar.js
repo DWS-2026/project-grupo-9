@@ -2,7 +2,7 @@ let bar = document.getElementById('navigationBar');
 
 bar.innerHTML = `<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #dfc797;">
                     <div class="container px-4 px-lg-5">
-                        <a class="navbar-brand fw-bold" href="#!">
+                        <a class="navbar-brand fw-bold" href="./index.html">
                             BOMBOMB
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

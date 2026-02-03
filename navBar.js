@@ -2,7 +2,7 @@ let bar = document.getElementById('navigationBar');
 
 bar.innerHTML = `<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #dfc797;">
                     <div class="container px-4 px-lg-5">
-                        <a class="navbar-brand fw-bold" href="#!">
+                        <a class="navbar-brand fw-bold" href="./index.html">
                             BOMBOMB
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -20,9 +20,9 @@ bar.innerHTML = `<nav class="navbar navbar-expand-lg navbar-light" style="backgr
                             <a class="btn btn-outline-dark me-1" href="./cart.html">
                                 <i class="bi-cart-fill me-1"></i>
                                 Carrito
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">2</span>
                             </a>
-                            <a class="btn btn-outline-dark me-1" href="./profilePage.html">
+                            <a class="btn btn-outline-dark me-1" href="./logInPage.html">
                                 <i class="bi-person-fill me-1"></i>
                                 Perfil
                             </a>

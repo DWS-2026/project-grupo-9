@@ -24,32 +24,32 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 4. **[Entidad 4]**: ORDER
 
 **Relaciones entre entidades:**
-- User - order: Un user puede tener múltiples order (1:N)
-- Box - chocolate: Un box puede tener múltiples chocolate (1:N)
-- Order - box: Un order puede contener múltiples boxes y un box puede estar en múltiples orders (N:M)
-- Order - chocolate: Un order puede contener múltiples chocolates y un chcolate puede estar en múltiples orders (N:M)
+- User - Order: Un User puede tener múltiples Order (1:N)
+- Box - Chocolate: Un Box puede tener múltiples Chocolates (1:N)
+- Order - Box: Un Order puede contener múltiples Boxes y un Box puede estar en múltiples Orders (N:M)
+- Order - Chocolate: Un Order puede contener múltiples Chocolates y un Chocolate puede estar en múltiples Orders (N:M)
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
 
 * **Usuario Anónimo**: 
-  - Permisos: navegación por la página de inicio, visualización de catálogo y producto, busqueda de productos y registro.
+  - Permisos: navegación por la página de inicio, visualización de catálogo y productos y registro.
   - No es dueño de ninguna entidad
 
 * **Usuario Registrado**: 
-  - Permisos: gestión de perfil, realizar pedido, realizar valoraciones y crear caja personalizada.
-  - Es dueño de: sus pedidos, su perfil y sus valoraciones.
+  - Permisos: gestión de su perfil, realizar pedido y crear caja personalizada o aleatoria.
+  - Es dueño de: sus pedidos y su perfil.
 
 * **Administrador**: 
-  - Permisos: gestión de productos, visualizacion de pedidos y moderación de reseñas y usuarios.
-  - Es dueño de: productos, usuarios y pedidos.
+  - Permisos: gestión de productos, visualizacion de pedidos y moderación de usuarios.
+  - Es dueño de: bombones, cajas, usuarios y pedidos.
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
 
-- **[Entidad con imágenes 1]**: [Ej: Usuario - Una imagen de avatar por usuario]
-- **[Entidad con imágenes 2]**: [Ej: Producto - Múltiples imágenes por producto (galería)]
-- **[Entidad con imágenes 3]**: [Ej: Categoría - Una imagen representativa por categoría]
+- **[Entidad con imágenes 1]**:  User - Una imagen de avatar por User
+- **[Entidad con imágenes 2]**: Box - Una imagen por Box
+- **[Entidad con imágenes 3]**: Chocolate - Una imagen por Chocolate
 
 ---
 

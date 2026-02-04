@@ -69,9 +69,24 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 ### **Capturas de Pantalla y Descripción de Páginas**
 
 #### **1. Página Principal / Home**
-![Página Principal](images/home-page.png)
+![Página Principal](images/capture_index.html.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> [Página de inicio que muestra el logo y nombre del obrador, aparece la novedad de las cajas personalizables con un botón que nos lleva a ella y contiene un footer, una promesa de calidad hacia los clientes y una barra de navegación con el perfil, los productos, el carrito, lac cajas personalizables y una opción para el administrador.]
+
+#### **2. Página del Carrito / Cart**
+![Página Carrito](images/capture_cart.html.png)
+
+> [Aquí es donde se muestran los productos seleccionados por el usuario y su precio total, además de la opción de empezar a efectuar el pago.]
+
+#### **3. Página de Pago / Payment**
+![Página Pago](images/capture_payment.html.png)
+
+> [En esta página, el usuario pondrá los detalles de la entrega e introducirá su tarjeta para el pago.]
+
+#### **4. Página de Éxito / Success**
+![Página Éxito](images/capture_success.html.png)
+
+> [Podemos comprobar que el pago se ha realizado con éxito y nos da la opción de volver al incio.]
 
 #### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
 
@@ -105,17 +120,17 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Inés Uclés Ortiz]**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Página del carrito](URL_commit_1)  | [Archivo1](html/cart.html)   |
+|2| [Página de inicio](URL_commit_2)  | [Archivo2](html/index.html)   |
+|3| [Página de pago](URL_commit_3)  | [Archivo3](html/payment.html)   |
+|4| [Página de fallo](URL_commit_4)  | [Archivo4](html/fail.html)   |
+|5| [Página de éxito](URL_commit_5)  | [Archivo5](html/success.html)   |
 
 ---
 

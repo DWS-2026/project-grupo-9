@@ -11075,7 +11075,7 @@ p {
   background-color: rgb(13, 7, 2, 0.70);
 }
 
-
+/*--------------------------------FOTO DEL INDEX*/
 h1>div>img{
     width: 300px;
     height: 300px;
@@ -11092,8 +11092,8 @@ h1>div>img{
     width: 95%;
     border-radius: 1rem;
     border: transparent;
-    display: flex;         /* Activa el modo "uno al lado del otro" */
-    flex-direction: row;   /* Los alinea en fila (es el valor por defecto) */
+    display: flex;         
+    flex-direction: row;   /* Los alinea en fila  */
     align-items: stretch;
     justify-content: center;
 }
@@ -11123,7 +11123,7 @@ h1>div>img{
 .first-product {
     display: flex;            /* Alinea los elementos en fila */
     align-items: center;      /* Centra verticalmente imagen, texto y precio */
-    justify-content: space-between; /* Empuja imagen/texto a la izquierda y cantidad/precio a la derecha */
+    justify-content: space-between; 
     margin-bottom: 20px;
     width: 100%;
     
@@ -11203,7 +11203,7 @@ h1>div>img{
     justify-content: center;
 }
 .products{
-    position: relative; /* Esto es lo que permite que position:absolute funcione */
+    position: relative; 
     width: 100%;
 }
 
@@ -11306,7 +11306,7 @@ input:focus::-webkit-input-placeholder
   align-content: center;
   border-radius:10px;
   background-color: #f7ecd1;  
-display: inline-block;    /* Permite que el botón tenga dimensiones */
+  display: inline-block;   
 }
 /*-------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------PAGINA DE PAGO FALLIDA*/
@@ -11319,8 +11319,8 @@ display: inline-block;    /* Permite que el botón tenga dimensiones */
     width: 95%;
     border-radius: 1rem;
     border: transparent;
-    display: flex;         /* Activa el modo "uno al lado del otro" */
-    flex-direction: row;   /* Los alinea en fila (es el valor por defecto) */
+    display: flex;         
+    flex-direction: row;   
     align-items: stretch;
     justify-content: center;
 }

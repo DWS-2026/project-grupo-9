@@ -12,7 +12,7 @@
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="styles.css" rel="stylesheet" />
+    <link href="../styles.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -24,27 +24,33 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="card shadow-sm rounded-4 p-0 overflow-hidden">
                     <div class="row g-0 align-items-center">
-                        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="images/flor_morada.jpeg"
-                                alt="..." /></div>
+                        <div class="col-md-4 mt-4 mx-5">
+                            <form>
+                                <div class="form-group">
+                                    <h4 class="display-6 fw-bolder">Imagen:</h4>
+                                    <input type="file" class="form-control-file" id="productPicture">
+                                </div>
+                            </form>
+                        </div>
                         <div class="col-md-6 p-5">
                             <h4 class="display-6 fw-bolder">Nombre:</h4>
-                            <input class="form-control text-center me-3" id="input" type="text" value="Violeta"
-                                    style="max-width: 20rem" />
-                                    <h4 class="display-6 fw-bolder">Precio por unidad:</h4>
-                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value="0.60€"
-                                    style="max-width: 10rem" />
-                                    <h4 class="display-6 fw-bolder">Descripción:</h4>
-                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value="Bombón en forma de flor con relleno de moras y brillo metalizado."
-                                    style="max-width: auto" />
+                            <input class="form-control text-center me-3" id="input" type="text" value=""
+                                style="max-width: 20rem" />
+                            <h4 class="display-6 fw-bolder">Precio por unidad:</h4>
+                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value=""
+                                style="max-width: 10rem" />
+                            <h4 class="display-6 fw-bolder">Descripción:</h4>
+                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value=""
+                                style="max-width: auto" />
                             <div class="d-flex">
                             </div>
                             <h4 class="display-6 fw-bolder">Stock:</h4>
-                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value="12"
-                                    style="max-width: 10rem" />
+                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value=""
+                                style="max-width: 10rem" />
                             <div class="container px-4 px-lg-5 my-5">
                                 <div class="text-center">
-                                    <a href="#" class="btn btn-primary btn-outline-dark btn-sm">
-                                        Guardar cambios
+                                    <a href="productsPage.html" class="btn btn-primary btn-outline-dark btn-sm">
+                                        Guardar producto
                                     </a>
                                 </div>
                             </div>
@@ -56,8 +62,8 @@
 
     <!-- Footer-->
     <div id="footer"></div>
-    <script src="navBar.js"></script>
-    <script src="footer.js"></script>
+    <script src="../navBar.js"></script>
+    <script src="../footer.js"></script>
 </body>
 
 </html>

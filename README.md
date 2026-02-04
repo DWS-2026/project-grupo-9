@@ -79,7 +79,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > Aquí es donde se muestran los productos seleccionados por el usuario y su precio total, además de la opción de empezar a efectuar el pago.
 
 #### **3. Página de Pago / Payment**
-![Página Pago](images/capture_payment.html.png)
+![Página Pago](images/capture_payment.png)
 
 > En esta página, el usuario pondrá los detalles de la entrega e introducirá su tarjeta para el pago.
 

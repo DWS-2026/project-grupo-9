@@ -79,7 +79,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > Aquí es donde se muestran los productos seleccionados por el usuario y su precio total, además de la opción de empezar a efectuar el pago.
 
 #### **3. Página de Pago / Payment**
-![Página Pago](images/capture_payment.png)
+![Página Pago](images/payment2.png)
 
 > En esta página, el usuario pondrá los detalles de la entrega e introducirá su tarjeta para el pago.
 
@@ -96,43 +96,84 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 #### **6. Página de Inicio de sesión/ Log in**
 ![Página Inicio de Sesión](images/capture_logIn.png)
 
-> Página para iniciar sesión, en caso de no tener cuenta se puede ir a la página de crear cuenta
+> Página para iniciar sesión, en caso de no tener cuenta se puede ir a la página de crear cuenta.
+
+#### **7. Página de Crear cuenta/ Sign**
+![Página Crear cuenta](images/capture_signIn.jpeg)
+
+> Página para crear cuenta, en caso de ya tener cuenta se puede ir a la página de inicio de sesión.
+
+#### **8. Página de perfil/ Profile**
+![Página Perfil](images/capture_profile.jpeg)
+
+> Página donde un usuario puede ver su perfil y su historial de pedidos, también puede editar su perfil y eliminarlo. El admin también tiene acceso a esta página para gestionar a los usuarios y sus pedidos.
+
+#### **9. Página de productos/ Products**
+![Página Productos (Bombones)](images/capture_productChocolate.jpeg)
+![Página Productos (Cajas)](images/capture_productBox.jpeg)
+
+> Página para ver los productos que se pueden comprar, tanto bombones como cajas, deja añadir productos al admin y que cualquiera pueda ver los detalles de algún producto específico.
+
+#### **10. Página de Detalles de productos/ Product Details**
+![Página Detalles de productos](images/capture_productDetails.jpeg)
+
+> Página para ver los detalles de los productos y desde donde el admin puede meterse a editar los detalles.
+
+
+
+#### **11. Página de lista de usuarios**
+![Página Lista de usuarios](images/userList.png)
+
+> Página para ver la lista de usuarios y poder meterse a su perfil.
+
+
+#### **12. Página de personalizar una caja**
+![Página Personalizar caja](images/customBox.png)
+
+> Página para crear una caja personalizada, pudiendo elegir caja y seleccionar los bombones que meter. También con la posibilidad de elegir bombones de forma aleatoria.
+
+#### **13. Página de editar usuario**
+![Página Editar usuario](images/editUser.png)
+
+> Página para editar un usuario.
+
+
 
 #### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
 
 ### **Participación de Miembros en la Práctica 1**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ainoa Acosta Sánchez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+He creado la página de log in, de sign in y el perfil. También he creado los archivo js de la barra de navegación y el footer para borrar código repetido y facilitarnos el trabajo a la hora de modificar cualquiera de los dos ya que así solo tendríamos que hacer el cambio una única vez.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Página de inicio de sesión](https://github.com/DWS-2026/project-grupo-9/commit/f0069cf15ceafd881530cbfca320b0a2fe2f2a03)  | [Archivo1](https://github.com/DWS-2026/project-grupo-9/blob/main/html/logInPage.html)   |
+|2| [Página de Crear cuenta](https://github.com/DWS-2026/project-grupo-9/commit/c2ffd1c82903427af6950a09aff3839ba2142c23)  | [Archivo2](https://github.com/DWS-2026/project-grupo-9/blob/main/html/signInPage.html)   |
+|3| [Páfina de Perfil](https://github.com/DWS-2026/project-grupo-9/commit/c4c92a8fc55b6951ef50e71a1db3ff5e6549b34b)  | [Archivo3](https://github.com/DWS-2026/project-grupo-9/blob/main/html/profilePage.html)   |
+|4| [Barra de navegación](https://github.com/DWS-2026/project-grupo-9/commit/428d3798bb63c61ab40a531e306479968f538028)  | [Archivo4](https://github.com/DWS-2026/project-grupo-9/blame/main/navBar.js)   |
+|5| [Footer](https://github.com/DWS-2026/project-grupo-9/commit/428d3798bb63c61ab40a531e306479968f538028)  | [Archivo5](https://github.com/DWS-2026/project-grupo-9/blob/main/footer.js)   |
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - [Ángela Briceño Ramírez.]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+He creado la página de productos, la de detalles de producto, la de editar producto y crear producto. He generado, editado y separado las imágenes de los bombones, que posteriormente subió Inés. He modificado ligeramente estilos en el archivo css. He grabado el vídeo de explicación y muestra de funcionamiento de la página web.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
+|1| [Página de productos y página de detalles de producto](https://github.com/DWS-2026/project-grupo-9/commit/edfdbfbb9f7e1099b54c5374cd7f84ed33158288)  | [Página productos](html/productsPage.html)   |
+|2| [Primera unificación del CSS](https://github.com/DWS-2026/project-grupo-9/commit/fd59604f3ece3cf1c279c43be2dac62b65dff4e1)  | [Página detalles](html/productDetailsPage.html)   |
+|3| [Página de editar producto](https://github.com/DWS-2026/project-grupo-9/commit/1d9e470e897477e1145103082ad5e025808f4a4d)  | [Página editar producto](html/editProductPage.html)   |
+|4| [Página de crear producto](https://github.com/DWS-2026/project-grupo-9/commit/c9acf94227941ea3b130bd075ed5abbe42c445df)  | [Página crear producto](html/createProduct.html)   |
 |5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
 
 ---
 
 #### **Alumno 3 - Inés Uclés Ortiz**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Creación de las páginas de inicio, carrito, pago, éxito y fallo.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -144,7 +185,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
+#### **Alumno 4 - Sandra García Rodríguez**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 

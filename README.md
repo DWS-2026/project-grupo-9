@@ -181,8 +181,8 @@ Creación de las páginas de inicio, carrito, pago, éxito y fallo. Además, le 
 |1| [Página del carrito](https://github.com/DWS-2026/project-grupo-9/commit/2e3c52f8b93e8cbb4c59f0cfc3da6668281d911d)  | [Archivo1](html/cart.html)   |
 |2| [Página de inicio](https://github.com/DWS-2026/project-grupo-9/commit/937857bb5fab4a11b4fce405a17b9a112d19c5db)  | [Archivo2](html/index.html)   |
 |3| [Página de pago](https://github.com/DWS-2026/project-grupo-9/commit/892bfece3c95d598e31da7013e92b3fac8cc2102)  | [Archivo3](html/payment.html)   |
-|4| [Página de éxito](https://github.com/DWS-2026/project-grupo-9/commit/0efdd30730614b69c7427166c517dcb7f64af76e)| [Archivo5](html/success.html)  |
-|5| [Diagrama de navegación] (https://github.com/DWS-2026/project-grupo-9/commit/aba099a670a65fae5974f5fdc999f8d85ac459aa) | [Archivo5](images/capture-nav-diagram.png)   |
+|4| [Página de éxito](https://github.com/DWS-2026/project-grupo-9/commit/0efdd30730614b69c7427166c517dcb7f64af76e)| [Archivo4](html/success.html)  |
+|5| [Diagrama de navegación](https://github.com/DWS-2026/project-grupo-9/commit/aba099a670a65fae5974f5fdc999f8d85ac459aa) | [Archivo5](images/capture-nav-diagram.png)   |
 
 ---
 

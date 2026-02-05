@@ -62,9 +62,10 @@ Indicar qué entidades tendrán asociadas una o varias imágenes:
 ### **Diagrama de Navegación**
 Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
 
-![Diagrama de Navegación](images/navigation-diagram.png)
+![Diagrama de Navegación](images/capture-nav-diagram.png)
 
-> [Descripción opcional del flujo de navegación: Ej: "El usuario puede acceder desde la página principal a todas las secciones mediante el menú de navegación. Los usuarios anónimos solo tienen acceso a las páginas públicas, mientras que los registrados pueden acceder a su perfil y panel de usuario."]
+> Cualquier usuario puede acceder desde la página principal a la de iniciar sesión o registrarse, personalizar caja, productos y ver los detalles de cada uno, limitando su interacción a esas páginas. En cambio, los usuarios registrados pueden acceder a todas las páginas (excepto las de administrador), pudiendo añadir productos al carrito, ver y editar su perfil y realizar una compra. El administrador es el encargado de añadir o editar productos y ver la lista de usuarios registrados.
+> Como en todas las páginas hay barras de navegación, el usuario se puede mover por la página web como desee (sin contar las pantallas de éxito o fallo), este diagrama lo que pretende es mostrar qué tipo de usuario puede acceder a las diferentes páginas.
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
@@ -122,24 +123,24 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 
 #### **11. Página de lista de usuarios**
-![Página Lista de usuarios](images/userList.png)
+![Página Lista de usuarios](images/userList2.png)
 
 > Página para ver la lista de usuarios y poder meterse a su perfil.
 
 
 #### **12. Página de personalizar una caja**
-![Página Personalizar caja](images/customBox.png)
+![Página Personalizar caja](images/customBox2.png)
 
 > Página para crear una caja personalizada, pudiendo elegir caja y seleccionar los bombones que meter. También con la posibilidad de elegir bombones de forma aleatoria.
 
 #### **13. Página de editar usuario**
-![Página Editar usuario](images/editUser.png)
+![Página Editar usuario](images/editUser2.png)
 
 > Página para editar un usuario.
 
 
 
-#### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
+
 
 ### **Participación de Miembros en la Práctica 1**
 
@@ -173,29 +174,28 @@ He creado la página de productos, la de detalles de producto, la de editar prod
 
 #### **Alumno 3 - Inés Uclés Ortiz**
 
-Creación de las páginas de inicio, carrito, pago, éxito y fallo.
+Creación de las páginas de inicio, carrito, pago, éxito y fallo. Además, le he dado nombre y descripción a los bombones y he realizado el diagrama de navegación.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
 |1| [Página del carrito](https://github.com/DWS-2026/project-grupo-9/commit/2e3c52f8b93e8cbb4c59f0cfc3da6668281d911d)  | [Archivo1](html/cart.html)   |
 |2| [Página de inicio](https://github.com/DWS-2026/project-grupo-9/commit/937857bb5fab4a11b4fce405a17b9a112d19c5db)  | [Archivo2](html/index.html)   |
 |3| [Página de pago](https://github.com/DWS-2026/project-grupo-9/commit/892bfece3c95d598e31da7013e92b3fac8cc2102)  | [Archivo3](html/payment.html)   |
-|4| [Página de fallo](https://github.com/DWS-2026/project-grupo-9/commit/bae6fc26f2933c219ea4ae9eaaa8b7a6512739e3)  | [Archivo4](html/fail.html)   |
-|5| [Página de éxito](https://github.com/DWS-2026/project-grupo-9/commit/0efdd30730614b69c7427166c517dcb7f64af76e)  | [Archivo5](html/success.html)   |
+|4| [Página de éxito](https://github.com/DWS-2026/project-grupo-9/commit/0efdd30730614b69c7427166c517dcb7f64af76e)| [Archivo4](html/success.html)  |
+|5| [Diagrama de navegación](https://github.com/DWS-2026/project-grupo-9/commit/aba099a670a65fae5974f5fdc999f8d85ac459aa) | [Archivo5](images/capture-nav-diagram.png)   |
 
 ---
 
 #### **Alumno 4 - Sandra García Rodríguez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+He creado las páginas de personalizar caja, lista de usuarios y editar perfil. También he creado la carpeta en al que almacenamos los html para separarlos del resto de archivos.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Página de personalizar caja de bombones](https://github.com/DWS-2026/project-grupo-9/commit/8bd20c17fc0150c32f5edfff0867a282cd9b4cd2)  | [Página caja personalizada](html/customBox.html)   |
+|2| [Página de editar perfil](https://github.com/DWS-2026/project-grupo-9/commit/702ace0465404044bebac2bb91f0e30dfa0c597f)  | [Página editar perfil](html/editProfile.html)   |
+|3| [Página de lista de usuarios](https://github.com/DWS-2026/project-grupo-9/commit/186d2824d7821a9a611536c861484d6184790770)  | [Página lista usuarios](html/userList.html)   |
+
 
 ---
 

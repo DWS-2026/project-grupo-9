@@ -198,7 +198,7 @@ Creación de las páginas de inicio, carrito, pago, éxito y fallo. Además, le 
 
 #### **Alumno 4 - Sandra García Rodríguez**
 
-He creado las páginas de personalizar caja, lista de usuarios y editar perfil. También he creado la carpeta en al que almacenamos los html para separarlos del resto de archivos.
+He creado las páginas de personalizar caja, lista de usuarios y editar perfil. También he creado la carpeta en al que almacenamos los html para separarlos del resto de archivos. Además he subido el video grabado por Ángela a youtube y he escrito las marcas de tiempo.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|

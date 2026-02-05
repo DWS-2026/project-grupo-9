@@ -15,7 +15,7 @@ bar.innerHTML = `<nav class="navbar navbar-expand-lg navbar-light" style="backgr
                                 </li>
                                 <li class="nav-item fw-bold"><a class="nav-link" href="./productsPage.html">PRODUCTOS</a></li>
                                 <li class="nav-item fw-bold"><a class="nav-link" href="./customBox.html">PERSONALIZAR</a></li>
-                                <li class="nav-item fw-bold"><a class="nav-link" href="./admin.html">ADMIN</a></li>
+                                <li class="nav-item fw-bold"><a class="nav-link" href="./userList.html">ADMIN</a></li>
                             </ul>
                             <a class="btn btn-outline-dark me-1" href="./cart.html">
                                 <i class="bi-cart-fill me-1"></i>

@@ -11507,5 +11507,46 @@ input:focus::-webkit-input-placeholder
 
 
 
+/*------------------------------PÁGINA LISTA USERS-----------------------------------*/
+.user-card {
+            background: linear-gradient(135deg, #ecd690, #e2a75a);
+            border-radius: 50px;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);  
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: white;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .user-phone {
+            color: #474545;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+
+
 
 

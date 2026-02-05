@@ -138,6 +138,16 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 > Página para editar un usuario.
 
+#### **14. Página de editar producto**
+![Página Editar producto](images/capture_editProduct.jpeg)
+
+> Página para editar un producto a la que tendrá acceso el admin, desde esta pantalla se podrá editar tanto cajas como bombones.
+
+#### **15. Página de crear producto**
+![Página Crear Producto](images/capture_createProduct.jpeg)
+
+> Página para crear productos, tanto cajas como bombones a la que solo tiene acceso el admin.
+
 
 
 

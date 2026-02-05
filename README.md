@@ -119,6 +119,26 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 > Página para ver los detalles de los productos y desde donde el admin puede meterse a editar los detalles.
 
+
+
+#### **11. Página de lista de usuarios**
+![Página Lista de usuarios](images/userList.png)
+
+> Página para ver la lista de usuarios y poder meterse a su perfil.
+
+
+#### **12. Página de personalizar una caja**
+![Página Personalizar caja](images/customBox-png)
+
+> Página para crear una caja personalizada, pudiendo elegir caja y seleccionar los bombones que meter. También con la posibilidad de elegir bombones de forma aleatoria.
+
+#### **13. Página de editar usuario**
+![Página Editar usuario](images/editUser.png)
+
+> Página para editar un usuario.
+
+
+
 #### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
 
 ### **Participación de Miembros en la Práctica 1**

@@ -192,9 +192,9 @@ He creado las páginas de personalizar caja, lista de usuarios y editar perfil. 
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Página de personalizar caja de bombones](https://github.com/DWS-2026/project-grupo-9/commit/8bd20c17fc0150c32f5edfff0867a282cd9b4cd2)  | [Archivo1](html/customBox.html)   |
-|2| [Página de editar perfil](https://github.com/DWS-2026/project-grupo-9/commit/702ace0465404044bebac2bb91f0e30dfa0c597f)  | [Archivo2](html/editProfile.html)   |
-|3| [Página de lista de usuarios](https://github.com/DWS-2026/project-grupo-9/commit/186d2824d7821a9a611536c861484d6184790770)  | [Archivo3](html/userList.html)   |
+|1| [Página de personalizar caja de bombones](https://github.com/DWS-2026/project-grupo-9/commit/8bd20c17fc0150c32f5edfff0867a282cd9b4cd2)  | [Página caja personalizada](html/customBox.html)   |
+|2| [Página de editar perfil](https://github.com/DWS-2026/project-grupo-9/commit/702ace0465404044bebac2bb91f0e30dfa0c597f)  | [Página editar perfil](html/editProfile.html)   |
+|3| [Página de lista de usuarios](https://github.com/DWS-2026/project-grupo-9/commit/186d2824d7821a9a611536c861484d6184790770)  | [Página lista usuarios](html/userList.html)   |
 
 
 ---

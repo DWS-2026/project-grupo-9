@@ -79,7 +79,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > Aquí es donde se muestran los productos seleccionados por el usuario y su precio total, además de la opción de empezar a efectuar el pago.
 
 #### **3. Página de Pago / Payment**
-![Página Pago](images/capture_payment.png)
+![Página Pago](images/payment2.png)
 
 > En esta página, el usuario pondrá los detalles de la entrega e introducirá su tarjeta para el pago.
 
@@ -96,7 +96,28 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 #### **6. Página de Inicio de sesión/ Log in**
 ![Página Inicio de Sesión](images/capture_logIn.png)
 
-> Página para iniciar sesión, en caso de no tener cuenta se puede ir a la página de crear cuenta
+> Página para iniciar sesión, en caso de no tener cuenta se puede ir a la página de crear cuenta.
+
+#### **7. Página de Crear cuenta/ Sign**
+![Página Crear cuenta](images/capture_signIn.jpeg)
+
+> Página para crear cuenta, en caso de ya tener cuenta se puede ir a la página de inicio de sesión.
+
+#### **8. Página de perfil/ Profile**
+![Página Perfil](images/capture_profile.jpeg)
+
+> Página donde un usuario puede ver su perfil y su historial de pedidos, también puede editar su perfil y eliminarlo. El admin también tiene acceso a esta página para gestionar a los usuarios y sus pedidos.
+
+#### **9. Página de productos/ Products**
+![Página Productos (Bombones)](images/capture_productChocolate.jpeg)
+![Página Productos (Cajas)](images/capture_productBox.jpeg)
+
+> Página para ver los productos que se pueden comprar, tanto bombones como cajas, deja añadir productos al admin y que cualquiera pueda ver los detalles de algún producto específico.
+
+#### **10. Página de Detalles de productos/ Product Details**
+![Página Detalles de productos](images/capture_productDetails.jpeg)
+
+> Página para ver los detalles de los productos y desde donde el admin puede meterse a editar los detalles.
 
 #### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
 

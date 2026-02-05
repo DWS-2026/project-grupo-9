@@ -153,7 +153,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 #### **Alumno 3 - Inés Uclés Ortiz**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Creación de las páginas de inicio, carrito, pago, éxito y fallo.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|

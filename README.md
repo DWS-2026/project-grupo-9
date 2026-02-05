@@ -123,24 +123,24 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 
 #### **11. Página de lista de usuarios**
-![Página Lista de usuarios](images/userList.png)
+![Página Lista de usuarios](images/userList2.png)
 
 > Página para ver la lista de usuarios y poder meterse a su perfil.
 
 
 #### **12. Página de personalizar una caja**
-![Página Personalizar caja](images/customBox.png)
+![Página Personalizar caja](images/customBox2.png)
 
 > Página para crear una caja personalizada, pudiendo elegir caja y seleccionar los bombones que meter. También con la posibilidad de elegir bombones de forma aleatoria.
 
 #### **13. Página de editar usuario**
-![Página Editar usuario](images/editUser.png)
+![Página Editar usuario](images/editUser2.png)
 
 > Página para editar un usuario.
 
 
 
-#### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
+
 
 ### **Participación de Miembros en la Práctica 1**
 
@@ -188,15 +188,14 @@ Creación de las páginas de inicio, carrito, pago, éxito y fallo. Además, le 
 
 #### **Alumno 4 - Sandra García Rodríguez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+He creado las páginas de personalizar caja, lista de usuarios y editar perfil. También he creado la carpeta en al que almacenamos los html para separarlos del resto de archivos.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Página de personalizar caja de bombones](https://github.com/DWS-2026/project-grupo-9/commit/8bd20c17fc0150c32f5edfff0867a282cd9b4cd2)  | [Archivo1](html/customBox.html)   |
+|2| [Página de editar perfil](https://github.com/DWS-2026/project-grupo-9/commit/702ace0465404044bebac2bb91f0e30dfa0c597f)  | [Archivo2](html/editProfile.html)   |
+|3| [Página de lista de usuarios](https://github.com/DWS-2026/project-grupo-9/commit/186d2824d7821a9a611536c861484d6184790770)  | [Archivo3](html/userList.html)   |
+
 
 ---
 

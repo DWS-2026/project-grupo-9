@@ -93,6 +93,11 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 > Por si ha habido algún problema con el pago, igualmente nos deja volver a la tienda.
 
+#### **6. Página de Inicio de sesión/ Log in**
+![Página Inicio de Sesión](images/capture_logIn.png)
+
+> Página para iniciar sesión, en caso de no tener cuenta se puede ir a la página de crear cuenta
+
 #### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
 
 ### **Participación de Miembros en la Práctica 1**

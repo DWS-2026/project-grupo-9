@@ -62,10 +62,10 @@ Indicar qué entidades tendrán asociadas una o varias imágenes:
 ### **Diagrama de Navegación**
 Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
 
-![Diagrama de Navegación](images/capture-nav-diagram.png)
+![Diagrama de Navegación](images/nav-diagram.png)
 
 > Cualquier usuario puede acceder desde la página principal a la de iniciar sesión o registrarse, personalizar caja, productos y ver los detalles de cada uno, limitando su interacción a esas páginas. En cambio, los usuarios registrados pueden acceder a todas las páginas (excepto las de administrador), pudiendo añadir productos al carrito, ver y editar su perfil y realizar una compra. El administrador es el encargado de añadir o editar productos y ver la lista de usuarios registrados.
-> Como en todas las páginas hay barras de navegación, el usuario se puede mover por la página web como desee (sin contar las pantallas de éxito o fallo), este diagrama lo que pretende es mostrar qué tipo de usuario puede acceder a las diferentes páginas.
+> Como en casi todas las páginas hay barras de navegación, el usuario se puede mover por la página web como desee (sin contar las pantallas de éxito o fallo), este diagrama lo que pretende es mostrar qué tipo de usuario puede acceder a las diferentes páginas.
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 

@@ -143,17 +143,17 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Participación de Miembros en la Práctica 1**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ainoa Acosta Sánchez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+He creado la página de log in, de sign in y el perfil. También he creado los archivo js de la barra de navegación y el footer para borrar código repetido y facilitarnos el trabajo a la hora de modificar cualquiera de los dos ya que así solo tendríamos que hacer el cambio una única vez.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Página de inicio de sesión](https://github.com/DWS-2026/project-grupo-9/commit/f0069cf15ceafd881530cbfca320b0a2fe2f2a03)  | [Archivo1](https://github.com/DWS-2026/project-grupo-9/blob/main/html/logInPage.html)   |
+|2| [Página de Crear cuenta](https://github.com/DWS-2026/project-grupo-9/commit/c2ffd1c82903427af6950a09aff3839ba2142c23)  | [Archivo2](https://github.com/DWS-2026/project-grupo-9/blob/main/html/signInPage.html)   |
+|3| [Páfina de Perfil](https://github.com/DWS-2026/project-grupo-9/commit/c4c92a8fc55b6951ef50e71a1db3ff5e6549b34b)  | [Archivo3](https://github.com/DWS-2026/project-grupo-9/blob/main/html/profilePage.html)   |
+|4| [Barra de navegación](https://github.com/DWS-2026/project-grupo-9/commit/428d3798bb63c61ab40a531e306479968f538028)  | [Archivo4](https://github.com/DWS-2026/project-grupo-9/blame/main/navBar.js)   |
+|5| [Footer](https://github.com/DWS-2026/project-grupo-9/commit/428d3798bb63c61ab40a531e306479968f538028)  | [Archivo5](https://github.com/DWS-2026/project-grupo-9/blob/main/footer.js)   |
 
 ---
 

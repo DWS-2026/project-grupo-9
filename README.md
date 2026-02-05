@@ -128,7 +128,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 
 #### **12. Página de personalizar una caja**
-![Página Personalizar caja](images/customBox-png)
+![Página Personalizar caja](images/customBox.png)
 
 > Página para crear una caja personalizada, pudiendo elegir caja y seleccionar los bombones que meter. También con la posibilidad de elegir bombones de forma aleatoria.
 
@@ -185,7 +185,7 @@ Creación de las páginas de inicio, carrito, pago, éxito y fallo.
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
+#### **Alumno 4 - Sandra García Rodríguez**
 
 [Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
 

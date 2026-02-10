@@ -12,17 +12,17 @@ public class UserController {
 	}
 
     @GetMapping("/login")
-	public String profile(Model model) {
+	public String logIn(Model model) {
 		return "logInPage_template";
 	}
 
     @GetMapping("/signin")
-	public String profile(Model model) {
+	public String signIn(Model model) {
 		return "signInPage_template";
 	}
 
     @GetMapping("/editprofile")
-	public String profile(Model model) {
+	public String editProfile(Model model) {
 		return "editProfile_template";
 	}
 }

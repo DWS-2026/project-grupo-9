@@ -25,6 +25,16 @@ public class UserController {
 	public String editProfile(Model model) {
 		return "editProfile";
 	}
+	
+	@GetMapping("/payment")
+	public String payment(Model model) {
+		return "payment";
+	}
+
+	@GetMapping("/userList")
+	public String userList(Model model) {
+		return "userList";
+	}
 }
 
 

@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
     @GetMapping("/profile")
 	public String profile(Model model) {
-		return "profilePage_template";
+		return "profilePage";
 	}
 
     @GetMapping("/login")
 	public String logIn(Model model) {
-		return "logInPage_template";
+		return "logInPage";
 	}
 
     @GetMapping("/signin")
 	public String signIn(Model model) {
-		return "signInPage_template";
+		return "signInPage";
 	}
 
     @GetMapping("/editprofile")
 	public String editProfile(Model model) {
-		return "editProfile_template";
+		return "editProfile";
 	}
 }
 

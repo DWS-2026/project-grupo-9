@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProductController {
     @GetMapping("/products")
 	public String products(Model model) {
-		return "productsPage_template";
+		return "productsPage";
 	}
 
     @GetMapping("/createproduct")
 	public String createProduct(Model model) {
-		return "createProduct_template";
+		return "createProduct";
 	}
 
     @GetMapping("/editproduct")
 	public String editProduct(Model model) {
-		return "editProductPage_template";
+		return "editProductPage";
 	}
 
     @GetMapping("/productdetails")
 	public String productDetails(Model model) {
-		return "productDeatilsPage_template";
+		return "productDeatilsPage";
 	}
 }
 

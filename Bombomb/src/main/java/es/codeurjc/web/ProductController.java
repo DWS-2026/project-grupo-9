@@ -23,7 +23,7 @@ public class ProductController {
 
     @GetMapping("/productdetails")
 	public String productDetails(Model model) {
-		return "productDeatilsPage";
+		return "productDetailsPage";
 	}
 
 	@GetMapping("/customBox")

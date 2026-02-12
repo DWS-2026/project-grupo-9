@@ -62,7 +62,7 @@ Indicar qué entidades tendrán asociadas una o varias imágenes:
 ### **Diagrama de Navegación**
 Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
 
-![Diagrama de Navegación](images/nav-diagram.png)
+![Diagrama de Navegación](Bombomb/src/main/resources/static/images/nav-diagram.png)
 
 > Cualquier usuario puede acceder desde la página principal a la de iniciar sesión o registrarse, personalizar caja, productos y ver los detalles de cada uno, limitando su interacción a esas páginas. En cambio, los usuarios registrados pueden acceder a todas las páginas (excepto las de administrador), pudiendo añadir productos al carrito, ver y editar su perfil y realizar una compra. El administrador es el encargado de añadir o editar productos y ver la lista de usuarios registrados.
 > Como en casi todas las páginas hay barras de navegación, el usuario se puede mover por la página web como desee (sin contar las pantallas de éxito o fallo), este diagrama lo que pretende es mostrar qué tipo de usuario puede acceder a las diferentes páginas.
@@ -70,81 +70,81 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 ### **Capturas de Pantalla y Descripción de Páginas**
 
 #### **1. Página Principal / Home**
-![Página Principal](images/capture_index.png)
+![Página Principal](Bombomb/src/main/resources/static/images/capture_index.png)
 
 > Página de inicio que muestra el logo y nombre del obrador, aparece la novedad de las cajas personalizables con un botón que nos lleva a ella y contiene un footer, una promesa de calidad hacia los clientes y una barra de navegación con el perfil, los productos, el carrito, lac cajas personalizables y una opción para el administrador.
 
 #### **2. Página del Carrito / Cart**
-![Página Carrito](images/capture_cart.png)
+![Página Carrito](Bombomb/src/main/resources/static/images/capture_cart.png)
 
 > Aquí es donde se muestran los productos seleccionados por el usuario y su precio total, además de la opción de empezar a efectuar el pago.
 
 #### **3. Página de Pago / Payment**
-![Página Pago](images/payment2.png)
+![Página Pago](Bombomb/src/main/resources/static/images/payment2.png)
 
 > En esta página, el usuario pondrá los detalles de la entrega e introducirá su tarjeta para el pago.
 
 #### **4. Página de Éxito / Success**
-![Página Éxito](images/capture_success.png)
+![Página Éxito](Bombomb/src/main/resources/static/images/capture_success.png)
 
 > Podemos comprobar que el pago se ha realizado con éxito y nos da la opción de volver al incio.
 
 #### **5. Página de Fallo / Fail**
-![Página Fallo](images/capture_fail.png)
+![Página Fallo](Bombomb/src/main/resources/static/images/capture_fail.png)
 
 > Por si ha habido algún problema con el pago, igualmente nos deja volver a la tienda.
 
 #### **6. Página de Inicio de sesión/ Log in**
-![Página Inicio de Sesión](images/capture_logIn.png)
+![Página Inicio de Sesión](Bombomb/src/main/resources/static/images/capture_logIn.png)
 
 > Página para iniciar sesión, en caso de no tener cuenta se puede ir a la página de crear cuenta.
 
 #### **7. Página de Crear cuenta/ Sign**
-![Página Crear cuenta](images/capture_signIn.jpeg)
+![Página Crear cuenta](Bombomb/src/main/resources/static/images/capture_signIn.jpeg)
 
 > Página para crear cuenta, en caso de ya tener cuenta se puede ir a la página de inicio de sesión.
 
 #### **8. Página de perfil/ Profile**
-![Página Perfil](images/capture_profile.jpeg)
+![Página Perfil](Bombomb/src/main/resources/static/images/capture_profile.jpeg)
 
 > Página donde un usuario puede ver su perfil y su historial de pedidos, también puede editar su perfil y eliminarlo. El admin también tiene acceso a esta página para gestionar a los usuarios y sus pedidos.
 
 #### **9. Página de productos/ Products**
-![Página Productos (Bombones)](images/capture_productChocolate.jpeg)
-![Página Productos (Cajas)](images/capture_productBox.jpeg)
+![Página Productos (Bombones)](Bombomb/src/main/resources/static/images/capture_productChocolate.jpeg)
+![Página Productos (Cajas)](Bombomb/src/main/resources/static/images/capture_productBox.jpeg)
 
 > Página para ver los productos que se pueden comprar, tanto bombones como cajas, deja añadir productos al admin y que cualquiera pueda ver los detalles de algún producto específico.
 
 #### **10. Página de Detalles de productos/ Product Details**
-![Página Detalles de productos](images/capture_productDetails.jpeg)
+![Página Detalles de productos](Bombomb/src/main/resources/static/images/capture_productDetails.jpeg)
 
 > Página para ver los detalles de los productos y desde donde el admin puede meterse a editar los detalles.
 
 
 
 #### **11. Página de lista de usuarios**
-![Página Lista de usuarios](images/userList2.png)
+![Página Lista de usuarios](Bombomb/src/main/resources/static/images/userList2.png)
 
 > Página para ver la lista de usuarios y poder meterse a su perfil.
 
 
 #### **12. Página de personalizar una caja**
-![Página Personalizar caja](images/customBox2.png)
+![Página Personalizar caja](Bombomb/src/main/resources/static/images/customBox2.png)
 
 > Página para crear una caja personalizada, pudiendo elegir caja y seleccionar los bombones que meter. También con la posibilidad de elegir bombones de forma aleatoria.
 
 #### **13. Página de editar usuario**
-![Página Editar usuario](images/editUser2.png)
+![Página Editar usuario](Bombomb/src/main/resources/static/images/editUser2.png)
 
 > Página para editar un usuario.
 
 #### **14. Página de editar producto**
-![Página Editar producto](images/capture_editProduct.jpeg)
+![Página Editar producto](Bombomb/src/main/resources/static/images/capture_editProduct.jpeg)
 
 > Página para editar un producto a la que tendrá acceso el admin, desde esta pantalla se podrá editar tanto cajas como bombones.
 
 #### **15. Página de crear producto**
-![Página Crear Producto](images/capture_createProduct.jpeg)
+![Página Crear Producto](Bombomb/src/main/resources/static/images/capture_createProduct.jpeg)
 
 > Página para crear productos, tanto cajas como bombones a la que solo tiene acceso el admin.
 

@@ -25,5 +25,15 @@ public class ProductController {
 	public String productDetails(Model model) {
 		return "productDeatilsPage";
 	}
+
+	@GetMapping("/customBox")
+	public String customBox(Model model) {
+		return "customBox";
+	}
+
+	@GetMapping("/cart")
+	public String cart(Model model) {
+		return "cart";
+	}
 }
 

@@ -23,12 +23,12 @@
             <!-- User 1 -->
             <div class="user-card">
                 <div class="user-info">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s"
+                    <img src= {{image}}
                         alt="foto" class="user-photo">
                     <div>
-                        <p class="user-name">María de la O Sánchez Sánchez</p>
-                        <p class="user-phone">+34 600 85 85 90</p>
-                        <p class="user-mail">mariasanchezsanchez@hotmail.com</p>
+                        <p class="user-name">{{name}}</p>
+                        <p class="user-phone">{{telephone}}</p>
+                        <p class="user-mail">{{email}}</p>
                     </div>
                 </div>
                 <a href="/profile" class="btn btn-outline-dark btn-sm">Ir al perfil</a>
@@ -41,8 +41,5 @@
     </main>
     {{>footer}}
 </body>
-
-
-
 
 </html>

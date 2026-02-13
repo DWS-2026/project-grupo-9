@@ -33,6 +33,10 @@ public class UserController {
 
 	@GetMapping("/userList")
 	public String userList(Model model) {
+		model.addAttribute("name", "María de la O Sánchez Sánchez");
+		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
+		model.addAttribute("telephone", "+34 600808080");
+		model.addAttribute("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
 		return "userList";
 	}
 }

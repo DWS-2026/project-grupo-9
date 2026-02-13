@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Error</title>
-        <link href="./styles.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-    <body>
+{{>navigationBar}}
+
+<body class="d-flex flex-column min-vh-100">
+    <main class="flex-grow-1">
         <div class="container-end">
             <div class="row justify-content-center">
                 <div class="col-md-5">
                     <div class="message-box _failed">
                         <i class="fa fa-times-circle" aria-hidden="false"></i>
-                        <h2> Error 404 </h2> 
-                        
-                </div> 
+                        <h2> Error 404 </h2>
+
+                    </div>
+                </div>
             </div>
-        </div>  
-    </body>
+    </main>
+    {{>footer}}
+</body>
+
+
 </html>

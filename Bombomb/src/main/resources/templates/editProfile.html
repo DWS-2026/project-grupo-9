@@ -10,26 +10,26 @@
                 <form class="row g-3">
                     <div class="col-md-4">
                         <label for="name" class="form-label">Nombre</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="María de la O" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" value={{name}} style="max-width: 20rem" />
                     </div>
                     <div class="col-md-8">
                         <label for="surname" class="form-label">Apellidos</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="Sánchez Sánchez" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" value={{surname}} style="max-width: 20rem" />
                     </div>
                     <div class="col-md-4">
                         <label for="telephone" class="form-label">Telefono</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="+34 600 85 85 90" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" value={{telephone}} style="max-width: 20rem" />
                     </div>
                     <div class="col-md-8">
                         <label for="email" class="form-label">Correo electrónico</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="mariasanchezsanchez@hotmail.com" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" value={{email}} style="max-width: 20rem" />
                     </div>
                     <div class="col-md-4 mt-4">
                         <form>
                             <div class="form-group">
                                 <label for="profilePicture">Foto de perfil</label>
                                  <div class="card-body text-center">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s"
+                                <img src={{image}}
                                     alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                             </div>
                                 <input type="file" class="form-control-file" id="profilePicture">

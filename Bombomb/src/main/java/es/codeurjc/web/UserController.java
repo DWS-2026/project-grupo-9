@@ -23,6 +23,11 @@ public class UserController {
 
     @GetMapping("/editprofile")
 	public String editProfile(Model model) {
+		model.addAttribute("name", "María de la O");
+		model.addAttribute("surname", "Sánchez Sánchez");
+		model.addAttribute("telephone", "600808080");
+		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
+		model.addAttribute("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
 		return "editProfile";
 	}
 	

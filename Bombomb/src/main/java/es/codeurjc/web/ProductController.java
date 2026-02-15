@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProductController {
     @GetMapping("/products")
 	public String products(Model model) {
+		model.addAttribute("name", "World");
 		return "productsPage";
 	}
+
 
     @GetMapping("/createproduct")
 	public String createProduct(Model model) {

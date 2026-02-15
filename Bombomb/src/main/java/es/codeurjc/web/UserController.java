@@ -1,5 +1,7 @@
 package es.codeurjc.web;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
     @GetMapping("/profile")
 	public String profile(Model model) {
+		model.addAttribute("name", "María de la O Sánchez Sánchez");
+		model.addAttribute("telephone", "600808080");
+		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
+		model.addAttribute("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
+		model.addAttribute("address", "Calle Villamorada 11 5ºC, Leganés");
+		model.addAttribute("date", "24/06/2026");
+		model.addAttribute("numberProducts", "2");
+		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
+		model.addAttribute("productType", "Bombón");
+		model.addAttribute("productName", "Mármol de frambuesa");
+		model.addAttribute("productPrize", "0.60");
+		model.addAttribute("productAmount", "1");
 		return "profilePage";
 	}
 

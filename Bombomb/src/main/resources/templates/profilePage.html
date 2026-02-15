@@ -13,9 +13,9 @@
                     <div class="col-lg-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s"
+                                <img src={{image}}
                                     alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                                <h5 class="my-3 fw-bold">María de la O Sánchez Sánchez</h5>
+                                <h5 class="my-3 fw-bold">{{name}}</h5>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                                         <p class="mb-0">Nombre</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">María de la O Sánchez Sánchez</p>
+                                        <p class="text-muted mb-0">{{name}}</p>
                                     </div>
                                 </div>
                                 <hr>
@@ -37,7 +37,7 @@
                                         <p class="mb-0">Email</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">mariasanchezsanchez@hotmail.com</p>
+                                        <p class="text-muted mb-0">{{email}}</p>
                                     </div>
                                 </div>
                                 <hr>
@@ -46,7 +46,7 @@
                                         <p class="mb-0">Número</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">+34 600 85 85 90</p>
+                                        <p class="text-muted mb-0">{{telephone}}</p>
                                     </div>
                                 </div>
                                 <hr>
@@ -55,7 +55,7 @@
                                         <p class="mb-0">Dirección</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">Calle Villamorada 11 5ºC, Leganés</p>
+                                        <p class="text-muted mb-0">{{address}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -78,24 +78,24 @@
                         <div class="cartProfile">
                             <div class="first-block">
                                 <div class="title-cart">
-                                    <h4><b>Pedido 24/06/2025</b></h4>
-                                    <p>2 productos</p>
+                                    <h4><b>Pedido {{date}}</b></h4>
+                                    <p>{{numberProducts}} productos</p>
                                 </div>
                                 <div class="products">
                                     <div class="first-product">
                                         <div class="info-product-group">
                                             <div class="button-image-product">
-                                                <img class="image-product" src="./images/chocolate_pink.jpeg">
+                                                <img class="image-product" src={{productImage}}>
                                             </div>
                                             <div class="col">
-                                                <div class="type-product">Bombón</div>
-                                                <div class="name-product">Mármol de frambuesa</div>
+                                                <div class="type-product">{{productType}}</div>
+                                                <div class="name-product">{{productName}}</div>
                                             </div>
                                         </div>
                                         <div class="right-control">
                                             <div class="col-price">
-                                                <div class="price">0.60&euro;</div>
-                                                <div class = "amount">1 unidad</div>
+                                                <div class="price">{{productPrize}}&euro;</div>
+                                                <div class = "amount">{{productAmount}} unidad</div>
                                             </div>
                                         </div>
                                     </div>

@@ -1,7 +1,5 @@
 package es.codeurjc.web;
 
-import org.springframework.stereotype.Indexed;
-
 import jakarta.persistence.Entity;
 
 @Entity

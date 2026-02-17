@@ -13,7 +13,7 @@
                     <div class="col-lg-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
-                                <img src={{image}}
+                                <img src="{{image}}"
                                     alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                                 <h5 class="my-3 fw-bold">{{name}}</h5>
                             </div>
@@ -34,6 +34,15 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
+                                        <p class="mb-0">Apellidos</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">{{surname}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
                                         <p class="mb-0">Email</p>
                                     </div>
                                     <div class="col-sm-9">
@@ -43,19 +52,10 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">Número</p>
+                                        <p class="mb-0">Teléfono</p>
                                     </div>
                                     <div class="col-sm-9">
                                         <p class="text-muted mb-0">{{telephone}}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Dirección</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{address}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                     <div class="first-product">
                                         <div class="info-product-group">
                                             <div class="button-image-product">
-                                                <img class="image-product" src={{productImage}}>
+                                                <img class="image-product" src="{{productImage}}">
                                             </div>
                                             <div class="col">
                                                 <div class="type-product">{{productType}}</div>

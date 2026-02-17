@@ -22,6 +22,11 @@ public class ProductController {
 
     @GetMapping("/editproduct")
 	public String editProduct(Model model) {
+		model.addAttribute("name", "Violeta");
+		model.addAttribute("price", "0.60€");
+		model.addAttribute("description", "Bombón en forma de flor relleno de moras y brillo metalizado");
+		model.addAttribute("stock", "12");
+		model.addAttribute("image", "images/chocolate_flower.jpeg");
 		return "editProductPage";
 	}
 
@@ -42,6 +47,9 @@ public class ProductController {
 
 	@GetMapping("/cart")
 	public String cart(Model model) {
+		model.addAttribute("image", "images/chocolate_pink.jpeg");
+		model.addAttribute("image2","images/chocolate_lemon.jpeg");
+
 		return "cart";
 	}
 }

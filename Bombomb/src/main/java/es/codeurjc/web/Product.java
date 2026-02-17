@@ -1,6 +1,11 @@
-package es.codeurjc;
+package es.codeurjc.web;
 
 import org.springframework.stereotype.Indexed;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Product {

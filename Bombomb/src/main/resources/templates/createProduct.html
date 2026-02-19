@@ -10,43 +10,42 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="card shadow-sm rounded-4 p-0 overflow-hidden">
                     <div class="row g-0 align-items-center">
-                        <div class="col-md-4 mt-4 mx-5">
-                            <form>
+                        <form action="/createproduct" method='post'>
+                            <div class="col-md-4 mt-4 mx-5">
                                 <div class="form-group">
                                     <h4 class="display-6 fw-bolder">Imagen:</h4>
-                                    <input type="file" class="form-control-file" id="productPicture">
+                                    <input type="text" class="form-control-file" id="productPicture" name='image'>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6 p-5">
-                            <h4 class="display-6 fw-bolder">Nombre:</h4>
-                            <input class="form-control text-center me-3" id="input" type="text" value=""
-                                style="max-width: 20rem" />
-                            <h4 class="display-6 fw-bolder">Precio por unidad:</h4>
-                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value=""
-                                style="max-width: 10rem" />
-                            <h4 class="display-6 fw-bolder">Descripción:</h4>
-                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value=""
-                                style="max-width: auto" />
-                            <div class="d-flex">
+
                             </div>
-                            <h4 class="display-6 fw-bolder">Stock:</h4>
-                            <input class="form-control text-center me-3" id="inputQuantity" type="text" value=""
-                                style="max-width: 10rem" />
+                            <div class="col-md-6 p-5">
+                                <h4 class="display-6 fw-bolder">Nombre:</h4>
+                                <input class="form-control text-center me-3" id="input" type="text" name='name'
+                                    style="max-width: 20rem" />
+                                <h4 class="display-6 fw-bolder">Precio por unidad:</h4>
+                                <input class="form-control text-center me-3" id="inputQuantity" type="text" name='price'
+                                    style="max-width: 10rem" />
+                                <h4 class="display-6 fw-bolder">Descripción:</h4>
+                                <input class="form-control text-center me-3" id="inputQuantity" type="text"
+                                    name='description' style="max-width: auto" />
+                                <h4 class="display-6 fw-bolder">Stock:</h4>
+                                <input class="form-control text-center me-3" id="inputQuantity" type="text" name='stock'
+                                    style="max-width: 10rem" />
                                 <h4 class="display-6 fw-bolder">Tipo:</h4>
-                            <input class="form-control text-center me-3" id="input" type="text" value=""
-                                style="max-width: 20rem" />
-                            <div class="container px-4 px-lg-5 my-5">
-                                <div class="text-center">
-                                    <a href="/products" class="btn btn-primary btn-outline-dark btn-sm">
-                                        Guardar producto
-                                    </a>
+                                <input class="form-control text-center me-3" id="input" type="text" name='type'
+                                    style="max-width: 20rem" />
+                                <div class="container px-4 px-lg-5 my-5">
+                                    <div class="text-center">
+                                        <input type='submit' class="btn btn-primary btn-outline-dark btn-sm"
+                                            value="Guardar producto">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
     <!-- Footer-->

@@ -10,29 +10,16 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="card shadow-sm rounded-4 p-0 overflow-hidden">
                     <div class="row g-0 align-items-center">
-                        <form action="/createproduct" method='post'>
+                        <form action="/create/chocolate" method='post' enctype="multipart/form-data">
                             <div class="col-md-4 mt-4 mx-5">
                                 <div class="form-group">
                                     <h4 class="display-6 fw-bolder">Imagen:</h4>
-                                    <input type="text" class="form-control-file" id="productPicture" name='image'>
+                                    <input type="file" class="form-control-file" id="productPicture" name='imageFile'>
                                 </div>
-
                             </div>
                             <div class="col-md-6 p-5">
                                 <h4 class="display-6 fw-bolder">Nombre:</h4>
                                 <input class="form-control text-center me-3" id="input" type="text" name='name'
-                                    style="max-width: 20rem" />
-                                <h4 class="display-6 fw-bolder">Precio por unidad:</h4>
-                                <input class="form-control text-center me-3" id="inputQuantity" type="text" name='price'
-                                    style="max-width: 10rem" />
-                                <h4 class="display-6 fw-bolder">Descripción:</h4>
-                                <input class="form-control text-center me-3" id="inputQuantity" type="text"
-                                    name='description' style="max-width: auto" />
-                                <h4 class="display-6 fw-bolder">Stock:</h4>
-                                <input class="form-control text-center me-3" id="inputQuantity" type="text" name='stock'
-                                    style="max-width: 10rem" />
-                                <h4 class="display-6 fw-bolder">Tipo:</h4>
-                                <input class="form-control text-center me-3" id="input" type="text" name='type'
                                     style="max-width: 20rem" />
                                 <div class="container px-4 px-lg-5 my-5">
                                     <div class="text-center">

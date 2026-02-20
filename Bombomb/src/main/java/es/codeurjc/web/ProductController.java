@@ -1,13 +1,17 @@
 package es.codeurjc.web;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -28,14 +32,17 @@ public class ProductController {
 
 	@Autowired
 	ProductRepository products;
+	@Autowired
+	ChocolateRepository chocolates;
 
 	@PostConstruct
-	public void init() {
-		products.save(new Product("Violeta", "0.60€",
-				"Bombón en forma de flor relleno de moras y brillo metalizado",
-				"12", "/images/chocolate_flower.jpeg", "Bombón"));
-		products.save(new Product("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaa"));
-	}
+	public void init() throws Exception {
+    ClassPathResource resource =
+            new ClassPathResource("static/images/chocolate_flower.jpeg");
+    byte[] bytes = resource.getInputStream().readAllBytes();
+    Blob blob = new SerialBlob(bytes);
+    chocolates.save(new Chocolate("Violeta", blob));
+}
 
 	@GetMapping("/products")
 	public String products(Model model) {
@@ -47,15 +54,51 @@ public class ProductController {
 
 	@GetMapping("/createproduct")
 	public String createProduct(Model model) {
-		return "createProduct";
+		return "createChocolate";
 	}
 
 	@PostMapping("/createproduct")
-	public String newProduct(Model model, Product product) throws IOException {
+	public String newProduct(Model model, Product product, MultipartFile imageFile) throws IOException {
+		if (!imageFile.isEmpty()) {
+			try {
+				product.setImageFile(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}
 		products.save(product);
 		model.addAttribute("products", products.findAll());
 		return "redirect:/products";
 	}
+
+	@PostMapping("/create/chocolate")
+	public String newChocolate(Model model, Chocolate chocolate, MultipartFile imageFile) throws IOException {
+		if (!imageFile.isEmpty()) {
+			try {
+				chocolate.setImage(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}
+		chocolates.save(chocolate);
+		model.addAttribute("products", chocolates.findAll());
+		return "redirect:/products";
+	}
+
+	@GetMapping("/chocolate/{id}/image")
+	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
+		Optional<Chocolate> op = chocolates.findById(id);
+		if (op.isPresent() && op.get().getImage() != null) {
+			Blob image = op.get().getImage();
+			Resource imageFile = new InputStreamResource(image.getBinaryStream());
+			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
+			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	
 
 	@GetMapping("/product/{id}/image")
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {

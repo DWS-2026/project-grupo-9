@@ -1,14 +1,11 @@
 package es.codeurjc.web;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -21,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
@@ -37,12 +33,11 @@ public class ProductController {
 
 	@PostConstruct
 	public void init() throws Exception {
-    ClassPathResource resource =
-            new ClassPathResource("static/images/chocolate_flower.jpeg");
-    byte[] bytes = resource.getInputStream().readAllBytes();
-    Blob blob = new SerialBlob(bytes);
-    chocolates.save(new Chocolate("Violeta", blob));
-}
+		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
+		byte[] bytes = resource.getInputStream().readAllBytes();
+		Blob blob = new SerialBlob(bytes);
+		chocolates.save(new Chocolate("Violeta", blob));
+	}
 
 	@GetMapping("/products")
 	public String products(Model model) {
@@ -98,8 +93,6 @@ public class ProductController {
 		}
 	}
 
-	
-
 	@GetMapping("/product/{id}/image")
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<Product> op = products.findById(id);
@@ -141,5 +134,11 @@ public class ProductController {
 		model.addAttribute("image2", "images/chocolate_lemon.jpeg");
 
 		return "cart";
+	}
+
+	@PostMapping("/delete/{id}/chocolate")
+	public String deleteChocolate(@PathVariable long id){
+		chocolates.deleteById(id);
+		return "redirect:/products";
 	}
 }

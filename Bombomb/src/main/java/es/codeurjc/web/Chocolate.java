@@ -1,13 +1,47 @@
 package es.codeurjc.web;
 
+import java.sql.Blob;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Id;
 
 @Entity
-public class Chocolate extends Product{
+public class Chocolate {
 
-    protected Chocolate(){}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Chocolate(String name, String price, String description, String stock, String image) {
-        super(name, price, description, stock, image, "Chocolate");
+    String name;
+
+    @Lob
+    Blob image;
+
+    protected Chocolate() {
     }
+
+    public Chocolate(String chocolateName, Blob chocolateImage){
+        this.name = chocolateName;
+        this.image = chocolateImage;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
+    }
+
 }

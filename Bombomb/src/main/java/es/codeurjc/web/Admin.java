@@ -1,0 +1,36 @@
+package es.codeurjc.web;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Indexed;
+
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Entity
+public class Admin extends User {
+    
+    @Id
+    @GeneratedValue( strategy =GenerationType.AUTO)
+    private long id;
+
+    @OneToMany
+	private Product product;
+
+    private String password="admin";
+
+    public Admin(String name, String surname, String telephone, String email, String image, String password){
+        super(name,surname,telephone, email, image, password);
+    }
+   
+    public boolean isAdmin(String password){
+        if(password.equals(this.password)){
+            return true;
+        }
+        return false;
+    }
+}

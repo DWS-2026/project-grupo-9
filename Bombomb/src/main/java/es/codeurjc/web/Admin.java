@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Indexed;
 
+import java.sql.Blob;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ public class Admin extends User {
 
     private String password="admin";
 
-    public Admin(String name, String surname, String telephone, String email, String image, String password){
+    public Admin(String name, String surname, String telephone, String email, Blob image, String password){
         super(name,surname,telephone, email, image, password);
     }
    

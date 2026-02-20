@@ -1,4 +1,4 @@
-package es.codeurjc;
+package es.codeurjc.web;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -15,31 +16,29 @@ public class Order {
     private int amount;
     private boolean status;
 
-
-    protected Order() {}   
+    protected Order() {
+    }
 
     public Order(String date, String price, int amount, boolean status) {
-        this.name = date;
+        this.date = date;
         this.price = price;
-        this.description = description;
         this.amount = amount;
         this.status = status;
-        private HashMap<Product, int> productsMap = new HashMap<Product, int>();
     }
 
     @Override
     public String toString() {
         return String.format(
                 "Order[id=%d, date='%s', price='%s', description='%s', amount='%d', status='%d']",
-                id, date, price, description, amount, status);
+                id, date, price, amount, status);
     }
 
-    public String getName() {
-        return name;
+    public String getDate() {
+        return date;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getPrice() {
@@ -50,28 +49,12 @@ public class Order {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public boolean getStatus() {
         return status;
     }
 
     public void setStock(boolean status) {
         this.status = status;
-    }
-
-    public HashMap<Product, int> getProductsMap() {
-        return productsMap;
-    }
-
-    public void setProductsMap(HashMap<Product, int> productsMap) {
-        this.productsMap = productsMap;
     }
 
 }

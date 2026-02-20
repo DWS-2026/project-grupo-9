@@ -1,9 +1,12 @@
 package es.codeurjc.web;
 
+import java.sql.Blob;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Product {
@@ -15,25 +18,36 @@ public class Product {
     private String price;
     private String description;
     private String stock;
-    private String image;
     private String type;
+    private Boolean madeByAdmin;
+
+    @Lob
+    private Blob imageFile;
+
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
 
     protected Product() {}   
 
-    public Product(String name, String price, String description, String stock, String image, String type) {
+    public Product(String name, String price, String description, String stock, Blob image, String type) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.stock = stock;
-        this.image = image;
         this.type = type;
+        this.imageFile = image;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Product[id=%d, name='%s', price='%s', description='%s', stock='%s', image='%s', type='%s']",
-                id, name, price, description, stock, image, type);
+                "Product[id=%d, name='%s', price='%s', description='%s', stock='%s', type='%s']",
+                id, name, price, description, stock, type);
     }
 
     public String getName() {
@@ -74,14 +88,6 @@ public class Product {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
 }

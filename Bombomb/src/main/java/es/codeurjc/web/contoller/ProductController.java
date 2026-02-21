@@ -1,4 +1,4 @@
-package es.codeurjc.web;
+package es.codeurjc.web.contoller;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+
+import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.Product;
+import es.codeurjc.web.repository.ChocolateRepository;
+import es.codeurjc.web.repository.ProductRepository;
+
 import org.springframework.core.io.Resource;
 
 import jakarta.annotation.PostConstruct;

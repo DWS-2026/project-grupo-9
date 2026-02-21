@@ -1,6 +1,7 @@
-package es.codeurjc.web;
+package es.codeurjc.web.model;
 
 import java.sql.Blob;
+
 import jakarta.persistence.Entity;
 
 

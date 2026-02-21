@@ -1,4 +1,4 @@
-package es.codeurjc.web;
+package es.codeurjc.web.contoller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

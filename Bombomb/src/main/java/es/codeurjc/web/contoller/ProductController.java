@@ -8,7 +8,6 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -22,12 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Product;
-import es.codeurjc.web.repository.ChocolateRepository;
 import es.codeurjc.web.repository.ProductRepository;
+import es.codeurjc.web.service.ChocolateService;
 
 import org.springframework.core.io.Resource;
-
-import jakarta.annotation.PostConstruct;
 
 @Controller
 public class ProductController {
@@ -35,19 +32,11 @@ public class ProductController {
 	@Autowired
 	ProductRepository products;
 	@Autowired
-	ChocolateRepository chocolates;
-
-	@PostConstruct
-	public void init() throws Exception {
-		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
-		chocolates.save(new Chocolate("Violeta", blob));
-	}
+	ChocolateService chocolateService;
 
 	@GetMapping("/products")
 	public String products(Model model) {
-		model.addAttribute("chocolates", chocolates.findAll());
+		model.addAttribute("chocolates", chocolateService.findAll());
 		return "productsPage";
 	}
 
@@ -72,21 +61,14 @@ public class ProductController {
 
 	@PostMapping("/create/chocolate")
 	public String newChocolate(Model model, Chocolate chocolate, MultipartFile imageFile) throws IOException {
-		if (!imageFile.isEmpty()) {
-			try {
-				chocolate.setImage(new SerialBlob(imageFile.getBytes()));
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}
-		chocolates.save(chocolate);
-		model.addAttribute("products", chocolates.findAll());
+		chocolateService.save(chocolate, imageFile);
+		model.addAttribute("products", chocolateService.findAll());
 		return "redirect:/products";
 	}
 
 	@GetMapping("/chocolate/{id}/image")
 	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
-		Optional<Chocolate> op = chocolates.findById(id);
+		Optional<Chocolate> op = chocolateService.findById(id);
 		if (op.isPresent() && op.get().getImage() != null) {
 			Blob image = op.get().getImage();
 			Resource imageFile = new InputStreamResource(image.getBinaryStream());
@@ -142,7 +124,7 @@ public class ProductController {
 
 	@PostMapping("/delete/{id}/chocolate")
 	public String deleteChocolate(@PathVariable long id) {
-		chocolates.deleteById(id);
+		chocolateService.deleteById(id);
 		return "redirect:/products";
 	}
 }

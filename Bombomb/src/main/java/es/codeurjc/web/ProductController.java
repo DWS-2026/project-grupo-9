@@ -41,9 +41,7 @@ public class ProductController {
 
 	@GetMapping("/products")
 	public String products(Model model) {
-		model.addAttribute("name", "Violeta");
-		model.addAttribute("price", "0.60€");
-		model.addAttribute("image", "images/chocolate_flower.jpeg");
+		model.addAttribute("chocolates", chocolates.findAll());
 		return "productsPage";
 	}
 
@@ -137,7 +135,7 @@ public class ProductController {
 	}
 
 	@PostMapping("/delete/{id}/chocolate")
-	public String deleteChocolate(@PathVariable long id){
+	public String deleteChocolate(@PathVariable long id) {
 		chocolates.deleteById(id);
 		return "redirect:/products";
 	}

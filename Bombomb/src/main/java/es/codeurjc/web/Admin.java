@@ -1,5 +1,6 @@
 package es.codeurjc.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,12 +21,17 @@ public class Admin extends User {
     private long id;
 
     @OneToMany
-	private Product product;
+	private List<Product> products;
 
     private String password="admin";
 
     public Admin(String name, String surname, String telephone, String email, Blob image, String password){
         super(name,surname,telephone, email, image, password);
+        this.products = new ArrayList<>();
+    }
+
+    public Admin() {
+        super();
     }
    
     public boolean isAdmin(String password){
@@ -33,5 +39,13 @@ public class Admin extends User {
             return true;
         }
         return false;
+    }
+
+     public List<Product> getProducts() {
+        return products;
+    }
+    
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

@@ -4,22 +4,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import java.util.List;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @ManyToMany
+    private List<Product> products;
+
     private long id;
-    private String date;
-    private String price;
+    private LocalDate date;
+    private float price;
     private int amount;
     private boolean status;
 
     protected Order() {
     }
 
-    public Order(String date, String price, int amount, boolean status) {
+    public Order(LocalDate date, float price, int amount, boolean status) {
         this.date = date;
         this.price = price;
         this.amount = amount;
@@ -28,24 +37,25 @@ public class Order {
 
     @Override
     public String toString() {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return String.format(
-                "Order[id=%d, date='%s', price='%s', description='%s', amount='%d', status='%d']",
-                id, date, price, amount, status);
+                "Order[id=%d, date='%s', price='.2%f', amount='%d', status='%b']",
+                id, date.format(dateFormat), price, amount, status);
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -53,8 +63,16 @@ public class Order {
         return status;
     }
 
-    public void setStock(boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
 }

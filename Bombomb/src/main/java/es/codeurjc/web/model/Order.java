@@ -9,17 +9,19 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @ManyToMany
     private List<Product> products;
 
-    private long id;
     private LocalDate date;
     private float price;
     private int amount;

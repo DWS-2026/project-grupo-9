@@ -7,11 +7,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+
 @Entity
+@Table(name = "users")
 public class User {
-    
+
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
@@ -21,18 +24,18 @@ public class User {
     private String password;
     @Lob
     private Blob image;
-   
 
-    protected User(){}
+    protected User() {
+    }
 
-    public User(String name, String surname, String telephone, String email, Blob image, String password){
-        
-        this.name=name;
-        this.surname=surname;
-        this.telephone=telephone;
-        this.email=email;
-        this.image=image;
-        this.password=password;
+    public User(String name, String surname, String telephone, String email, Blob image, String password) {
+
+        this.name = name;
+        this.surname = surname;
+        this.telephone = telephone;
+        this.email = email;
+        this.image = image;
+        this.password = password;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class User {
         this.name = name;
     }
 
-     public String getSurname() {
+    public String getSurname() {
         return surname;
     }
 
@@ -58,7 +61,7 @@ public class User {
         this.surname = surname;
     }
 
-     public String getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
@@ -66,7 +69,7 @@ public class User {
         this.telephone = telephone;
     }
 
-     public String getEmail() {
+    public String getEmail() {
         return email;
     }
 
@@ -74,7 +77,7 @@ public class User {
         this.email = email;
     }
 
-     public Blob getImage() {
+    public Blob getImage() {
         return image;
     }
 
@@ -82,7 +85,7 @@ public class User {
         this.image = image;
     }
 
-    public String getPassword() {/*no se hasta que punto esta funcion es buena idea */
+    public String getPassword() {/* no se hasta que punto esta funcion es buena idea */
         return password;
     }
 
@@ -90,5 +93,4 @@ public class User {
         this.password = password;
     }
 
-   
 }

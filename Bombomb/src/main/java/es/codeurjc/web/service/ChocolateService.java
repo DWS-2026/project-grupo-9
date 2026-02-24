@@ -22,13 +22,6 @@ public class ChocolateService {
     @Autowired
     private ChocolateRepository chocolateRepository;
 
-    @PostConstruct
-	public void init() throws Exception {
-		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Violeta", blob));
-	}
 
     public void save(Chocolate chocolate, MultipartFile image) throws IOException{
         if (!image.isEmpty()) {

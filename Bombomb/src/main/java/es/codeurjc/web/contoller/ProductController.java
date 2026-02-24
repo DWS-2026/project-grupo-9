@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -21,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Product;
+import es.codeurjc.web.model.Order;
+import es.codeurjc.web.repository.OrderRepository;
 import es.codeurjc.web.repository.ProductRepository;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
@@ -31,6 +34,8 @@ import org.springframework.core.io.Resource;
 @Controller
 public class ProductController {
 
+    private final OrderRepository orderRepository;
+
 	@Autowired
 	ProductRepository products;
 	@Autowired
@@ -38,8 +43,16 @@ public class ProductController {
 	@Autowired
 	OrderService orderService;
 
+    ProductController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
 	@PostConstruct
-    public void init() {
+    public void init() throws SerialException, SQLException {
+		products.save(new Product("Caja 1", "19.50€", "Caja con 12 bombones violeta", 
+			new SerialBlob(new byte[0]), "Caja", true));
+		products.save(new Product("Caja 2", "18.50€", "Caja con 12 bombones limón", 
+			new SerialBlob(new byte[0]), "Caja", true));
 
     }
 
@@ -125,9 +138,10 @@ public class ProductController {
 
 	@GetMapping("/cart")
 	public String cart(Model model) {
-		model.addAttribute("image", "images/chocolate_pink.jpeg");
-		model.addAttribute("image2", "images/chocolate_lemon.jpeg");
+		
 
+		Order order =orderService.getActiveCart();
+		model.addAttribute("cart", order);
 		return "cart";
 	}
 

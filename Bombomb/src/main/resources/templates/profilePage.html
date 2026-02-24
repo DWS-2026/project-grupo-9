@@ -5,7 +5,7 @@
     <main class="flex-grow-1">
 
         {{>navigationBar}}
-
+        {{#user}}
         <section>
 
             <div class="container py-5">
@@ -13,7 +13,7 @@
                     <div class="col-lg-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
-                                <img src="{{image}}" alt="avatar" class="rounded-circle img-fluid"
+                                <img src="profile/{{id}}/image" alt="avatar" class="rounded-circle img-fluid"
                                     style="width: 150px;">
                                 <h5 class="my-3 fw-bold">{{name}}</h5>
                             </div>
@@ -242,6 +242,7 @@
                 </div>
             </div>
         </section>
+        {{/user}}
     </main>
 
     {{>footer}}

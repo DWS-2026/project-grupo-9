@@ -24,6 +24,7 @@ import es.codeurjc.web.model.Product;
 import es.codeurjc.web.repository.ProductRepository;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
+import jakarta.annotation.PostConstruct;
 
 import org.springframework.core.io.Resource;
 
@@ -36,6 +37,11 @@ public class ProductController {
 	ChocolateService chocolateService;
 	@Autowired
 	OrderService orderService;
+
+	@PostConstruct
+    public void init() {
+
+    }
 
 	@GetMapping("/products")
 	public String products(Model model) {

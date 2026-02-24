@@ -17,7 +17,6 @@ public class Product {
     private String name;
     private String price;
     private String description;
-    private String stock;
     private String type;
     private Boolean madeByAdmin;
 
@@ -32,22 +31,23 @@ public class Product {
         this.imageFile = imageFile;
     }
 
-    protected Product() {}   
+    protected Product() {
+    }
 
-    public Product(String name, String price, String description, String stock, Blob image, String type) {
+    public Product(String name, String price, String description, Blob image, String type, boolean madeByAdmin) {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.stock = stock;
         this.type = type;
         this.imageFile = image;
+        this.madeByAdmin = madeByAdmin;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Product[id=%d, name='%s', price='%s', description='%s', stock='%s', type='%s']",
-                id, name, price, description, stock, type);
+                "Product[id=%d, name='%s', price='%s', description='%s', type='%s', madeByAdmin='%b']",
+                id, name, price, description, type, madeByAdmin);
     }
 
     public String getName() {
@@ -74,20 +74,20 @@ public class Product {
         this.description = description;
     }
 
-    public String getStock() {
-        return stock;
-    }
-
-    public void setStock(String stock) {
-        this.stock = stock;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean getMadeByAdmin() {
+        return madeByAdmin;
+    }
+
+    public void setMadeByAdmin(boolean madeByAdmin) {
+        this.madeByAdmin = madeByAdmin;
     }
 
 }

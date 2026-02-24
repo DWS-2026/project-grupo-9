@@ -7,18 +7,18 @@
     <main class="flex-grow-1">
         <div class="d-flex justify-content-center mt-5">
             <div class="card mb-4 px-lg-4 py-5">
-                <form class="row g-3">
+                <form class="row g-3" action = "/login" method = "post">
                     <h1>Inicio de Sesión</h1>
                     <div class="col-md-12">
                         <label for="inputEmail4" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="inputEmail4">
+                        <input type="email" class="form-control" id="inputEmail4" name = "email">
                     </div>
                     <div class="col-md-12">
                         <label for="inputPassword4" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="inputPassword4">
+                        <input type="password" class="form-control" id="inputPassword4" name = "password">
                     </div>
                     <div class="col-12">
-                        <a class="btn btn-primary" href="/profile">Iniciar sesión</a>
+                        <input class="btn btn-primary" type="submit">Iniciar sesión</a>
                     </div>
                     <a class = "link-dark" href="/signin">
                         ¿No tienes cuenta?

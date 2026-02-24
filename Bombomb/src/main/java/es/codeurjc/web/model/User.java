@@ -1,8 +1,11 @@
 package es.codeurjc.web.model;
 
 import java.sql.Blob;
-import org.springframework.stereotype.Indexed;
+import java.util.List;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,7 +13,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
 
     @Id
@@ -22,13 +25,17 @@ public class User {
     private String telephone;
     private String email;
     private String password;
+
     @Lob
     private Blob image;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     protected User() {
     }
 
-    public User(String name, String surname, String telephone, String email, Blob image, String password) {
+    public User(String name, String surname, String telephone, String email, Blob image, String password, String... roles) {
 
         this.name = name;
         this.surname = surname;
@@ -91,6 +98,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
 }

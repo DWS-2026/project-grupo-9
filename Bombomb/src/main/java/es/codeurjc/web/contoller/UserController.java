@@ -1,18 +1,67 @@
 package es.codeurjc.web.contoller;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import es.codeurjc.web.model.User;
+import es.codeurjc.web.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 
 @Controller
 public class UserController {
-    @GetMapping("/profile")
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	/**@PostConstruct
+	public void init() throws Exception {
+		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
+		byte[] bytes = resource.getInputStream().readAllBytes();
+		Blob blob = new SerialBlob(bytes);
+		userRepository.save(new User("María de la O", "Sánchez Sánchez",
+				"600808080", "mariasanchezsanchez@hotmail.com", blob, "aaa"));
+	}**/
+
+	@PostConstruct
+	private void initDatabase() throws IOException, SerialException, SQLException {
+		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
+		byte[] bytes = resource.getInputStream().readAllBytes();
+		Blob blob = new SerialBlob(bytes);
+		userRepository.save(new User("María de la O", "Sánchez Sánchez",
+				"600808080", "mariasanchezsanchez@hotmail.com", blob, 
+				passwordEncoder.encode("pass"), "USER"));
+
+		resource = new ClassPathResource("static/images/chocolate_pink.jpeg");
+		bytes = resource.getInputStream().readAllBytes();
+		blob = new SerialBlob(bytes);
+		userRepository.save(new User("Administrador", "Adminis Trado",
+				"666 666 666", "adminstrador@gmail.com", blob, 
+				passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
+	}
+
+	@GetMapping("/profile")
 	public String profile(Model model) {
 		model.addAttribute("name", "María de la O ");
 		model.addAttribute("surname", "Sánchez Sánchez");
 		model.addAttribute("telephone", "+34 600 808080");
 		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
-		model.addAttribute("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
+		model.addAttribute("image",
+				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
 		model.addAttribute("date", "24/06/2026");
 		model.addAttribute("numberProducts", "2");
 		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
@@ -23,26 +72,23 @@ public class UserController {
 		return "profilePage";
 	}
 
-    @GetMapping("/login")
+	@GetMapping("/login")
 	public String logIn(Model model) {
 		return "logInPage";
 	}
 
-    @GetMapping("/signin")
+	@GetMapping("/signin")
 	public String signIn(Model model) {
 		return "signInPage";
 	}
 
-    @GetMapping("/editprofile")
-	public String editProfile(Model model) {
-		model.addAttribute("name", "María de la O");
-		model.addAttribute("surname", "Sánchez Sánchez");
-		model.addAttribute("telephone", "600808080");
-		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
-		model.addAttribute("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
+	@GetMapping("/editprofile/{id}")
+	public String editProfile(Model model, @PathVariable long id) {
+		User user = userRepository.getById(id);
+		model.addAttribute(user);
 		return "editProfile";
 	}
-	
+
 	@GetMapping("/payment")
 	public String payment(Model model) {
 		return "payment";
@@ -53,9 +99,8 @@ public class UserController {
 		model.addAttribute("name", "María de la O Sánchez Sánchez");
 		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
 		model.addAttribute("telephone", "+34 600808080");
-		model.addAttribute("image", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
+		model.addAttribute("image",
+				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
 		return "userList";
 	}
 }
-
-

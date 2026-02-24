@@ -30,7 +30,7 @@ public class UserController {
 
 	
 
-	@PostConstruct
+	/**@PostConstruct
 	private void initDatabase() throws IOException, SerialException, SQLException {
 		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
 		byte[] bytes = resource.getInputStream().readAllBytes();
@@ -45,7 +45,7 @@ public class UserController {
 		userRepository.save(new User("Administrador", "Adminis Trado",
 				"666 666 666", "administrador@gmail.com", blob, 
 				passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-	}
+	}**/
 
 	@GetMapping("/profile")
 	public String profile(Model model) {

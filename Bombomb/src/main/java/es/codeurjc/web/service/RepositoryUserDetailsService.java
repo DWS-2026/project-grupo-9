@@ -1,4 +1,4 @@
-package es.codeurjc.web.service;package es.codeurjc.security;
+package es.codeurjc.web.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.UserRepository;
 
-public class RepositoryUserDetailsService implements UserDetailsService {
-//el identificador principal de un usuario va a ser el email
 @Service
 public class RepositoryUserDetailsService implements UserDetailsService {
 
@@ -22,20 +21,18 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Override
-	public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new EmailNotFoundException("User (" + email + ") not found"));
+		User user = userRepository.findByEmail(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 		List<GrantedAuthority> roles = new ArrayList<>();
 		for (String role : user.getRoles()) {
 			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), 
+		return new org.springframework.security.core.userdetails.User(user.getName(), 
 				user.getPassword(), roles);
 
 	}
-}
-
 }

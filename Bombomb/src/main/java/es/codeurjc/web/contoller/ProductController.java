@@ -23,6 +23,7 @@ import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Product;
 import es.codeurjc.web.repository.ProductRepository;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.OrderService;
 
 import org.springframework.core.io.Resource;
 
@@ -33,6 +34,8 @@ public class ProductController {
 	ProductRepository products;
 	@Autowired
 	ChocolateService chocolateService;
+	@Autowired
+	OrderService orderService;
 
 	@GetMapping("/products")
 	public String products(Model model) {
@@ -127,4 +130,12 @@ public class ProductController {
 		chocolateService.deleteById(id);
 		return "redirect:/products";
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+	@PostMapping("/product/{id}/add-to-cart")
+    public String addToCart(@PathVariable long id) {
+        Product product = products.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        orderService.addProductToCart(product);
+        return "redirect:/cart";
+    }
 }

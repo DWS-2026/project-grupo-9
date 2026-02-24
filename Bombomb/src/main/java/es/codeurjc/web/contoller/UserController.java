@@ -28,14 +28,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	/**@PostConstruct
-	public void init() throws Exception {
-		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
-		userRepository.save(new User("María de la O", "Sánchez Sánchez",
-				"600808080", "mariasanchezsanchez@hotmail.com", blob, "aaa"));
-	}**/
+	
 
 	@PostConstruct
 	private void initDatabase() throws IOException, SerialException, SQLException {
@@ -50,7 +43,7 @@ public class UserController {
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Administrador", "Adminis Trado",
-				"666 666 666", "adminstrador@gmail.com", blob, 
+				"666 666 666", "administrador@gmail.com", blob, 
 				passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
 	}
 

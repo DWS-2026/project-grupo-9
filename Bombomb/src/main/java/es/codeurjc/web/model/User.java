@@ -3,6 +3,8 @@ package es.codeurjc.web.model;
 import java.sql.Blob;
 import java.util.List;
 
+import org.springframework.stereotype.Indexed;
+
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,24 +20,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String name;
     private String surname;
     private String telephone;
     private String email;
-    private String password;
-
+    private String password; 
     @Lob
     private Blob image;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch=FetchType.EAGER)
     private List<String> roles;
 
     protected User() {
     }
 
-    public User(String name, String surname, String telephone, String email, Blob image, String password, String... roles) {
+    public User(String name, String surname, String telephone, String email, Blob image, String password,String... roles) {
 
         this.name = name;
         this.surname = surname;
@@ -43,6 +44,7 @@ public class User {
         this.email = email;
         this.image = image;
         this.password = password;
+        this.roles = List.of(roles);
     }
 
     @Override
@@ -99,11 +101,9 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
     public List<String> getRoles() {
         return roles;
     }
-
     public void setRoles(List<String> roles) {
         this.roles = roles;
     }

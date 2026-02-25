@@ -3,21 +3,28 @@ package es.codeurjc.web.contoller;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -30,7 +37,7 @@ public class UserController {
 
 	
 
-	@PostConstruct
+	/**@PostConstruct
 	private void initDatabase() throws IOException, SerialException, SQLException {
 		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
 		byte[] bytes = resource.getInputStream().readAllBytes();
@@ -45,16 +52,19 @@ public class UserController {
 		userRepository.save(new User("Administrador", "Adminis Trado",
 				"666 666 666", "administrador@gmail.com", blob, 
 				passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-	}
+	}**/
 
 	@GetMapping("/profile")
-	public String profile(Model model) {
-		model.addAttribute("name", "María de la O ");
+	public String profile(Model model, HttpServletRequest request) {
+		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		model.addAttribute("user",actualUser);
+		/**model.addAttribute("name", "María de la O ");
 		model.addAttribute("surname", "Sánchez Sánchez");
 		model.addAttribute("telephone", "+34 600 808080");
 		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
 		model.addAttribute("image",
 				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
+				**/
 		model.addAttribute("date", "24/06/2026");
 		model.addAttribute("numberProducts", "2");
 		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
@@ -63,6 +73,19 @@ public class UserController {
 		model.addAttribute("productPrize", "0.60");
 		model.addAttribute("productAmount", "1");
 		return "profilePage";
+	}
+
+	@GetMapping("/profile/{id}/image")
+	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
+		Optional<User> op = userRepository.findById(id);
+		if (op.isPresent() && op.get().getImage() != null) {
+			Blob image = op.get().getImage();
+			InputStreamResource imageFile = new InputStreamResource(image.getBinaryStream());
+			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
+			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/login")

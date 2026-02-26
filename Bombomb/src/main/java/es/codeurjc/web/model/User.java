@@ -26,32 +26,32 @@ public class User {
     private String surname;
     private String telephone;
     private String email;
-    private String password; 
+    private String encodedPassword; 
     @Lob
     private Blob image;
 
     @ElementCollection(fetch=FetchType.EAGER)
     private List<String> roles;
 
-    protected User() {
+    public User() {
     }
 
-    public User(String name, String surname, String telephone, String email, Blob image, String password,String... roles) {
+    public User(String name, String surname, String telephone, String email, Blob image, String encodedPassword,String... roles) {
 
         this.name = name;
         this.surname = surname;
         this.telephone = telephone;
         this.email = email;
         this.image = image;
-        this.password = password;
+        this.encodedPassword = encodedPassword;
         this.roles = List.of(roles);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "User[id=%d, name='%s', surname='%s', telephone='%s', email='%s', password='%s']",
-                id, name, surname, telephone, email, password);
+                "User[id=%d, name='%s', surname='%s', telephone='%s', email='%s', encodedPassword='%s']",
+                id, name, surname, telephone, email, encodedPassword);
     }
 
     public String getName() {
@@ -94,12 +94,12 @@ public class User {
         this.image = image;
     }
 
-    public String getPassword() {/* no se hasta que punto esta funcion es buena idea */
-        return password;
+    public String getEncodedPassword() {
+        return encodedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
     }
     public List<String> getRoles() {
         return roles;

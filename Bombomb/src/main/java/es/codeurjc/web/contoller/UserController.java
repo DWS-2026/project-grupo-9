@@ -30,6 +30,8 @@ import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.RepositoryUserDetailsService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class UserController {
@@ -127,7 +129,7 @@ public class UserController {
 
 	
 	@PostMapping("/signin")
-	public String newChocolate(Model model, User user, String password, MultipartFile imageFile) throws IOException {
+	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		user.setEncodedPassword(passwordEncoder.encode(password));
  		if (!imageFile.isEmpty()) {
 			try {
@@ -138,6 +140,14 @@ public class UserController {
 		}
 		userRepository.save(user);
 		return "redirect:/profile";
+	}
+	
+	@PostMapping("/delete/profile")
+	public String deleteUser(Model model, HttpServletRequest request) {
+		//TODO: process POST request
+		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		userRepository.delete(actualUser);
+		return "redirect:/login";
 	}
 	
 	

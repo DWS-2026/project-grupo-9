@@ -61,14 +61,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary">Eliminar perfil</button>
-                    </div>
-                    <div class="col-lg-4">
-                        <a href="/editprofile" class="btn btn-primary">Editar perfil</a>
-                    </div>
+                                        
+                    <form action="/delete/profile" method="post">
+                        <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
+                    </form>
+                    <form action="/editprofile" method="post">
+                        <input type="submit" value="Editar perfil" class="btn btn-primary" />
+                    </form>
+                                        
                     <form action="/logout" method="post">
-                        <input type="submit" value="Sign Out" />
+                        <input type="submit" class="btn btn-primary" value="Sign Out" />
                     </form>
 
                     <div class="col-lg-12 mt-5">

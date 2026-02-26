@@ -59,6 +59,7 @@ public class ProductController {
 	@GetMapping("/products")
 	public String products(Model model) {
 		model.addAttribute("chocolates", chocolateService.findAll());
+		model.addAttribute("products", products.findAll());
 		return "productsPage";
 	}
 

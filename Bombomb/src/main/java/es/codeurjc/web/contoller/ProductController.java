@@ -8,7 +8,10 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -48,11 +51,19 @@ public class ProductController {
     }
 
 	@PostConstruct
-    public void init() throws SerialException, SQLException {
+    public void init() throws SerialException, SQLException, IOException {
+		ClassPathResource resource = new ClassPathResource("static/images/box_heart2.png");
+		byte[] bytes = resource.getInputStream().readAllBytes();
+		Blob blob = new SerialBlob(bytes);
 		products.save(new Product("Caja 1", "19.50€", "Caja con 12 bombones violeta", 
-			new SerialBlob(new byte[0]), "Caja", true));
+			blob, "Caja", true));
+
+
+		ClassPathResource resource2 = new ClassPathResource("static/images/box_red2.png");
+		byte[] bytes2 = resource2.getInputStream().readAllBytes();
+		Blob blob2 = new SerialBlob(bytes2);
 		products.save(new Product("Caja 2", "18.50€", "Caja con 12 bombones limón", 
-			new SerialBlob(new byte[0]), "Caja", true));
+			blob2, "Caja", true));
 
     }
 
@@ -127,7 +138,7 @@ public class ProductController {
 
 	@GetMapping("/product/{id}/details")
 	public String productDetails(Model model, @PathVariable long id) {
-		Product product = products.getById(id);
+		Product product = products.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		model.addAttribute("product", product);
 		return "productDetailsPage";
 	}

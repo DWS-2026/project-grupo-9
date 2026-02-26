@@ -10,10 +10,11 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="card shadow-sm rounded-4 p-0 overflow-hidden">
                     <div class="row g-0 align-items-center">
-                        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image}}"
-                                alt="..." />
-                            <img src="/product/{{product.id}}/image"></img></div>
-                        <div class="col-md-6 p-5">
+                        
+                        <div class="col-md-6">
+                            <img class="card-img-top mb-5 mb-md-0" src="/product/{{product.id}}/image" alt="Producto: {{product.name}}" />
+                        </div>
+                        <div class=" col-md-6 p-5">
                             <h1 class="display-5 fw-bolder">{{product.name}}</h1>
                             <div class="fs-5 mb-5">
                                 <span>{{product.price}}/1ud</span>
@@ -27,9 +28,6 @@
                                     Añadir al carrito
                                 </button>
                             </div>
-                            <div class="small text-muted mt-2">
-                                Quedan {{product.stock}} unidades.
-                            </div>
                             <div class="container px-4 px-lg-5 my-5">
                                 <div class="text-center">
                                     <a href="/editproduct" class="btn btn-primary btn-outline-dark btn-sm">
@@ -38,6 +36,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

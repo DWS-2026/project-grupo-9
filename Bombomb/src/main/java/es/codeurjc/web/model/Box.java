@@ -16,20 +16,29 @@ public class Box extends Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private int size=9;
-    String name;
+    private String name;
+    private String price;
+    private String description;
+    private String type;
+    private Boolean madeByAdmin;
+    @ManyToMany
+    private List<Chocolate> chocolates;
 
     @Lob
     Blob image;
     
-    @ManyToMany
-    private List<Chocolate> chocolates;
+    
 
-    public Box(String name, String price, String description, Blob image, String type, Boolean madeByAdmin){
-        super(name, price, description, image, "Box", madeByAdmin);
+    public Box(String name, String price, String description, Blob image, String type, Boolean madeByAdmin, List<Chocolate> chocolates) {
+        this.name=name;
+        this.price= price;
+        this.description= description;
+        this.image= image;
+        this.type= "Box";
+        this.madeByAdmin= madeByAdmin;
+        this.chocolates = chocolates;
     }
-
-    
-    
+   
     public void setName(String name){
         this.name=name;
     }

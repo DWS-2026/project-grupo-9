@@ -37,6 +37,10 @@ public class Order {
         this.isOpen = isOpen;
     }
 
+    public Order(boolean isOpen) {
+        this.isOpen = isOpen;   
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +19,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @ManyToOne
+    private User user;
 
     @ManyToMany
     private List<Product> products;

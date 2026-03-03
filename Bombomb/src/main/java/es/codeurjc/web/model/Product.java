@@ -7,12 +7,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @ManyToMany
+    private List<Order> orders;
 
     private String name;
     private String price;
@@ -88,6 +93,14 @@ public class Product {
 
     public void setMadeByAdmin(boolean madeByAdmin) {
         this.madeByAdmin = madeByAdmin;
+    }
+
+        public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }

@@ -2,6 +2,7 @@ package es.codeurjc.web.model;
 
 import java.sql.Blob;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Indexed;
 
@@ -12,7 +13,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "USERS")
@@ -33,6 +36,9 @@ public class User {
     @ElementCollection(fetch=FetchType.EAGER)
     private List<String> roles;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
+
     public User() {
     }
 
@@ -45,6 +51,7 @@ public class User {
         this.image = image;
         this.encodedPassword = encodedPassword;
         this.roles = List.of(roles);
+        orders.add(new Order(false));
     }
 
     @Override
@@ -106,6 +113,14 @@ public class User {
     }
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }

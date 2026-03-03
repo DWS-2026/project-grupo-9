@@ -4,7 +4,8 @@
 <body class="d-flex flex-column min-vh-100">
     <main class="flex-grow-1">
         {{>navigationBar}}
-
+        {{#order}}
+        {{#products}}
         <div class="cart">
             <div class="row">
                 <div class="first-block">
@@ -16,16 +17,16 @@
                         <div class="first-product">
                             <div class="info-product-group">
                                 <div class="button-image-product">
-                                    <img class="image-product" src={{image}}>
+                                    <img class="image-product" src="/product/{{id}}/image">
                                 </div>
                                 <div class="col">
-                                    <div class="type-product">Bombón</div>
-                                    <div class="name-product">Mármol de frambuesa</div>
+                                    <div class="type-product">Caja</div>
+                                    <div class="name-product">{{name}}</div>
                                 </div>
                             </div>
                             <div class="right-control">
                                 <div class="col-price">
-                                    <div class="price">0.60&euro;</div>
+                                    <div class="price">{{price}}€</div>
                                 </div>
                                 <div class="modify-amount">
                                     <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
@@ -37,26 +38,6 @@
                                     onclick="document.querySelector('.products').scrollBy(0, -100)">▲</button>
                                 <button class="btn-scroll-cart"
                                     onclick="document.querySelector('.products').scrollBy(0, 100)">▼</button>
-                            </div>
-                        </div>
-                        <div class="first-product">
-                            <div class="info-product-group">
-                                <div class="button-image-product">
-                                    <img class="image-product" src={{image2}}>
-                                </div>
-                                <div class="col">
-                                    <div class="type-product">Bombón</div>
-                                    <div class="name-product">Delicia de Cítrico</div>
-                                </div>
-                            </div>
-                            <div class="right-control">
-                                <div class="col-price">
-                                    <div class="price">0.60&euro;</div>
-                                </div>
-                                <div class="modify-amount">
-                                    <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                                </div>
-
                             </div>
                         </div>
 
@@ -73,14 +54,16 @@
                             <div class="col text-right">1.20&euro;</div>
                         </div>
                         <div class="container px-4 px-lg-5">
-                            <a href="/payment" class="btn btn-pay" ><span>Proceder con el pago</span></a>
+                            <a href="/payment" class="btn btn-pay"><span>Proceder con el pago</span></a>
 
-                        </div> 
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
+        {{/products}}
+        {{/order}}
     </main>
     {{>footer}}
 

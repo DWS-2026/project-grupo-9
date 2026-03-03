@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,6 +34,9 @@ public class User {
     @ElementCollection(fetch=FetchType.EAGER)
     private List<String> roles;
 
+    @OneToMany
+    private List<Order> orders;
+
     public User() {
     }
 
@@ -45,6 +49,7 @@ public class User {
         this.image = image;
         this.encodedPassword = encodedPassword;
         this.roles = List.of(roles);
+        orders.add(new Order(False));
     }
 
     @Override
@@ -106,6 +111,14 @@ public class User {
     }
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }

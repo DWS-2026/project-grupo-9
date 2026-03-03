@@ -162,7 +162,7 @@ public class UserController {
 		//TODO: process POST request
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		userRepository.delete(actualUser);
-		return "redirect:/login";
+		return "redirect:/logout";
 	}
 	@PostMapping("/signin")
 	public String newChocolate(Model model, User user, String password, MultipartFile imageFile) throws IOException {

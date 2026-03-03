@@ -168,6 +168,6 @@ public class ProductController {
     public String addToCart(@PathVariable long id) {
         Product product = products.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addProductToCart(product);
-        return "redirect:/cart";
+        return "redirect:/product/" + id + "/details";
     }
 }

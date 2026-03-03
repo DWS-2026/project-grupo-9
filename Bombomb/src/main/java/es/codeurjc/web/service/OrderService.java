@@ -40,7 +40,7 @@ public class OrderService {
     }
 
     public Order getActiveCart() {
-        return orderRepository.findAll().stream().filter(order -> !order.getisOpen()).findFirst()
+        return orderRepository.findAll().stream().filter(order -> order.getisOpen()).findFirst()
                 .orElse(createNewCart());
     }
 

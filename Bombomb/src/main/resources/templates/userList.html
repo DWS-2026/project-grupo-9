@@ -5,11 +5,11 @@
     <main class="flex-grow-1">
         {{>navigationBar}}
         <div class="container mt-5">
-
+            {{#users}}
             <!-- User 1 -->
             <div class="user-card">
                 <div class="user-info">
-                    <img src= {{image}}
+                    <img src="/profile/{{id}}/image"
                         alt="foto" class="user-photo">
                     <div>
                         <p class="user-name">{{name}}</p>
@@ -17,10 +17,10 @@
                         <p class="user-mail">{{email}}</p>
                     </div>
                 </div>
-                <a href="/profile" class="btn btn-outline-dark btn-sm">Ir al perfil</a>
+                <a href="/userList/{{id}}" class="btn btn-outline-dark btn-sm">Ir al perfil</a>
                 
             </div>
-
+            {{/users}}
 
 
         </div>

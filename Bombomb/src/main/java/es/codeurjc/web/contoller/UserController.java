@@ -47,34 +47,11 @@ public class UserController {
 	@Autowired
     private OrderService orderService;
 
-	/**@PostConstruct
-	private void initDatabase() throws IOException, SerialException, SQLException {
-		ClassPathResource resource = new ClassPathResource("static/images/chocolate_flower.jpeg");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
-		userRepository.save(new User("María de la O", "Sánchez Sánchez",
-				"600808080", "mariasanchezsanchez@hotmail.com", blob, 
-				passwordEncoder.encode("pass"), "USER"));
-
-		resource = new ClassPathResource("static/images/chocolate_pink.jpeg");
-		bytes = resource.getInputStream().readAllBytes();
-		blob = new SerialBlob(bytes);
-		userRepository.save(new User("Administrador", "Adminis Trado",
-				"666 666 666", "administrador@gmail.com", blob, 
-				passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
-	}**/
-
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		model.addAttribute("user",actualUser);
-		/**model.addAttribute("name", "María de la O ");
-		model.addAttribute("surname", "Sánchez Sánchez");
-		model.addAttribute("telephone", "+34 600 808080");
-		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
-		model.addAttribute("image",
-				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
-				**/
+		
 		model.addAttribute("date", "24/06/2026");
 		model.addAttribute("numberProducts", "2");
 		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
@@ -140,26 +117,9 @@ public class UserController {
 		model.addAttribute("productAmount", "1");
 		return "profilePage";
 	}
-
-/* 	
-	@PostMapping("/signin")
-	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
-		user.setEncodedPassword(passwordEncoder.encode(password));
- 		if (!imageFile.isEmpty()) {
-			try {
-				user.setImage(new SerialBlob(imageFile.getBytes()));
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}
-		
-		userRepository.save(user);
-		return "redirect:/profile";
-	}*/
 	
 	@PostMapping("/delete/profile")
 	public String deleteUser(Model model, HttpServletRequest request) {
-		//TODO: process POST request
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		userRepository.delete(actualUser);
 		return "redirect:/logout";

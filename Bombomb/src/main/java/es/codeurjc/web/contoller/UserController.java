@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.User;
+import es.codeurjc.web.repository.OrderRepository;
 import es.codeurjc.web.repository.UserRepository;
+import es.codeurjc.web.service.OrderService;
 import es.codeurjc.web.service.RepositoryUserDetailsService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +44,8 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
+	@Autowired
+    private OrderService orderService;
 
 	/**@PostConstruct
 	private void initDatabase() throws IOException, SerialException, SQLException {
@@ -97,6 +100,7 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String logIn(Model model) {
+		
 		return "logInPage";
 	}
 
@@ -107,7 +111,7 @@ public class UserController {
 
 	@GetMapping("/editprofile/{id}")
 	public String editProfile(Model model, @PathVariable long id) {
-		User user = userRepository.getById(id);
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 		model.addAttribute(user);
 		return "editProfile";
 	}
@@ -119,15 +123,25 @@ public class UserController {
 
 	@GetMapping("/userList")
 	public String userList(Model model) {
-		model.addAttribute("name", "María de la O Sánchez Sánchez");
-		model.addAttribute("email", "mariasanchezsanchez@hotmail.com");
-		model.addAttribute("telephone", "+34 600808080");
-		model.addAttribute("image",
-				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErNULijVAz9MIn0j-zc0bkiiSmoFrXnIATg&s");
+		List<User> users = userRepository.findAll();
+		model.addAttribute("users", users);
 		return "userList";
 	}
+	@GetMapping("/userList/{id}")
+	public String viewUser(Model model, @PathVariable long id) {
+		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+		model.addAttribute("user", user);
+		model.addAttribute("date", "24/06/2026");
+		model.addAttribute("numberProducts", "2");
+		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
+		model.addAttribute("productType", "Bombón");
+		model.addAttribute("productName", "Mármol de frambuesa");
+		model.addAttribute("productPrize", "0.60");
+		model.addAttribute("productAmount", "1");
+		return "profilePage";
+	}
 
-	
+/* 	
 	@PostMapping("/signin")
 	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		user.setEncodedPassword(passwordEncoder.encode(password));
@@ -138,9 +152,10 @@ public class UserController {
 				throw new IOException("Failed to create image blob", e);
 			}
 		}
+		
 		userRepository.save(user);
 		return "redirect:/profile";
-	}
+	}*/
 	
 	@PostMapping("/delete/profile")
 	public String deleteUser(Model model, HttpServletRequest request) {
@@ -148,6 +163,19 @@ public class UserController {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		userRepository.delete(actualUser);
 		return "redirect:/login";
+	}
+	@PostMapping("/signin")
+	public String newChocolate(Model model, User user, String password, MultipartFile imageFile) throws IOException {
+		user.setEncodedPassword(passwordEncoder.encode(password));
+ 		if (!imageFile.isEmpty()) {
+			try {
+				user.setImage(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}
+		userRepository.save(user);
+		return "redirect:/profile";
 	}
 	
 	

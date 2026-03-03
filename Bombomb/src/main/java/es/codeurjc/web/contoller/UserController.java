@@ -1,10 +1,15 @@
 package es.codeurjc.web.contoller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -19,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +37,7 @@ import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.OrderService;
 import es.codeurjc.web.service.RepositoryUserDetailsService;
 import jakarta.annotation.PostConstruct;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -109,12 +116,56 @@ public class UserController {
 		return "signInPage";
 	}
 
-	@GetMapping("/editprofile/{id}")
+	@GetMapping("/editprofile")
 	public String editProfile(Model model, @PathVariable long id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-		model.addAttribute(user);
+		model.addAttribute("user",user);
 		return "editProfile";
 	}
+	/* 
+	@PostMapping("/editprofile")
+	public String editProfile(Model model, HttpServletRequest request){
+		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		model.addAttribute("user",actualUser);
+		model.addAttribute("name", actualUser.getName());
+		model.addAttribute("surname", actualUser.getSurname());
+		model.addAttribute("image", actualUser.getImage());
+		return "editProfile";	
+	}
+*/
+@PostMapping("/editprofile")
+	public String editProfile(Model model, HttpServletRequest request,@RequestParam(required = false) String name,@RequestParam(required = false) String telephone,@RequestParam(required = false) String surname, @RequestParam(required = false) String email, @RequestParam(required = false) MultipartFile imageFile) throws IOException {
+		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		if(name!=null) {
+			actualUser.setName(name);
+		}
+		if(telephone!=null) {
+			actualUser.setTelephone(telephone);
+		}
+		if(surname!=null) {
+			actualUser.setSurname(surname);
+		}
+		if(email!=null) {
+			actualUser.setEmail(email);
+		}
+		if(imageFile!=null && !imageFile.isEmpty()) {
+			try {
+				actualUser.setImage(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}
+		userRepository.save(actualUser);
+		model.addAttribute("user",actualUser);
+		model.addAttribute("name", actualUser.getName());
+	    model.addAttribute("telephone", actualUser.getTelephone());
+		model.addAttribute("surname", actualUser.getSurname());
+		model.addAttribute("email", actualUser.getEmail());
+		model.addAttribute("image", actualUser.getImage());
+
+		return "editprofile";	
+	}
+	
 
 	@GetMapping("/payment")
 	public String payment(Model model) {

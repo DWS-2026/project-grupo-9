@@ -7,39 +7,42 @@
         <div class="d-flex justify-content-center mt-5 mx-5">
             <div class="card mb-4 px-lg-4 py-5">
                 <h1>Editar perfil</h1>
-                <form class="row g-3">
+                <form class="row g-3" method="post" action="/editprofile" enctype="multipart/form-data">
                     {{#user}}
                     <div class="col-md-4">
                         <label for="name" class="form-label">Nombre</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="{{name}}" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" name="name" value="{{name}}" style="max-width: 20rem" />
                     </div>
                     <div class="col-md-8">
                         <label for="surname" class="form-label">Apellidos</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="{{surname}}" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" name="surname" value="{{surname}}" style="max-width: 20rem" />
                     </div>
                     <div class="col-md-4">
                         <label for="telephone" class="form-label">Teléfono</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="{{telephone}}" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" name="telephone" value="{{telephone}}" style="max-width: 20rem" />
                     </div>
                     <div class="col-md-8">
                         <label for="email" class="form-label">Correo electrónico</label>
-                        <input class="form-control text-center me-3" id="input" type="text" value="{{email}}" style="max-width: 20rem" />
+                        <input class="form-control text-center me-3" id="input" type="text" name="email" value="{{email}}" style="max-width: 20rem" />
                     </div>
                     <div class="col-md-4 mt-4">
-                        <form>
+                        <!--<form>-->
                             <div class="form-group">
                                 <label for="profilePicture">Foto de perfil</label>
                                  <div class="card-body text-center">
                                 <img src="{{image}}"
                                     alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                             </div>
-                                <input type="file" class="form-control-file" id="profilePicture">
+                                <input type="file" class="form-control-file" name="imageFile" id="profilePicture">
                             </div>
-                        </form>
+                        <!--</form>-->
                     </div>
                     {{/user}}
-                    <div class="col-12 mt-4">
-                        <a href="/profile" class="btn btn-primary">Editar perfil</a>
+                   <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar cambios
+                    </button>
+                        <a href="/profile"  class="btn btn-primary">Perfil</a>
                     </div>
                 </form>
             </div>

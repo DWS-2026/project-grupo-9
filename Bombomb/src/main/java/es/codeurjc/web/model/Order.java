@@ -25,24 +25,24 @@ public class Order {
     private LocalDate date;
     private float price;
     private int amount;
-    private boolean status;
+    private boolean isOpen;
 
     protected Order() {
     }
 
-    public Order(LocalDate date, float price, int amount, boolean status) {
+    public Order(LocalDate date, float price, int amount, boolean isOpen) {
         this.date = date;
         this.price = price;
         this.amount = amount;
-        this.status = status;
+        this.isOpen = isOpen;
     }
 
     @Override
     public String toString() {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return String.format(
-                "Order[id=%d, date='%s', price='.2%f', amount='%d', status='%b']",
-                id, date.format(dateFormat), price, amount, status);
+                "Order[id=%d, date='%s', price='.2%f', amount='%d', isOpen='%b']",
+                id, date.format(dateFormat), price, amount, isOpen);
     }
 
     public LocalDate getDate() {
@@ -61,12 +61,12 @@ public class Order {
         this.price = price;
     }
 
-    public boolean getStatus() {
-        return status;
+    public boolean getisOpen() {
+        return isOpen;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setisOpen(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 
     public List<Product> getProducts() {

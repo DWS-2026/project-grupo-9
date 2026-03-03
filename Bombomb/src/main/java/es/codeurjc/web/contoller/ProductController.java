@@ -138,9 +138,14 @@ public class ProductController {
 
 	@GetMapping("/product/{id}/details")
 	public String productDetails(Model model, @PathVariable long id) {
-		Product product = products.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		model.addAttribute("product", product);
-		return "productDetailsPage";
+		Optional <Product> product = products.findById(id);
+		if(product.isPresent()){
+			model.addAttribute("product", product);
+			return "productDetailsPage";
+		}else{
+			model.addAttribute("message", "Producto no encontrado");
+			return "error";
+		}
 	}
 
 	@GetMapping("/customBox")

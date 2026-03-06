@@ -11,34 +11,34 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Id;
 
 @Entity
-public class Box extends Product {
+public class Box {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private int size=9;
     private String name;
     private String price;
-    private String description;
-    private String type;
+    //private String description;
     private Boolean madeByAdmin;
     @ManyToMany
     private List<Chocolate> chocolates;
-
     @Lob
     Blob image;
     
     
+    
 
-    public Box(String name, String price, String description, Blob image, String type, Boolean madeByAdmin, List<Chocolate> chocolates) {
+    public Box(String name, String price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) { //String type quitado
         this.name=name;
         this.price= price;
-        this.description= description;
+        //this.description= description; //puede que no haga falta
         this.image= image;
-        this.type= "Box";
         this.madeByAdmin= madeByAdmin;
         this.chocolates = chocolates;
     }
-   
+
+    
+    
     public void setName(String name){
         this.name=name;
     }

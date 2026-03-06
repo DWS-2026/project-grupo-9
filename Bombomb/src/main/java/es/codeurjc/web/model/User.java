@@ -36,7 +36,7 @@ public class User {
     @ElementCollection(fetch=FetchType.EAGER)
     private List<String> roles;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
     public User() {
@@ -51,7 +51,13 @@ public class User {
         this.image = image;
         this.encodedPassword = encodedPassword;
         this.roles = List.of(roles);
-        orders.add(new Order(false));
+        Order order = new Order(true);
+        addOrder(order);
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
+        order.setUser(this);
     }
 
     @Override

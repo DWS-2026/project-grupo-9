@@ -42,7 +42,8 @@ public class Order {
     }
 
     public Order(boolean isOpen) {
-        this.isOpen = isOpen;   
+        this.isOpen = isOpen; 
+        this.date = LocalDate.now();  
     }
 
     @Override

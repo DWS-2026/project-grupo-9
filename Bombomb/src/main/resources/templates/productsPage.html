@@ -106,10 +106,10 @@
                                     <!-- Product actions-->
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                         <div class="text-center">
-                                            <a href="/product/{{id}}/details"
-                                                class="btn btn-outline-danger mt-auto">
-                                                Detalles
-                                            </a>
+                                            <form action="/product/{{id}}/add-to-cart" method="post">
+            <input type="submit" value="Añadir al carrito"
+                   class="btn btn-outline-dark flex-shrink-0" />
+        </form>
                                         </div>
                                     </div>
                                 </div>

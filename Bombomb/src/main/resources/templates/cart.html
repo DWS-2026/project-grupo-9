@@ -5,7 +5,7 @@
     <main class="flex-grow-1">
         {{>navigationBar}}
         {{#order}}
-        {{#products}}
+
         <div class="cart">
             <div class="row">
                 <div class="first-block">
@@ -14,6 +14,7 @@
                         <p>2 productos</p>
                     </div>
                     <div class="products">
+                        {{#products}}
                         <div class="first-product">
                             <div class="info-product-group">
                                 <div class="button-image-product">
@@ -26,21 +27,12 @@
                             </div>
                             <div class="right-control">
                                 <div class="col-price">
-                                    <div class="price">{{price}}€</div>
-                                </div>
-                                <div class="modify-amount">
-                                    <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+                                    <div class="price">{{price}}</div>
                                 </div>
 
-                            </div>
-                            <div class="arrow-scroll-cart">
-                                <button class="btn-scroll-cart"
-                                    onclick="document.querySelector('.products').scrollBy(0, -100)">▲</button>
-                                <button class="btn-scroll-cart"
-                                    onclick="document.querySelector('.products').scrollBy(0, 100)">▼</button>
                             </div>
                         </div>
-
+                        {{/products}}
                     </div>
                 </div>
                 <div class="second-block">
@@ -62,7 +54,7 @@
 
             </div>
         </div>
-        {{/products}}
+
         {{/order}}
     </main>
     {{>footer}}

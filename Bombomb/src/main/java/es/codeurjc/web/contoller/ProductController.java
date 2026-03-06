@@ -158,7 +158,7 @@ public class ProductController {
 		
 
 		Order order =orderService.getActiveCart();
-		model.addAttribute("cart", order);
+		model.addAttribute("order", order);
 		return "cart";
 	}
 
@@ -173,6 +173,6 @@ public class ProductController {
     public String addToCart(@PathVariable long id) {
         Product product = products.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addProductToCart(product);
-        return "redirect:/product/" + id + "/details";
+        return "redirect:/products";
     }
 }

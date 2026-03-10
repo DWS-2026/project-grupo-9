@@ -24,7 +24,7 @@ public class Order {
     private User user;
 
     @ManyToMany
-    private List<Product> products;
+    private List<Box> boxes;
 
     private LocalDate date;
     private float price;
@@ -78,12 +78,12 @@ public class Order {
         this.isOpen = isOpen;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Box> getBoxes() {
+        return boxes;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setBoxes(List<Box> products) {
+        this.boxes = products;
     }
 
     public int getAmount() {

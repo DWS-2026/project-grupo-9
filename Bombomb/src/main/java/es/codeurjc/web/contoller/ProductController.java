@@ -37,8 +37,6 @@ import org.springframework.core.io.Resource;
 @Controller
 public class ProductController {
 
-    private final OrderRepository orderRepository;
-
 	@Autowired
 	ProductRepository products;
 	@Autowired
@@ -46,9 +44,6 @@ public class ProductController {
 	@Autowired
 	OrderService orderService;
 
-    ProductController(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
 
 	@PostConstruct
     public void init() throws SerialException, SQLException, IOException {

@@ -25,7 +25,9 @@ public class Box {
     @Lob
     Blob image;
     
-    
+    public Box() {
+        
+    }
     
 
     public Box(String name, String price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {

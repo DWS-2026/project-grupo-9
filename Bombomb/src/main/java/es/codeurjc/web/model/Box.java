@@ -15,11 +15,11 @@ public class Box {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int size=9;
+    private final int size=9;
     private String name;
     private String price;
-    //private String description;
     private Boolean madeByAdmin;
+    private Boolean isOpenBox=false;
     @ManyToMany
     private List<Chocolate> chocolates;
     @Lob
@@ -28,17 +28,39 @@ public class Box {
     
     
 
-    public Box(String name, String price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) { //String type quitado
+    public Box(String name, String price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {
         this.name=name;
         this.price= price;
-        //this.description= description; //puede que no haga falta
         this.image= image;
         this.madeByAdmin= madeByAdmin;
         this.chocolates = chocolates;
     }
 
-    
-    
+      
+    public String getPrice() {
+        return price;
+    }
+    public void setPrice(String price) {
+        this.price = price;
+    }
+    public Boolean getMadeByAdmin() {
+        return madeByAdmin;
+    }
+    public void setMadeByAdmin(Boolean madeByAdmin) {
+        this.madeByAdmin = madeByAdmin;
+    }
+    public Boolean getIsOpenBox() {
+        return isOpenBox;
+    }
+       public void setIsOpenBox(Boolean isOpenBox) {
+        this.isOpenBox = isOpenBox;
+    }
+    public List<Chocolate> getChocolates() {
+        return chocolates;
+    }
+    public void setChocolates(List<Chocolate> chocolates) {
+        this.chocolates = chocolates;
+    }
     public void setName(String name){
         this.name=name;
     }
@@ -51,11 +73,7 @@ public class Box {
     public void setImage(Blob image) {
         this.image = image;
     }
-    public void setChocolateList(List<Chocolate> chocolates){
-        this.chocolates = chocolates;
-    }
-    public List<Chocolate> getChocolateList(){
-        return this.chocolates;
-    }
+    
+
     
 }

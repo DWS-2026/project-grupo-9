@@ -71,11 +71,6 @@ public class BoxController {
 		return "productsPage";
 	}
 
-	@GetMapping("/createproduct")
-	public String createProduct(Model model) {
-		return "createChocolate";
-	}
-
 	@PostMapping("/createproduct")
 	public String newProduct(Model model, Box box, MultipartFile imageFile) throws IOException {
 		if (!imageFile.isEmpty()) {
@@ -88,26 +83,6 @@ public class BoxController {
 		boxes.save(box);
 		model.addAttribute("boxes", boxes.findAll());
 		return "redirect:/products";
-	}
-
-	@PostMapping("/create/chocolate")
-	public String newChocolate(Model model, Chocolate chocolate, MultipartFile imageFile) throws IOException {
-		chocolateService.save(chocolate, imageFile);
-		model.addAttribute("products", chocolateService.findAll());
-		return "redirect:/products";
-	}
-
-	@GetMapping("/chocolate/{id}/image")
-	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
-		Optional<Chocolate> op = chocolateService.findById(id);
-		if (op.isPresent() && op.get().getImage() != null) {
-			Blob image = op.get().getImage();
-			Resource imageFile = new InputStreamResource(image.getBinaryStream());
-			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
 	}
 
 	@GetMapping("/product/{id}/image")
@@ -157,12 +132,6 @@ public class BoxController {
 		 	true).stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No se encontró un carrito activo para el usuario"));
 		model.addAttribute("order", order);
 		return "cart";
-	}
-
-	@PostMapping("/delete/{id}/chocolate")
-	public String deleteChocolate(@PathVariable long id) {
-		chocolateService.deleteById(id);
-		return "redirect:/products";
 	}
 
 	//////////////////////////////////////////////////////////////////////////

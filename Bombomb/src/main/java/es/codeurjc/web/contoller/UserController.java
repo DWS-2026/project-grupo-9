@@ -1,15 +1,10 @@
 package es.codeurjc.web.contoller;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -22,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.OrderService;
-import es.codeurjc.web.service.RepositoryUserDetailsService;
-import jakarta.annotation.PostConstruct;
 
 import jakarta.servlet.http.HttpServletRequest;
 

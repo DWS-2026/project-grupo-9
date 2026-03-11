@@ -22,6 +22,8 @@ public class Box {
     private Boolean madeByAdmin;
     @ManyToMany
     private List<Chocolate> chocolates;
+    //@ManyToMany(mappedBy="orders")
+    //private List<Order> orders;
     @Lob
     Blob image;
     

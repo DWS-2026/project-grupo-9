@@ -1,4 +1,4 @@
-package es.codeurjc.web.repository;
+package es.codeurjc.web;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.User;
+import es.codeurjc.web.repository.ChocolateRepository;
+import es.codeurjc.web.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
 /*FALTA POR HACER EL 

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Order;
-import es.codeurjc.web.model.Product;
+import es.codeurjc.web.model.Box;
 import es.codeurjc.web.repository.OrderRepository;
 import jakarta.annotation.PostConstruct;
 
@@ -44,17 +44,21 @@ public class OrderService {
                 .orElse(createNewCart());
     }
 
+    public List<Order> findByUserEmailAndIsOpen(String Email, Boolean isOpen) {
+        return orderRepository.findByUserEmailAndIsOpen(Email, isOpen);
+    }
+
     private Order createNewCart() {
         Order newCart = new Order(LocalDate.now(), 0.0f, 0, true);
-        newCart.setProducts(new ArrayList<>());
+        newCart.setBoxes(new ArrayList<>());
         return orderRepository.save(newCart);
     }
 
-    public void addProductToCart(Product product) {
+    public void addBoxToCart(Box box) {
         Order cart = getActiveCart();
-        List<Product> products = cart.getProducts();
-        products.add(product);
-        cart.setAmount(products.size());
+        List<Box> boxes = cart.getBoxes();
+        boxes.add(box);
+        cart.setAmount(boxes.size());
         orderRepository.save(cart);
     }
 

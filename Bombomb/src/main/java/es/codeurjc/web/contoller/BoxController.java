@@ -122,6 +122,7 @@ public class BoxController {
 
 	@GetMapping("/customBox")
 	public String customBox(Model model) {
+		model.addAttribute("chocolates", chocolateService.findAll());
 		return "customBox";
 	}
 
@@ -134,7 +135,6 @@ public class BoxController {
 		return "cart";
 	}
 
-	//////////////////////////////////////////////////////////////////////////
 	@PostMapping("/product/{id}/add-to-cart")
     public String addToCart(@PathVariable long id) {
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));

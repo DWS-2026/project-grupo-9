@@ -4,12 +4,10 @@
     {{>navigationBar}}
     <div class="layout-container">
 
-        <div class="choose-box">
-            <button class="btn btn-choose-box">Elige tu caja</button>
-        </div>
+
 
         <div class="box-pic">
-            <img src="./images/box_heart_open2.png" alt="Open box" class="middle-pic">
+            <img src="./images/box_heart_9_spots.png" alt="Open box" class="middle-pic">
         </div>
 
         <div class="middle-btn">
@@ -17,26 +15,22 @@
         </div>
 
         <div class="add-to-cart">
-            <a href="/cart" class="btn buy-btn">Añadir al carro</a>
+            <a href="/cart" class="btn buy-btn">Añadir al carro</a>            
         </div>
 
         <div class="chocolate-bottom-bar">
             <div class="images-grid">
+                {{#chocolates}}
                 <div class="choco-pic">
-                    <img src="./images/chocolate_flower.jpeg" alt="choco 1">
+                    <form action="/add/{{id}}" method ="post">
+                    <input src="/chocolate/{{id}}/image" alt="choco" type="image">
+                    </form>
+                    
+                    <div class="choco-name">{{name}}</div>
                 </div>
-                <div class="choco-pic">
-                    <img src="./images/chocolate_pink.jpeg" alt="choco 2">
-                </div>
+                {{/chocolates}}
             </div>
-
-            <div class="bottom-bar-nav">
-                <button class="btn-nav" id="prev">‹</button>
-                <button class="btn-nav" id="next">›</button>
-            </div>
-        </div>
-        
-        
+        </div>    
     </div>
     {{>footer}}
 

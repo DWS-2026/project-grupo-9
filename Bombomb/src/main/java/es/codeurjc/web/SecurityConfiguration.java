@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/customBox").authenticated()
                     .requestMatchers("/profile").authenticated()
                     .requestMatchers("/userList").authenticated()
+                    .requestMatchers("/cart").authenticated()
 					// PUBLIC PAGES
 					.anyRequest().permitAll()
                 )

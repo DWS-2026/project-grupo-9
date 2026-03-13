@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
-import es.codeurjc.web.repository.OrderRepository;
 import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
@@ -129,16 +128,23 @@ public class BoxController {
 	@GetMapping("/cart")
 	public String cart(Model model, HttpServletRequest request) {
 
-		Order order = orderService.findByUserEmailAndIsOpen(request.getUserPrincipal().getName(),
+		String userEmail = request.getUserPrincipal().getName();
+
+		Order order = orderService.findByUserEmailAndIsOpen(userEmail,
 		 	true).stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No se encontró un carrito activo para el usuario"));
 		model.addAttribute("order", order);
 		return "cart";
 	}
 
 	@PostMapping("/product/{id}/add-to-cart")
-    public String addToCart(@PathVariable long id) {
+    public String addToCart(@PathVariable long id, HttpServletRequest request) {
+
+
+		String userEmail = request.getUserPrincipal().getName();
+
+
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-        orderService.addBoxToCart(box);
+        orderService.addBoxToCart(userEmail, box);
         return "redirect:/products";
     }
 

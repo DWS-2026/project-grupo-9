@@ -73,6 +73,7 @@
                                         
                     <form action="/logout" method="post">
                         <input type="submit" class="btn btn-primary" value="Sign Out" />
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
 
                     <div class="col-lg-12 mt-5">

@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class BoxController {
 
-	private final RepositoryUserDetailsService repositoryUserDetailsService;
     @Autowired
 	BoxRepository boxes;
 	@Autowired
@@ -144,17 +143,33 @@ public class BoxController {
 		Order order = orderService.findByUserEmailAndIsOpen(userEmail,
 		 	true).stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No se encontró un carrito activo para el usuario"));
 		model.addAttribute("order", order);
+
+		int amount = order.getBoxes().size();
 		return "cart";
 	}
 
 	@PostMapping("/product/{id}/add-to-cart")
     public String addToCart(@PathVariable long id, HttpServletRequest request) {
+
+
 		String userEmail = request.getUserPrincipal().getName();
+
 
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addBoxToCart(userEmail, box);
         return "redirect:/products";
     }
+
+	@PostMapping("/order/close-cart")
+    public String closeCart(HttpServletRequest request) {
+
+
+		String userEmail = request.getUserPrincipal().getName();
+        orderService.closeTheCart(userEmail);
+		orderService.createNewCart(userEmail);
+        return "redirect:/success";
+    }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

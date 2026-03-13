@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.User;
+import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.OrderService;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 
 @Controller
 public class UserController {
@@ -39,13 +39,13 @@ public class UserController {
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-    private OrderService orderService;
+	private OrderService orderService;
 
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		model.addAttribute("user",actualUser);
-		
+		model.addAttribute("user", actualUser);
+
 		model.addAttribute("date", "24/06/2026");
 		model.addAttribute("numberProducts", "2");
 		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
@@ -53,6 +53,9 @@ public class UserController {
 		model.addAttribute("productName", "Mármol de frambuesa");
 		model.addAttribute("productPrize", "0.60");
 		model.addAttribute("productAmount", "1");
+
+		List<Order> closedOrders = orderService.findClosedOrdersByUserEmail(actualUser.getEmail());
+		model.addAttribute("closedOrders", closedOrders);
 		return "profilePage";
 	}
 
@@ -70,8 +73,8 @@ public class UserController {
 	}
 
 	@GetMapping("/profile/image")
-	public ResponseEntity<Object> downloadProfileImage( HttpServletRequest request) throws SQLException {
-			Optional<User> op = userRepository.findByEmail(request.getUserPrincipal().getName());
+	public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request) throws SQLException {
+		Optional<User> op = userRepository.findByEmail(request.getUserPrincipal().getName());
 
 		if (op.isPresent() && op.get().getImage() != null) {
 			Blob image = op.get().getImage();
@@ -85,7 +88,7 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String logIn(Model model) {
-		
+
 		return "logInPage";
 	}
 
@@ -96,37 +99,44 @@ public class UserController {
 
 	@GetMapping("/editprofile")
 	public String editProfile(Model model, @PathVariable long id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-		model.addAttribute("user",user);
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+		model.addAttribute("user", user);
 		return "editProfile";
 	}
-	/* 
+
+	/*
+	 * @PostMapping("/editprofile")
+	 * public String editProfile(Model model, HttpServletRequest request){
+	 * User actualUser =
+	 * userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow(
+	 * );
+	 * model.addAttribute("user",actualUser);
+	 * model.addAttribute("name", actualUser.getName());
+	 * model.addAttribute("surname", actualUser.getSurname());
+	 * model.addAttribute("image", actualUser.getImage());
+	 * return "editProfile";
+	 * }
+	 */
 	@PostMapping("/editprofile")
-	public String editProfile(Model model, HttpServletRequest request){
+	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
+			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
+			@RequestParam(required = false) String email, @RequestParam(required = false) MultipartFile imageFile)
+			throws IOException {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		model.addAttribute("user",actualUser);
-		model.addAttribute("name", actualUser.getName());
-		model.addAttribute("surname", actualUser.getSurname());
-		model.addAttribute("image", actualUser.getImage());
-		return "editProfile";	
-	}
-*/
-@PostMapping("/editprofile")
-	public String editProfile(Model model, HttpServletRequest request,@RequestParam(required = false) String name,@RequestParam(required = false) String telephone,@RequestParam(required = false) String surname, @RequestParam(required = false) String email, @RequestParam(required = false) MultipartFile imageFile) throws IOException {
-		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		if(name!=null) {
+		if (name != null) {
 			actualUser.setName(name);
 		}
-		if(telephone!=null) {
+		if (telephone != null) {
 			actualUser.setTelephone(telephone);
 		}
-		if(surname!=null) {
+		if (surname != null) {
 			actualUser.setSurname(surname);
 		}
-		if(email!=null) {
+		if (email != null) {
 			actualUser.setEmail(email);
 		}
-		if(imageFile!=null && !imageFile.isEmpty()) {
+		if (imageFile != null && !imageFile.isEmpty()) {
 			try {
 				actualUser.setImage(new SerialBlob(imageFile.getBytes()));
 			} catch (Exception e) {
@@ -134,16 +144,15 @@ public class UserController {
 			}
 		}
 		userRepository.save(actualUser);
-		model.addAttribute("user",actualUser);
+		model.addAttribute("user", actualUser);
 		model.addAttribute("name", actualUser.getName());
-	    model.addAttribute("telephone", actualUser.getTelephone());
+		model.addAttribute("telephone", actualUser.getTelephone());
 		model.addAttribute("surname", actualUser.getSurname());
 		model.addAttribute("email", actualUser.getEmail());
 		model.addAttribute("image", actualUser.getImage());
 
-		return "editprofile";	
+		return "editprofile";
 	}
-	
 
 	@GetMapping("/payment")
 	public String payment(Model model) {
@@ -154,14 +163,16 @@ public class UserController {
 	public String userList(Model model) {
 		List<User> users = userRepository.findAll();
 		model.addAttribute("users", users);
-		//model.addAttribute("username", request.getUserPrincipal().getName());
-		//model.addAttribute("admin", request.isUserInRole("ADMIN"));
+		// model.addAttribute("username", request.getUserPrincipal().getName());
+		// model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		return "userList";
 	}
+
 	@GetMapping("/userList/{id}")
 	public String viewUser(Model model, @PathVariable long id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-		model.addAttribute("admin",true);
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+		model.addAttribute("admin", true);
 		model.addAttribute("user", user);
 		model.addAttribute("date", "24/06/2026");
 		model.addAttribute("numberProducts", "2");
@@ -172,7 +183,7 @@ public class UserController {
 		model.addAttribute("productAmount", "1");
 		return "profilePage";
 	}
-	
+
 	@PostMapping("/delete/profile")
 	public String deleteUser(Model model, HttpServletRequest request) {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
@@ -190,7 +201,7 @@ public class UserController {
 	@PostMapping("/signin")
 	public String newChocolate(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		user.setEncodedPassword(passwordEncoder.encode(password));
- 		if (!imageFile.isEmpty()) {
+		if (!imageFile.isEmpty()) {
 			try {
 				user.setImage(new SerialBlob(imageFile.getBytes()));
 			} catch (Exception e) {
@@ -200,7 +211,5 @@ public class UserController {
 		userRepository.save(user);
 		return "redirect:/profile";
 	}
-	
-	
-}
 
+}

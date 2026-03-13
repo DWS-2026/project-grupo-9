@@ -18,7 +18,8 @@
                                         <input type="text" class="form-control" id="name-delivery" placeholder="Linda">
 
                                         <label for="surname-delivery" class="form-label">Apellidos</label>
-                                        <input type="text" class="form-control" id="surname-delivery" placeholder="Williams Willy">
+                                        <input type="text" class="form-control" id="surname-delivery"
+                                            placeholder="Williams Willy">
                                     </div>
 
                                     <div class="row">
@@ -29,9 +30,10 @@
                                         </div>
                                         <div class="col-8">
                                             <label for="street" class="form-label">Calle</label>
-                                            <input type="text" class="form-control" id="street" placeholder="Calle A Tus Anchas,portal/número,piso,puerta">
+                                            <input type="text" class="form-control" id="street"
+                                                placeholder="Calle A Tus Anchas,portal/número,piso,puerta">
                                         </div>
-                                        
+
                                     </div>
                                 </form>
                             </div>
@@ -52,30 +54,35 @@
                                 <form>
 
                                     <label for="name-card" class="form-label">Nombre del titular de la tarjeta</label>
-                                    <input type="text" class="form-control" id="name-card" placeholder="Linda Williams Willy">
+                                    <input type="text" class="form-control" id="name-card"
+                                        placeholder="Linda Williams Willy">
 
                                     <label for="card-number" class="form-label">Número de tarjeta</label>
-                                    <input type="text" class="form-control" id="card-number" placeholder="0125 6780 4567 9909">
+                                    <input type="text" class="form-control" id="card-number"
+                                        placeholder="0125 6780 4567 9909">
 
                                     <div class="row">
                                         <div class="col-4">
                                             <label for="expiration-date" class="form-label">Fecha de caducidad</label>
-                                            <input type="text" class="form-control" id="expiration-date" placeholder="YY/MM">
+                                            <input type="text" class="form-control" id="expiration-date"
+                                                placeholder="YY/MM">
                                         </div>
                                         <div class="col-3">
                                             <label for="cvv" class="form-label">CVV</label>
                                             <input type="text" class="form-control" id="cvv" placeholder="111">
                                         </div>
                                         <div class="container px-4 px-lg-5">
-                                        
-                                            <a href="/success" class="btn btn-primary" ><span>PAGAR</span></a>
+
 
                                         </div>
 
                                     </div>
-                                    
-                                </form>
 
+                                </form>
+                                <form action="/order/close-cart" method="post">
+                                    <input type="submit" value="Pagar" class="btn btn-outline-dark flex-shrink-0" />
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                </form>
                             </div>
                         </div>
 

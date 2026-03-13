@@ -10,14 +10,20 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.Box;
+import es.codeurjc.web.service.UserService;
+import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.repository.OrderRepository;
 import jakarta.annotation.PostConstruct;
 
 @Service
 public class OrderService {
+    private final UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
 
+    OrderService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     public void init() {
@@ -41,17 +47,22 @@ public class OrderService {
     }
 
     public Order getActiveCart() {
-        return orderRepository.findAll().stream().filter(order -> order.isOpen()).findFirst()
-                .orElse(createNewCart());
+        return orderRepository.findAll().stream().filter(order -> order.isOpen()).findFirst().get();
     }
 
     public List<Order> findByUserEmailAndIsOpen(String Email, Boolean isOpen) {
         return orderRepository.findByUserEmailAndIsOpen(Email, isOpen);
     }
 
-    private Order createNewCart() {
+    public List<Order> findClosedOrdersByUserEmail(String userEmail) {
+        return orderRepository.findByUserEmailAndIsOpen(userEmail, false);
+    }
+
+    public Order createNewCart(String userEmail) {
+
         Order newCart = new Order(LocalDate.now(), 0.0f, 0, true);
         newCart.setBoxes(new ArrayList<>());
+        newCart.setUser(userRepository.findByEmail(userEmail).get());
         return orderRepository.save(newCart);
     }
 
@@ -59,7 +70,13 @@ public class OrderService {
         Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
         List<Box> boxes = cart.getBoxes();
         boxes.add(box);
-        cart.setAmount(boxes.size());
+        cart.updateCart();
+        orderRepository.save(cart);
+    }
+
+    public void closeTheCart(String userEmail) {
+        Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
+        cart.setOpen(false);
         orderRepository.save(cart);
     }
 

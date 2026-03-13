@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import es.codeurjc.web.repository.OrderRepository;
+
 import java.util.List;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -99,6 +101,19 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void updateCart(){
+        setAmount(this.getBoxes().size());
+        setPrice(updatePrice());
+    }
+
+    public float updatePrice(){
+        float total = 0;
+        for (Box box : boxes){
+            total = total + box.getPrice();
+        }
+        return total;
     }
 
 }

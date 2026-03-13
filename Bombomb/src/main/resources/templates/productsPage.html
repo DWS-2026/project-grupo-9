@@ -63,6 +63,7 @@
                                                 <button type="submit" class="btn btn-outline-danger mt-auto">
                                                     Borrar
                                                 </button>
+                                                <input type="hidden" name="_csrf" value="{{token}}"/>
                                             </form>
                                         </div>
                                     </div>
@@ -105,11 +106,12 @@
                                     </div>
                                     <!-- Product actions-->
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center">
+                                        <div class="text-center">F
                                             <form action="/product/{{id}}/add-to-cart" method="post">
-            <input type="submit" value="Añadir al carrito"
-                   class="btn btn-outline-dark flex-shrink-0" />
-        </form>
+                                                <input type="submit" value="Añadir al carrito"
+                                                    class="btn btn-outline-dark flex-shrink-0" />
+                                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

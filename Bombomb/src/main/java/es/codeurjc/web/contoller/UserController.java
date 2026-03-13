@@ -57,8 +57,22 @@ public class UserController {
 	}
 
 	@GetMapping("/profile/{id}/image")
-	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
+	public ResponseEntity<Object> downloadProfileImageAdminList(@PathVariable long id) throws SQLException {
 		Optional<User> op = userRepository.findById(id);
+		if (op.isPresent() && op.get().getImage() != null) {
+			Blob image = op.get().getImage();
+			InputStreamResource imageFile = new InputStreamResource(image.getBinaryStream());
+			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
+			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/profile/image")
+	public ResponseEntity<Object> downloadProfileImage( HttpServletRequest request) throws SQLException {
+			Optional<User> op = userRepository.findByEmail(request.getUserPrincipal().getName());
+
 		if (op.isPresent() && op.get().getImage() != null) {
 			Blob image = op.get().getImage();
 			InputStreamResource imageFile = new InputStreamResource(image.getBinaryStream());
@@ -147,6 +161,7 @@ public class UserController {
 	@GetMapping("/userList/{id}")
 	public String viewUser(Model model, @PathVariable long id) {
 		User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+		model.addAttribute("admin",true);
 		model.addAttribute("user", user);
 		model.addAttribute("date", "24/06/2026");
 		model.addAttribute("numberProducts", "2");
@@ -164,6 +179,14 @@ public class UserController {
 		userRepository.delete(actualUser);
 		return "redirect:/logout";
 	}
+
+	@PostMapping("/delete/{id}/profile")
+	public String deleteUserForAdmin(Model model, @PathVariable long id) {
+		User actualUser = userRepository.findById(id).orElseThrow();
+		userRepository.delete(actualUser);
+		return "redirect:/userList";
+	}
+
 	@PostMapping("/signin")
 	public String newChocolate(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		user.setEncodedPassword(passwordEncoder.encode(password));

@@ -22,7 +22,7 @@ public class Box {
     private Boolean isOpenBox=false;
     @ManyToMany
     private List<Chocolate> chocolates;
-    @ManyToMany(mappedBy="orders")
+    @ManyToMany(mappedBy="boxes")
     private List<Order> orders;
     @Lob
     Blob image;
@@ -32,7 +32,7 @@ public class Box {
     }
     
 
-    public Box(String name, float price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {
+    public Box(String name, float price, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {
         this.name=name;
         this.price= price;
         this.image= image;
@@ -77,7 +77,9 @@ public class Box {
     public void setImage(Blob image) {
         this.image = image;
     }
-    
+    public int getSize() {
+        return size;
+    }
     
     
 }

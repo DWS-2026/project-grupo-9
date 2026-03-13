@@ -35,8 +35,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
-        // Disable CSRF at the moment
-		http.csrf(csrf -> csrf.disable());
         http
 			.authorizeHttpRequests(authorize -> authorize
 					// PRIVATE PAGES

@@ -17,13 +17,13 @@ public class Box {
     private long id;
     private final int size=9;
     private String name;
-    private String price;
+    private float price;
     private Boolean madeByAdmin;
     private Boolean isOpenBox=false;
     @ManyToMany
     private List<Chocolate> chocolates;
-    //@ManyToMany(mappedBy="orders")
-    //private List<Order> orders;
+    @ManyToMany(mappedBy="orders")
+    private List<Order> orders;
     @Lob
     Blob image;
     
@@ -32,7 +32,7 @@ public class Box {
     }
     
 
-    public Box(String name, String price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {
+    public Box(String name, float price, String description, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {
         this.name=name;
         this.price= price;
         this.image= image;
@@ -41,10 +41,10 @@ public class Box {
     }
 
       
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
     public Boolean getMadeByAdmin() {
@@ -78,6 +78,6 @@ public class Box {
         this.image = image;
     }
     
-
+    
     
 }

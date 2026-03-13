@@ -64,9 +64,11 @@
                                         
                     <form action="/delete/profile" method="post">
                         <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                     <form action="/editprofile" method="post">
                         <input type="submit" value="Editar perfil" class="btn btn-primary" />
+                        <input type="hidden" name="_csrf" value="{{token}}"/>
                     </form>
                                         
                     <form action="/logout" method="post">

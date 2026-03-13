@@ -70,11 +70,11 @@ public class Order {
         this.price = price;
     }
 
-    public boolean getisOpen() {
+    public boolean isOpen() {
         return isOpen;
     }
 
-    public void setisOpen(boolean isOpen) {
+    public void setOpen(boolean isOpen) {
         this.isOpen = isOpen;
     }
 

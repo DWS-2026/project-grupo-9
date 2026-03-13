@@ -18,6 +18,7 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+
     @PostConstruct
     public void init() {
 
@@ -40,7 +41,7 @@ public class OrderService {
     }
 
     public Order getActiveCart() {
-        return orderRepository.findAll().stream().filter(order -> order.getisOpen()).findFirst()
+        return orderRepository.findAll().stream().filter(order -> order.isOpen()).findFirst()
                 .orElse(createNewCart());
     }
 
@@ -54,8 +55,8 @@ public class OrderService {
         return orderRepository.save(newCart);
     }
 
-    public void addBoxToCart(Box box) {
-        Order cart = getActiveCart();
+    public void addBoxToCart(String userEmail, Box box) {
+        Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
         List<Box> boxes = cart.getBoxes();
         boxes.add(box);
         cart.setAmount(boxes.size());

@@ -1,5 +1,6 @@
 package es.codeurjc.web.contoller;
 
+import es.codeurjc.web.RepositoryUserDetailsService;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +33,27 @@ import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import es.codeurjc.web.model.User;
+import es.codeurjc.web.service.UserService;
 
 import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class BoxController {
 
-	@Autowired
+	private final RepositoryUserDetailsService repositoryUserDetailsService;
+    @Autowired
 	BoxRepository boxes;
 	@Autowired
 	ChocolateService chocolateService;
 	@Autowired
 	OrderService orderService;
+	@Autowired
+	UserService userService;
+
+
 
 
 	@PostConstruct
@@ -51,14 +62,14 @@ public class BoxController {
 		ClassPathResource resource = new ClassPathResource("static/images/box_heart2.png");
 		byte[] bytes = resource.getInputStream().readAllBytes();
 		Blob blob = new SerialBlob(bytes);
-		boxes.save(new Box("Caja 1", "19.50€", "Caja con 12 bombones violeta", 
+		boxes.save(new Box("Caja 1", 19.50f,
 			blob, true, chocolates));
 
 
 		ClassPathResource resource2 = new ClassPathResource("static/images/box_red2.png");
 		byte[] bytes2 = resource2.getInputStream().readAllBytes();
 		Blob blob2 = new SerialBlob(bytes2);
-		boxes.save(new Box("Caja 2", "18.50€", "Caja con 12 bombones limón", 
+		boxes.save(new Box("Caja 2", 18.50f,
 			blob2, true, chocolates));
 
     }
@@ -138,15 +149,73 @@ public class BoxController {
 
 	@PostMapping("/product/{id}/add-to-cart")
     public String addToCart(@PathVariable long id, HttpServletRequest request) {
-
-
 		String userEmail = request.getUserPrincipal().getName();
-
 
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addBoxToCart(userEmail, box);
         return "redirect:/products";
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+	// al añadirlo al carrito, se crea la caja, con la imagen y la lista de bomobnes y eso
+// que se haga como en el createproduct 
+// y que luego que añada al order	
+	@PostMapping("/custom/{id}/add-to-cart")
+    public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
+		String userEmail = request.getUserPrincipal().getName();
+        Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+		box.setName("Caja personalizada");
+		box.setPrice(65.00f);
+		box.setMadeByAdmin(false);
+		box.setIsOpenBox(false);
+        orderService.addBoxToCart(userEmail,box);
+        return "redirect:/products";
+    }
+
+/////coger la caja actual, añadirle a la lista el chocolate con su id
+	@PostMapping("/add/{id}") //{id}=chocolate id
+	public String addToCustomBox(@PathVariable long id, Model model, HttpServletRequest request) {
+		Chocolate chocolate = chocolateService.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+		
+		String userEmail = request.getUserPrincipal().getName();	
+		Optional<Box> op = boxes.findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail( true, true, userEmail);
+		Box box;
+		
+		if (op.isPresent() && op.get().getImage() != null) {
+			box =op.get();
+		} else {
+			box = new Box("", 25.73f, null, false, null);
+			box.setIsOpenBox(true);
+		}
+
+		List<Chocolate> chocolates = box.getChocolates();
+		if (chocolates == null) {
+			chocolates = new ArrayList<>();
+		}
+		int currentSize = chocolates.size();
+		if (currentSize >= box.getSize()) {
+			//throw new IllegalStateException("La caja ya está llena");
+		}else{
+			chocolates.add(chocolate);
+			box.setChocolates(chocolates);
+		}
+		boxes.save(box); //boxRepository.save(box);
+		orderService.addBoxToCart(userEmail, box);
+
+		model.addAttribute("boxChocolates", chocolates);
+		return "redirect:/customBox";
+	}
+	
+
+//aleatorio
+	@PostMapping("/random/{id}")//id?
+	public String postMethodName(@PathVariable long id) {//id?
+		//que sea aleatorio y eso y que se meta directamente al carrito
+
+		
+		return "redirect:/cart";
+	}
+	
 }

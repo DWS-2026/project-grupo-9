@@ -121,7 +121,7 @@ public class UserController {
 	@PostMapping("/editprofile")
 	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
-			@RequestParam(required = false) String email, @RequestParam(required = false) MultipartFile imageFile)
+			 @RequestParam(required = false) MultipartFile imageFile)
 			throws IOException {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		if (name != null) {
@@ -133,9 +133,7 @@ public class UserController {
 		if (surname != null) {
 			actualUser.setSurname(surname);
 		}
-		if (email != null) {
-			actualUser.setEmail(email);
-		}
+		
 		if (imageFile != null && !imageFile.isEmpty()) {
 			try {
 				actualUser.setImage(new SerialBlob(imageFile.getBytes()));
@@ -148,7 +146,6 @@ public class UserController {
 		model.addAttribute("name", actualUser.getName());
 		model.addAttribute("telephone", actualUser.getTelephone());
 		model.addAttribute("surname", actualUser.getSurname());
-		model.addAttribute("email", actualUser.getEmail());
 		model.addAttribute("image", actualUser.getImage());
 
 		return "editprofile";

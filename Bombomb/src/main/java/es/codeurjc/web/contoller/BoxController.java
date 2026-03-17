@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Box;
@@ -125,10 +126,17 @@ public class BoxController {
 			return "error";
 		}
 	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@GetMapping("/customBox")
-	public String customBox(Model model) {
+	public String customBox(Model model, HttpServletRequest request) {
 		model.addAttribute("chocolates", chocolateService.findAll());
+		String userEmail = request.getUserPrincipal().getName();
+		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		if (op.isPresent()) {
+			model.addAttribute("box", op.get());
+		} 
 		return "customBox";
 	}
 
@@ -148,14 +156,13 @@ public class BoxController {
 	@PostMapping("/product/{id}/add-to-cart")
     public String addToCart(@PathVariable long id, HttpServletRequest request) {
 
+
 		String userEmail = request.getUserPrincipal().getName();
 
-		if(orderService.isBoxInCart(userEmail, id) == false) {
+
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addBoxToCart(userEmail, box);
-		}
-
-		return "redirect:/products";
+        return "redirect:/products";
     }
 
 	@PostMapping("/order/close-cart")
@@ -168,77 +175,86 @@ public class BoxController {
         return "redirect:/success";
     }
 
-	@PostMapping("/delete-from-cart/{id}/box")
-	public String deleteBoxFromCart(@PathVariable long id, HttpServletRequest request) {
-
-		String userEmail = request.getUserPrincipal().getName();
-		orderService.removeBoxFromCart(userEmail, id);
-		
-		return "redirect:/cart";
-	}
-	
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	// al añadirlo al carrito, se crea la caja, con la imagen y la lista de bomobnes y eso
-// que se haga como en el createproduct 
-// y que luego que añada al order	
+	// que se haga como en el createproduct 
+	// y que luego que añada al order	
 	@PostMapping("/custom/{id}/add-to-cart")
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		box.setName("Caja personalizada");
-		box.setPrice(65.00f);
+		box.setPrice(40.00f);
 		box.setMadeByAdmin(false);
 		box.setIsOpenBox(false);
-        orderService.addBoxToCart(userEmail,box);
-        return "redirect:/products";
+		boxes.save(box);
+		return "redirect:/products";
     }
 
-/////coger la caja actual, añadirle a la lista el chocolate con su id
-	@PostMapping("/add/{id}") //{id}=chocolate id
-	public String addToCustomBox(@PathVariable long id, Model model, HttpServletRequest request) {
+
+	@PostMapping("/addChocolate/{id}") //{id}=chocolate id
+	public String addToCustomBox(@PathVariable long id, Model model, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+		
 		Chocolate chocolate = chocolateService.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		
 		String userEmail = request.getUserPrincipal().getName();	
-		Optional<Box> op = boxes.findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail( true, true, userEmail);
+		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		Box box;
+		Boolean isInOrder=false;
 		
-		if (op.isPresent() && op.get().getImage() != null) {
+		if (op.isPresent()) {
 			box =op.get();
+			isInOrder=true;
 		} else {
-			box = new Box("", 25.73f, null, false, null);
+			box = new Box("", 0.0f, null, false, new ArrayList<>());
 			box.setIsOpenBox(true);
 		}
 
 		List<Chocolate> chocolates = box.getChocolates();
-		if (chocolates == null) {
-			chocolates = new ArrayList<>();
-		}
 		int currentSize = chocolates.size();
-		if (currentSize >= box.getSize()) {
-			//throw new IllegalStateException("La caja ya está llena");
+		if (currentSize >= box.getSize()) {//if box has 9 chocolates
+			model.addAttribute("message", "La caja ya está llena");
+			return "error";
 		}else{
 			chocolates.add(chocolate);
 			box.setChocolates(chocolates);
 		}
-		boxes.save(box); //boxRepository.save(box);
-		orderService.addBoxToCart(userEmail, box);
+		boxes.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
 
-		model.addAttribute("boxChocolates", chocolates);
+		if(!isInOrder){ //if the box is new, add it to the order
+		orderService.addBoxToCart(userEmail, box);
+		}
+		//model.addAttribute("boxChocolates", chocolates);
+		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
 		return "redirect:/customBox";
 	}
 	
-
+//botón de vaciar la caja
+	@PostMapping("/emptyCustom")
+	public String emptyCustomBox(Model model, HttpServletRequest request) {
+		String userEmail = request.getUserPrincipal().getName();
+		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Box box;
+		if (op.isPresent()) {
+			box =op.get();
+			box.getChocolates().clear();
+			boxes.save(box);
+		} 
+		return "redirect:/customBox";
+	}
+	
 //aleatorio
-	@PostMapping("/random/{id}")//id?
-	public String postMethodName(@PathVariable long id) {//id?
-		//que sea aleatorio y eso y que se meta directamente al carrito
+	@PostMapping("/randomize")//id? 
+	public String randomCustom(@PathVariable long id) {//id?
+		//que sea aleatorio y eso y que se muestre
 
+		//se vacía la lista y se hace una nueva aleatoria 
+		
 		
 		return "redirect:/cart";
 	}
-	
+
 }

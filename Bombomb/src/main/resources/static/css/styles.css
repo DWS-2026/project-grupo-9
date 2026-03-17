@@ -11388,6 +11388,19 @@ input:focus::-webkit-input-placeholder
     justify-content: center;
 }
 
+.empty-btn {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px 30px;
+}
+
+.empty-btn:hover {
+    background-color: darkred;
+}
+
 .random-btn {
     padding: 15px 50px;
     background-color: #4ECDC4;
@@ -11443,6 +11456,31 @@ input:focus::-webkit-input-placeholder
     padding-bottom: 5px;
 }
 
+.list-chocolates {
+    grid-column: 1 / -1;
+    border: 2px solid black;
+    background-color:  #A97E5F;
+    font-size: 20px;
+    padding: 10px;
+    position: relative;
+}
+.list-chocolates ul {
+    list-style: none;
+    padding: 0;
+}
+
+.list-chocolates li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.list-chocolates .choco-image {
+    width: 50px; /* Ajusta según necesites */
+    height: 50px;
+    object-fit: cover;
+}
 .choco-pic {
     display: grid;
     width: 100px;
@@ -11450,7 +11488,7 @@ input:focus::-webkit-input-placeholder
     display: flex;
     flex-direction: column;
     justify-items: center;
-    align-items: center;
+    align-items: center;    
 }
 .choco-name {
   font-size: 19px;
@@ -11483,6 +11521,8 @@ input:focus::-webkit-input-placeholder
     
     .box-pic,
     .middle-btn,
+    .empty-btn,
+    .random-btn,
     .buy-btn,
     .chocolate-bottom-bar {
         grid-column: 1;
@@ -11529,8 +11569,3 @@ input:focus::-webkit-input-placeholder
             font-size: 0.9em;
             margin: 0;
         }
-
-
-
-
-

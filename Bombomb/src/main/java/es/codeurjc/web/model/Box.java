@@ -80,6 +80,10 @@ public class Box {
     public int getSize() {
         return size;
     }
+
+    public long getId() {
+        return id;
+    }
     
     
 }

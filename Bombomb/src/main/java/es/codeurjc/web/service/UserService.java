@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mysql.cj.jdbc.Blob;
+
+import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.UserRepository;
 
@@ -27,20 +30,14 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }   
 
-     public void save(User user, MultipartFile image,@RequestParam(required = true) String passwordString) throws IOException{
-        if (!image.isEmpty()) {
-			try {
-				user.setImage(new SerialBlob(image.getBytes()));
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}
-        if(minPasswordLength(passwordEncoder.encode(passwordString))==false) {
-            throw new IOException("Password must be at least 8 characters long");
-        }
-     userRepository.save(user);
-
-    
+    public void save(User user, String passwordString) throws IOException{
+        if (user.getRoles() == null) {
+        	user.setRoles(new ArrayList<>());
+    	}
+    	user.getRoles().add("USER");
+        user.addOrder(new Order(true));
+        user.setEncodedPassword(passwordEncoder.encode(passwordString));
+        userRepository.save(user);
     }
     //////////////////////////////////////////////
    

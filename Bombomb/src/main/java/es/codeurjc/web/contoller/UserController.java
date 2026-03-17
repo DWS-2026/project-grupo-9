@@ -27,7 +27,7 @@ import es.codeurjc.web.model.User;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.OrderService;
-
+import es.codeurjc.web.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -41,6 +41,9 @@ public class UserController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
@@ -182,11 +185,6 @@ public class UserController {
 
 	@PostMapping("/signin")
 	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
-		user.setEncodedPassword(passwordEncoder.encode(password));
-		if (user.getRoles() == null) {
-        	user.setRoles(new ArrayList<>());
-    	}
-    	user.getRoles().add("USER");
 		if (!imageFile.isEmpty()) {
 			try {
 				user.setImage(new SerialBlob(imageFile.getBytes()));
@@ -194,7 +192,11 @@ public class UserController {
 				throw new IOException("Failed to create image blob", e);
 			}
 		}
-		userRepository.save(user);
+		if(!userService.minPasswordLength(password)){
+			model.addAttribute("message", "La contraseña no tiene 8 caracteres");
+			return "error";
+		}
+		userService.save(user, password);
 		return "redirect:/login";
 	}
 

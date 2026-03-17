@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import es.codeurjc.web.RepositoryUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -47,7 +46,7 @@ public class SecurityConfiguration {
                 )
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")
-					.failureUrl("/login/error")
+					.failureUrl("/error/login")
 					.defaultSuccessUrl("/profile")
                     .usernameParameter("email")
 					.permitAll()

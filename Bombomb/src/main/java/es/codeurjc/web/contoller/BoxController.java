@@ -1,6 +1,5 @@
 package es.codeurjc.web.contoller;
 
-import es.codeurjc.web.RepositoryUserDetailsService;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -33,11 +32,9 @@ import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import es.codeurjc.web.model.User;
 import es.codeurjc.web.service.UserService;
 
 import org.springframework.core.io.Resource;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller

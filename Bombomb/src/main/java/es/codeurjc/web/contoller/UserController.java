@@ -46,15 +46,6 @@ public class UserController {
 	public String profile(Model model, HttpServletRequest request) {
 		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		model.addAttribute("user", actualUser);
-
-		model.addAttribute("date", "24/06/2026");
-		model.addAttribute("numberProducts", "2");
-		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
-		model.addAttribute("productType", "Bombón");
-		model.addAttribute("productName", "Mármol de frambuesa");
-		model.addAttribute("productPrize", "0.60");
-		model.addAttribute("productAmount", "1");
-
 		List<Order> closedOrders = orderService.findClosedOrdersByUserEmail(actualUser.getEmail());
 		model.addAttribute("closedOrders", closedOrders);
 		return "profilePage";
@@ -172,13 +163,6 @@ public class UserController {
 				.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 		model.addAttribute("admin", true);
 		model.addAttribute("user", user);
-		model.addAttribute("date", "24/06/2026");
-		model.addAttribute("numberProducts", "2");
-		model.addAttribute("productImage", "./images/chocolate_pink.jpeg");
-		model.addAttribute("productType", "Bombón");
-		model.addAttribute("productName", "Mármol de frambuesa");
-		model.addAttribute("productPrize", "0.60");
-		model.addAttribute("productAmount", "1");
 		return "profilePage";
 	}
 
@@ -199,7 +183,7 @@ public class UserController {
 	@PostMapping("/signin")
 	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		user.setEncodedPassword(passwordEncoder.encode(password));
-		 if (user.getRoles() == null) {
+		if (user.getRoles() == null) {
         	user.setRoles(new ArrayList<>());
     	}
     	user.getRoles().add("USER");
@@ -210,9 +194,7 @@ public class UserController {
 				throw new IOException("Failed to create image blob", e);
 			}
 		}
-		
 		userRepository.save(user);
-    	System.out.println("Roles guardados: " + user.getRoles());
 		return "redirect:/login";
 	}
 

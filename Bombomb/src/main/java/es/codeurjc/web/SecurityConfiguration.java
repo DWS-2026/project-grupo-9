@@ -38,16 +38,16 @@ public class SecurityConfiguration {
         http
 			.authorizeHttpRequests(authorize -> authorize
 					// PRIVATE PAGES
-                    .requestMatchers("/customBox").authenticated()
-                    .requestMatchers("/profile").authenticated()
-                    .requestMatchers("/userList").authenticated()
-                    .requestMatchers("/cart").authenticated()
+                    .requestMatchers("/customBox").hasAnyRole("USER")
+                    .requestMatchers("/profile").hasAnyRole("USER")
+                    .requestMatchers("/userList").hasAnyRole("ADMIN")
+                    .requestMatchers("/cart").hasAnyRole("USER")
 					// PUBLIC PAGES
 					.anyRequest().permitAll()
                 )
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")
-					.failureUrl("/error")
+					.failureUrl("/login/error")
 					.defaultSuccessUrl("/profile")
                     .usernameParameter("email")
 					.permitAll()

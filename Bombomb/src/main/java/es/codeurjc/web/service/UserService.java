@@ -35,7 +35,7 @@ public class UserService {
 				throw new IOException("Failed to create image blob", e);
 			}
 		}
-        if(minPasswordLength(passwordString)==false) {
+        if(minPasswordLength(passwordEncoder.encode(passwordString))==false) {
             throw new IOException("Password must be at least 8 characters long");
         }
      userRepository.save(user);

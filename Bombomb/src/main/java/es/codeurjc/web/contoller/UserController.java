@@ -3,6 +3,7 @@ package es.codeurjc.web.contoller;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -196,8 +197,12 @@ public class UserController {
 	}
 
 	@PostMapping("/signin")
-	public String newChocolate(Model model, User user, String password, MultipartFile imageFile) throws IOException {
+	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		user.setEncodedPassword(passwordEncoder.encode(password));
+		 if (user.getRoles() == null) {
+        	user.setRoles(new ArrayList<>());
+    	}
+    	user.getRoles().add("USER");
 		if (!imageFile.isEmpty()) {
 			try {
 				user.setImage(new SerialBlob(imageFile.getBytes()));
@@ -205,8 +210,10 @@ public class UserController {
 				throw new IOException("Failed to create image blob", e);
 			}
 		}
+		
 		userRepository.save(user);
-		return "redirect:/profile";
+    	System.out.println("Roles guardados: " + user.getRoles());
+		return "redirect:/login";
 	}
 
 }

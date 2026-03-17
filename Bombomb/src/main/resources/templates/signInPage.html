@@ -11,23 +11,23 @@
                 <form class="row g-3" action="/signin" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
                         <label for="name" class="form-label">Nombre</label>
-                        <input type="text" name="name" class="form-control" id="name">
+                        <input type="text" name="name" class="form-control" id="name" required>
                     </div>
                     <div class="col-md-8">
                         <label for="surname" class="form-label">Apellidos</label>
-                        <input type="text" name="surname" class="form-control" id="surname">
+                        <input type="text" name="surname" class="form-control" id="surname" required>
                     </div>
                     <div class="col-md-4">
                         <label for="telephone" class="form-label">Telefono</label>
-                        <input type="tel" name="telephone" class="form-control" id="telephone">
+                        <input type="tel" name="telephone" class="form-control" id="telephone" required>
                     </div>
                     <div class="col-md-8">
                         <label for="email" class="form-label">Correo electrónico</label>
-                        <input type="email" name="email" class="form-control" id="email">
+                        <input type="email" name="email" class="form-control" id="email" required>
                     </div>
                     <div class="col-md-4">
                         <label for="inputPassword4" class="form-label">Contraseña</label>
-                        <input type="password" name="password" class="form-control" id="inputPassword4">
+                        <input type="password" name="password" class="form-control" id="inputPassword4" required minlength="8">
                     </div>
                     <div class="col-md-4 mt-4">
                         

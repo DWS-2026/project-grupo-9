@@ -27,8 +27,14 @@
                             </div>
                             <div class="right-control">
                                 <div class="col-price">
-                                    <div class="price">{{price}}</div>
+                                    <div class="price">{{price}}€</div>
                                 </div>
+                                <form action="/delete-from-cart/{{id}}/box" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-outline-danger mt-auto">
+                                        Borrar
+                                    </button>
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                </form>
 
                             </div>
                         </div>

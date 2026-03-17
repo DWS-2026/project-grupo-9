@@ -67,8 +67,10 @@ public class OrderService {
 
     public void addBoxToCart(String userEmail, Box box) {
         Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
+        if(box.getMadeByAdmin()!= false){
         List<Box> boxes = cart.getBoxes();
         boxes.add(box);
+        }
         cart.updateCart();
         orderRepository.save(cart);
     }

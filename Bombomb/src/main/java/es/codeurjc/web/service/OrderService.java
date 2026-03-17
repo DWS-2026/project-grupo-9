@@ -80,4 +80,17 @@ public class OrderService {
         orderRepository.save(cart);
     }
 
+    public boolean isBoxInCart(String userEmail, long boxId) {
+        Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
+        return cart.getBoxes().stream().anyMatch(box -> box.getId() == boxId);
+    }
+
+    public void removeBoxFromCart(String userEmail, long boxId) {
+        Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
+        List<Box> boxes = cart.getBoxes();
+        boxes.removeIf(box -> box.getId() == boxId);
+        cart.updateCart();
+        orderRepository.save(cart);
+    }
+
 }

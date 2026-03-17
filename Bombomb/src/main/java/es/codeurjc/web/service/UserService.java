@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.UserRepository;
 

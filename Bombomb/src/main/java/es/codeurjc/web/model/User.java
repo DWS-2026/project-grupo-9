@@ -4,7 +4,6 @@ import java.sql.Blob;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Indexed;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

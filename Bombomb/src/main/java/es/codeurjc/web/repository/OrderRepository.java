@@ -3,7 +3,6 @@ package es.codeurjc.web.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import es.codeurjc.web.model.Order;
-import es.codeurjc.web.model.Box;
 
 import java.util.List;
 

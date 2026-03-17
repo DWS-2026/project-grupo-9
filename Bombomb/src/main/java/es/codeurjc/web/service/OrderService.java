@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.Box;
-import es.codeurjc.web.service.UserService;
 import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.repository.OrderRepository;
 import jakarta.annotation.PostConstruct;

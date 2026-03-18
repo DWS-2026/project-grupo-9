@@ -186,13 +186,17 @@ public class BoxController {
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		box.setName("Caja personalizada");
+		//box.setName("Caja personalizada"); //puede que luego se tenga que poner aqui
+		//pq si le das a add al prcipio se pone como caja pers y si luego le das a aleatorio, va a seguir como personalizada 
+		//y viceversa
 		box.setPrice(40.00f);
 		box.setMadeByAdmin(false);
 		box.setIsOpenBox(false);
 		boxes.save(box);
-		return "redirect:/products";
+		//orderService.addBoxToCart(userEmail, box); con esto aparece dos veces 
+		return "redirect:/cart";
     }
+	
 
 
 	@PostMapping("/addChocolate/{id}") //{id}=chocolate id
@@ -209,13 +213,13 @@ public class BoxController {
 			box =op.get();
 			isInOrder=true;
 		} else {
-			box = new Box("", 0.0f, null, false, new ArrayList<>());
+			box = new Box("Caja personalizada", 0.0f, null, false, new ArrayList<>());
 			box.setIsOpenBox(true);
 		}
 
 		List<Chocolate> chocolates = box.getChocolates();
 		int currentSize = chocolates.size();
-		if (currentSize >= box.getSize()) {//if box has 9 chocolates
+		if (currentSize >= box.getSize()) {//if box has 9 chocolates(max size)
 			model.addAttribute("message", "La caja ya está llena");
 			return "error";
 		}else{
@@ -232,8 +236,7 @@ public class BoxController {
 		return "redirect:/customBox";
 	}
 	
-//botón de vaciar la caja
-	@PostMapping("/emptyCustom")
+	@PostMapping("/emptyCustom")//empty the box
 	public String emptyCustomBox(Model model, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
 		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
@@ -246,15 +249,36 @@ public class BoxController {
 		return "redirect:/customBox";
 	}
 	
-//aleatorio
-	@PostMapping("/randomize")//id? 
-	public String randomCustom(@PathVariable long id) {//id?
-		//que sea aleatorio y eso y que se muestre
+	@PostMapping("/randomize")//make chocolate list random
+	public String randomCustom(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String userEmail = request.getUserPrincipal().getName();	
+		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Box box;
+		Boolean isInOrder=false;
+		if (op.isPresent()) {
+			box =op.get();
+			isInOrder=true;
+		} else {
+			box = new Box("Caja aleatoria", 0.0f, null, false, new ArrayList<>());
+			box.setIsOpenBox(true);
+		}
+		List<Chocolate> chocolates = box.getChocolates();
+		chocolates.clear();
+		//if the box is empty, fill it with random chocolates, if not,emty it and fill it with random chocolates
+		int totalSize = chocolateService.findAll().size();
+		int boxSize = box.getSize();
 
-		//se vacía la lista y se hace una nueva aleatoria 
-		
-		
-		return "redirect:/cart";
+		for(int i=0; i<boxSize; i++){
+			int randomIndex = (int) (Math.random() * totalSize);
+			chocolates.add(chocolateService.findAll().get(randomIndex));
+		}
+		boxes.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
+
+		if(!isInOrder){ //if the box is new, add it to the order
+		orderService.addBoxToCart(userEmail, box);
+		}
+		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
+		return "redirect:/customBox";
 	}
 
 }

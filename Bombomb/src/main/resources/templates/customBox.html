@@ -7,14 +7,10 @@
 
         
         <div class="box-pic">
-            <img src="./images/box_circle_9_spots.png" alt="Open box" class="middle-pic"> 
-            <!--{{#boxChocolates}}
-                <div class="choco-pic">
-                    <img src="/chocolate/{{id}}/image" alt="{{name}}" class="choco-image">
-                </div>
-            {{/boxChocolates}}       -->  
+            <img src="./images/box_circle_9_spots.png" alt="Open box" class="middle-pic">  
         </div>
         <div class="col-auto">
+             {{#box}}
             <div class="list-chocolates">
                 <h3>Bombones en la caja:</h3>
                 <ul>
@@ -23,6 +19,7 @@
                     {{/boxChocolates}}
                 </ul>
             </div>
+             {{/box}}
         </div>
         <div class="empty-box">
             <form action="/emptyCustom" method="post">
@@ -31,19 +28,20 @@
             </form>
         </div>
         <div class="middle-btn">
-            <button class="btn random-btn">Aleatorio</button>
             <form action="/randomize" method ="post">
+            <input type="submit" value="Aleatorio" class ="btn random-btn">
             <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>
 
+        {{#box}}
         <div class="add-to-cart">
-            <a href="/cart" class="btn buy-btn">Añadir al carro</a>  
-            <!-- addCustomToCart o addToCart dependiendo de si se hace el métdo de addCustom pq las custom no 
-             son como las normales-->
-                      
+            <form action="/custom/{{box.id}}/add-to-cart" method="post">
+                <input type="submit" value="Añadir al carrito" class="btn buy-btn" />
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
         </div>
-
+        {{/box}}
         <div class="chocolate-bottom-bar">
             <div class="images-grid">
                 {{#chocolates}}

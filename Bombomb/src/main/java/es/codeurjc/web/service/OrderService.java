@@ -96,5 +96,8 @@ public class OrderService {
         cart.updateCart();
         orderRepository.save(cart);
     }
+    public List<Order> findByBoxes(Box box){
+        return orderRepository.findByBoxes(box);
+    }
 
 }

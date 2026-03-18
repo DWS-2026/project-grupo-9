@@ -115,4 +115,9 @@ public class Order {
         return total;
     }
 
+    public void removeBox(Box box){
+        boxes.remove(box);
+        this.updateCart();
+    }
+
 }

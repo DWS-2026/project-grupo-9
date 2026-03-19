@@ -20,13 +20,14 @@ public class Box {
     private float price;
     private Boolean madeByAdmin;
     private Boolean isOpenBox=false;
+    private Boolean isAvailable = true;
     @ManyToMany
     private List<Chocolate> chocolates;
     @ManyToMany(mappedBy="boxes")
     private List<Order> orders;
     @Lob
     Blob image;
-    
+
     public Box() {
         
     }
@@ -38,6 +39,25 @@ public class Box {
         this.image= image;
         this.madeByAdmin= madeByAdmin;
         this.chocolates = chocolates;
+    }
+
+    public Boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+
+    public void setIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
       

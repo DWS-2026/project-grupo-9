@@ -96,8 +96,8 @@ public class OrderService {
         cart.updateCart();
         orderRepository.save(cart);
     }
-    public List<Order> findByBoxes(Box box){
-        return orderRepository.findByBoxes(box);
+    public List<Order> findByBoxesAndIsOpen(Box box, Boolean isOpen){
+        return orderRepository.findByBoxesAndIsOpen(box, isOpen);
     }
 
 }

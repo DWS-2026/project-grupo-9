@@ -28,39 +28,48 @@ public class ChocolateService {
     @Autowired
     private OrderService orderService;
 
-
-    public void save(Chocolate chocolate, MultipartFile image) throws IOException{
+    public void save(Chocolate chocolate, MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
-			try {
-				chocolate.setImage(new SerialBlob(image.getBytes()));
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}
+            try {
+                chocolate.setImage(new SerialBlob(image.getBytes()));
+            } catch (Exception e) {
+                throw new IOException("Failed to create image blob", e);
+            }
+        }
         chocolateRepository.save(chocolate);
     }
 
-    public List<Chocolate> findAll(){
+    public List<Chocolate> findAll() {
         return chocolateRepository.findAll();
     }
 
-    public Optional<Chocolate> findById(long id){
+    public Optional<Chocolate> findById(long id) {
         return chocolateRepository.findById(id);
     }
 
-    public void deleteById(long id){
-        List <Box> boxes = boxRepository.findByChocolatesId(id);
-        for(Box box : boxes){
-            /*This part needs to be moved into the boxService */
-            List <Order> orders = orderService.findByBoxes(box);
-            for(Order order : orders){
-                order.removeBox(box);
-                orderService.save(order);
+    public void deleteById(long id) {
+        Optional<Chocolate> op = chocolateRepository.findById(id);
+        if (op.isPresent()) {
+            Chocolate chocolate = op.get();
+            chocolate.setIsAvailable(false);
+            chocolateRepository.save(chocolate);
+             /*boxService.delete(box)*/
+
+            List<Box> boxes = boxRepository.findByChocolatesId(id);
+            for (Box box : boxes) {
+                box.setIsAvailable(false);
+                List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
+                for(Order order : orders){
+                    order.removeBox(box);
+                }
+                boxRepository.save(box);
+               
             }
-            boxRepository.delete(box);
         }
-        chocolateRepository.deleteById(id);
     }
 
+    public List <Chocolate> findByIsAvailable(Boolean isAvailable){
+        return chocolateRepository.findByIsAvailable(isAvailable);
+    }
 
 }

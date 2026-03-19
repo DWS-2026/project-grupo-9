@@ -277,15 +277,21 @@ public class BoxController {
 	}
 
 	@PostMapping("/adminAddBox/{id}")
-	public String adminAddBox(@PathVariable long id, HttpServletRequest request, @RequestParam String name) {
+	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException {
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		if (name != null) {
-			box.setName(name);
-			box.setMadeByAdmin(true);
-			box.setIsOpenBox(false);
-			box.setPrice(19.0f);
-			boxes.save(box);
-		}
+		if (!imageFile.isEmpty()) {
+			try {
+				box.setImage(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}	
+		box.setName(name);
+		box.setMadeByAdmin(true);
+		box.setIsOpenBox(false);
+		box.setPrice(19.0f);
+		boxes.save(box);
+		
 		return "redirect:/products";
 	}
 	

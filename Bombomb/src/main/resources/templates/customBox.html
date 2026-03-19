@@ -45,8 +45,9 @@
         </div>
         <div class="add-to-boxes">
             <div class="col-md-8"></div>
-            <form action="/adminAddBox/{{box.id}}" method="post">
+            <form action="/adminAddBox/{{box.id}}" method="post" enctype="multipart/form-data">
                 <input class="form-control text-center me-3" id="input" type="text" name="name"  value="{{name}}" style="max-width: 20rem" required/>
+                <input type="file" class="form-control-file" id="boxPicture" name='imageFile' required>
                 <input type="submit" value="Añadir caja" class="btn buy-btn" />
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>

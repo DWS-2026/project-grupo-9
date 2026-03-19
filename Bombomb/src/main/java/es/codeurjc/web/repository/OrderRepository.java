@@ -11,6 +11,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
     
 
     List<Order> findByUserEmailAndIsOpen(String Email, Boolean isOpen);
-   List <Order> findByBoxes(Box box);
+   List <Order> findByBoxesAndIsOpen(Box box, Boolean isOpen);
 
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -83,7 +84,8 @@ public class BoxController {
 			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
 			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
 		} else {
-			return ResponseEntity.notFound().build();
+			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
+        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
 		}
 	}
 
@@ -104,8 +106,7 @@ public class BoxController {
 			model.addAttribute("product", box);
 			return "productDetailsPage";
 		}else{
-			model.addAttribute("message", "Producto no encontrado");
-			return "error";
+			return "redirect:/error/notFound";
 		}
 	}
 

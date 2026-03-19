@@ -35,6 +35,7 @@ import es.codeurjc.web.service.UserService;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -276,13 +277,13 @@ public class BoxController {
 	}
 
 	@PostMapping("/adminAddBox/{id}")
-	public String adminAddBox(@PathVariable long id, HttpServletRequest request, String name) {
-		//String userEmail = request.getUserPrincipal().getName(); //no pq es admin
+	public String adminAddBox(@PathVariable long id, HttpServletRequest request, @RequestParam String name) {
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		if (name != null) {
 			box.setName(name);
 			box.setMadeByAdmin(true);
 			box.setIsOpenBox(false);
+			box.setPrice(19.0f);
 			boxes.save(box);
 		}
 		return "redirect:/products";

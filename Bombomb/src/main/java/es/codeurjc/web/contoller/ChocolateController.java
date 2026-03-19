@@ -27,7 +27,7 @@ public class ChocolateController {
     @Autowired
 	ChocolateService chocolateService;
         
-    @GetMapping("/createproduct")
+    @GetMapping("/create/chocolate")
 	public String createProduct(Model model) {
 		return "createChocolate";
 	}

@@ -3,6 +3,9 @@ package es.codeurjc.web;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -12,10 +15,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.User;
+import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.ChocolateRepository;
 import es.codeurjc.web.repository.UserRepository;
+import es.codeurjc.web.service.ChocolateService;
 import jakarta.annotation.PostConstruct;
 
 /*FALTA POR HACER EL 
@@ -27,6 +33,10 @@ public class DBLoader {
 
 	@Autowired
 	private ChocolateRepository chocolateRepository;
+	@Autowired
+	private ChocolateService chocolateService;
+	@Autowired
+	private BoxRepository boxes;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -107,5 +117,30 @@ public class DBLoader {
 		blob = new SerialBlob(bytes);
 		chocolateRepository.save(new Chocolate("Mármol de frambuesa", blob));
 
+		Optional <Chocolate> chocolate = chocolateService.findById(1);
+		List <Chocolate> chocolates = new ArrayList<Chocolate>();
+		if(chocolate.isPresent()){
+			for(int i = 0; i < 9; i++){
+				chocolates.add(chocolate.get());
+			}
+		}
+		resource = new ClassPathResource("static/images/box_heart2.png");
+		bytes = resource.getInputStream().readAllBytes();
+		blob = new SerialBlob(bytes);
+		boxes.save(new Box("Caja 1", 19.50f,
+			blob, true, chocolates));
+
+		chocolate = chocolateService.findById(2);
+		chocolates = new ArrayList<Chocolate>();
+		if(chocolate.isPresent()){
+			for(int i = 0; i < 9; i++){
+				chocolates.add(chocolate.get());
+			}
+		}
+		ClassPathResource resource2 = new ClassPathResource("static/images/box_red2.png");
+		byte[] bytes2 = resource2.getInputStream().readAllBytes();
+		Blob blob2 = new SerialBlob(bytes2);
+		boxes.save(new Box("Caja 2", 18.50f,
+			blob2, true, chocolates));
 	}
 }

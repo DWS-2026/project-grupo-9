@@ -71,6 +71,6 @@ public class UserService {
     }
 
     public boolean minPasswordLength(String password) {
-        return password.length() >= 8;
+        return password != null && password.length() >= 8;
     }
 }

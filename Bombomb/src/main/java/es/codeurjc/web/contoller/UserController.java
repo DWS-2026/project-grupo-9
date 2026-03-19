@@ -183,7 +183,7 @@ public class UserController {
 		return "redirect:/userList";
 	}
 
-	@PostMapping("/signin")
+	/*@PostMapping("/signin")
 	public String newUser(Model model, User user, String password, MultipartFile imageFile) throws IOException {
 		if (!imageFile.isEmpty()) {
 			try {
@@ -195,6 +195,22 @@ public class UserController {
 		if(!userService.minPasswordLength(password)){
 			model.addAttribute("message", "La contraseña no tiene 8 caracteres");
 			return "error";
+		}
+		userService.save(user, password);
+		return "redirect:/login";
+	}*/
+	@PostMapping("/signin")
+	public String newUser(Model model, User user, MultipartFile imageFile,HttpServletRequest request, @RequestParam String password) throws IOException {
+		if (!imageFile.isEmpty()) {
+			try {
+				user.setImage(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}
+		if(!userService.minPasswordLength(password)){
+			model.addAttribute("message", "La contraseña no tiene 8 caracteres");
+			return "redirect:/error/minPassword";
 		}
 		userService.save(user, password);
 		return "redirect:/login";

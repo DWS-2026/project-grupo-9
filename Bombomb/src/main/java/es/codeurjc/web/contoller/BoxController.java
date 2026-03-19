@@ -6,13 +6,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -31,11 +29,12 @@ import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import es.codeurjc.web.service.UserService;
 
 import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -50,26 +49,6 @@ public class BoxController {
 	@Autowired
 	UserService userService;
 
-
-
-
-	@PostConstruct
-    public void init() throws SerialException, SQLException, IOException {
-		List<Chocolate> chocolates = chocolateService.findAll();
-		ClassPathResource resource = new ClassPathResource("static/images/box_heart2.png");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
-		boxes.save(new Box("Caja 1", 19.50f,
-			blob, true, chocolates));
-
-
-		ClassPathResource resource2 = new ClassPathResource("static/images/box_red2.png");
-		byte[] bytes2 = resource2.getInputStream().readAllBytes();
-		Blob blob2 = new SerialBlob(bytes2);
-		boxes.save(new Box("Caja 2", 18.50f,
-			blob2, true, chocolates));
-
-    }
 
 	@GetMapping("/products")
 	public String products(Model model) {
@@ -133,6 +112,11 @@ public class BoxController {
 	public String customBox(Model model, HttpServletRequest request) {
 		model.addAttribute("chocolates", chocolateService.findAll());
 		String userEmail = request.getUserPrincipal().getName();
+		boolean isAdmin = userService.findByEmail(userEmail).map(user -> user.getRoles().contains("ADMIN")).orElse(false);
+		if(isAdmin){
+			model.addAttribute("admin", isAdmin);
+		}
+
 		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		if (op.isPresent()) {
 			model.addAttribute("box", op.get());
@@ -179,9 +163,7 @@ public class BoxController {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	// al añadirlo al carrito, se crea la caja, con la imagen y la lista de bomobnes y eso
-	// que se haga como en el createproduct 
-	// y que luego que añada al order	
+
 	@PostMapping("/custom/{id}/add-to-cart")
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
@@ -280,5 +262,19 @@ public class BoxController {
 		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
 		return "redirect:/customBox";
 	}
+
+	@PostMapping("/adminAddBox/{id}")
+	public String adminAddBox(@PathVariable long id, HttpServletRequest request, String name) {
+		//String userEmail = request.getUserPrincipal().getName(); //no pq es admin
+        Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+		if (name != null) {
+			box.setName(name);
+			box.setMadeByAdmin(true);
+			box.setIsOpenBox(false);
+			boxes.save(box);
+		}
+		return "redirect:/products";
+	}
+	
 
 }

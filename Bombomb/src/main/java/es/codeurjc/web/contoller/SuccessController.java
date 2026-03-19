@@ -34,5 +34,10 @@ public class SuccessController {
 		model.addAttribute("message", "Contraseña o email incorrecto");
 		return "error";
 	}
+    @GetMapping("/error/minPassword")
+	public String minPassword(Model model){
+		model.addAttribute("message", "La contraseña debe tener al menos 8 caracteres");
+		return "error";
+	}
 	
 }

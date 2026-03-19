@@ -143,9 +143,11 @@ public class BoxController {
 
 		String userEmail = request.getUserPrincipal().getName();
 
-
+		if(orderService.isBoxInCart(userEmail, id) == false) {
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addBoxToCart(userEmail, box);
+		}
+
         return "redirect:/products";
     }
 
@@ -159,6 +161,14 @@ public class BoxController {
         return "redirect:/success";
     }
 
+	@PostMapping("/delete-from-cart/{id}/box")
+	public String deleteBoxFromCart(@PathVariable long id, HttpServletRequest request) {
+
+		String userEmail = request.getUserPrincipal().getName();
+		orderService.removeBoxFromCart(userEmail, id);
+		
+		return "redirect:/cart";
+	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

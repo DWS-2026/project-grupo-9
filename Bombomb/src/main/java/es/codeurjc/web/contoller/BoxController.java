@@ -112,7 +112,7 @@ public class BoxController {
 
 	@GetMapping("/customBox")
 	public String customBox(Model model, HttpServletRequest request) {
-		model.addAttribute("chocolates", chocolateService.findAll());
+		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
 		String userEmail = request.getUserPrincipal().getName();
 		if(request.isUserInRole("ADMIN")){
 			model.addAttribute("admin", true);
@@ -172,10 +172,6 @@ public class BoxController {
 		return "redirect:/cart";
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 	@PostMapping("/custom/{id}/add-to-cart")
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
@@ -227,7 +223,6 @@ public class BoxController {
 		if(!isInOrder){ //if the box is new, add it to the order
 		orderService.addBoxToCart(userEmail, box);
 		}
-		//model.addAttribute("boxChocolates", chocolates);
 		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
 		return "redirect:/customBox";
 	}
@@ -266,7 +261,7 @@ public class BoxController {
 
 		for(int i=0; i<boxSize; i++){
 			int randomIndex = (int) (Math.random() * totalSize);
-			chocolates.add(chocolateService.findAll().get(randomIndex));
+			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
 		}
 		boxes.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
 

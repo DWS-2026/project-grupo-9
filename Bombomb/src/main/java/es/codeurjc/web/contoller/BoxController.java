@@ -27,6 +27,7 @@ import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.BoxRepository;
+import es.codeurjc.web.repository.OrderRepository;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,7 +49,8 @@ public class BoxController {
 	OrderService orderService;
 	@Autowired
 	UserService userService;
-
+	@Autowired
+	OrderRepository orderRepository;
 
 	@GetMapping("/products")
 	public String products(Model model) {
@@ -178,14 +180,16 @@ public class BoxController {
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		//box.setName("Caja personalizada"); //puede que luego se tenga que poner aqui
-		//pq si le das a add al prcipio se pone como caja pers y si luego le das a aleatorio, va a seguir como personalizada 
-		//y viceversa
+		
 		box.setPrice(40.00f);
 		box.setMadeByAdmin(false);
+
+		Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
+        cart.updateCart();
+
 		box.setIsOpenBox(false);
 		boxes.save(box);
-		//orderService.addBoxToCart(userEmail, box); con esto aparece dos veces 
+		orderService.addBoxToCart(userEmail, box);
 		return "redirect:/cart";
     }
 	

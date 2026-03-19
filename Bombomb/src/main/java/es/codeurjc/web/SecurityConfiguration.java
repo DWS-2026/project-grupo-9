@@ -65,6 +65,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/product/*/add-to-cart").hasAnyRole("USER")
                     .requestMatchers("/success").hasAnyRole("USER")
                     .requestMatchers("/delete-from-cart/*/box").hasAnyRole("USER")
+                    .requestMatchers("/custom/*/add-to-cart").hasAnyRole("USER")
 
                    
                     .requestMatchers("/delete/*/profile").hasAnyRole("ADMIN")
@@ -73,6 +74,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/userList/**").hasAnyRole("ADMIN")
                     .requestMatchers("/profile/*/image").hasAnyRole("ADMIN")
                     .requestMatchers("/create/chocolate").hasAnyRole("ADMIN")
+                    .requestMatchers("/adminAddBox/*").hasAnyRole("ADMIN")
                 )
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")

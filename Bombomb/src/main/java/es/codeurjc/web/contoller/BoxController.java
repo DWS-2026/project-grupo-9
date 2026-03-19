@@ -107,21 +107,19 @@ public class BoxController {
 			return "error";
 		}
 	}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@GetMapping("/customBox")
 	public String customBox(Model model, HttpServletRequest request) {
 		model.addAttribute("chocolates", chocolateService.findAll());
 		String userEmail = request.getUserPrincipal().getName();
-		boolean isAdmin = userService.findByEmail(userEmail).map(user -> user.getRoles().contains("ADMIN")).orElse(false);
-		if(isAdmin){
-			model.addAttribute("admin", isAdmin);
+		if(request.isUserInRole("ADMIN")){
+			model.addAttribute("admin", true);
 		}
 
 		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		if (op.isPresent()) {
 			model.addAttribute("box", op.get());
+			model.addAttribute("boxChocolates", op.get().getChocolates());
 		} 
 		return "customBox";
 	}

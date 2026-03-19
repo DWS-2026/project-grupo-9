@@ -19,6 +19,15 @@ public class Chocolate {
 
     @Lob
     Blob image;
+    Boolean isAvailable = true;
+
+    public Boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
 
     protected Chocolate() {
     }

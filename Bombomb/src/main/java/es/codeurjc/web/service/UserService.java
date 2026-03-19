@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mysql.cj.jdbc.Blob;
 
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;

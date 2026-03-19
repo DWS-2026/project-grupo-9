@@ -27,6 +27,7 @@ import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.BoxRepository;
+import es.codeurjc.web.repository.OrderRepository;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import es.codeurjc.web.service.UserService;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -48,12 +50,13 @@ public class BoxController {
 	OrderService orderService;
 	@Autowired
 	UserService userService;
-
+	@Autowired
+	OrderRepository orderRepository;
 
 	@GetMapping("/products")
 	public String products(Model model) {
-		model.addAttribute("chocolates", chocolateService.findAll());
-		model.addAttribute("boxes", boxes.findAll());
+		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
+		model.addAttribute("boxes", boxes.findByMadeByAdminAndIsOpenBoxAndIsAvailable(true, false, true));
 		return "productsPage";
 	}
 
@@ -105,21 +108,19 @@ public class BoxController {
 			return "error";
 		}
 	}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@GetMapping("/customBox")
 	public String customBox(Model model, HttpServletRequest request) {
 		model.addAttribute("chocolates", chocolateService.findAll());
 		String userEmail = request.getUserPrincipal().getName();
-		boolean isAdmin = userService.findByEmail(userEmail).map(user -> user.getRoles().contains("ADMIN")).orElse(false);
-		if(isAdmin){
-			model.addAttribute("admin", isAdmin);
+		if(request.isUserInRole("ADMIN")){
+			model.addAttribute("admin", true);
 		}
 
 		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		if (op.isPresent()) {
 			model.addAttribute("box", op.get());
+			model.addAttribute("boxChocolates", op.get().getChocolates());
 		} 
 		return "customBox";
 	}
@@ -143,10 +144,10 @@ public class BoxController {
 
 		String userEmail = request.getUserPrincipal().getName();
 
-		if(orderService.isBoxInCart(userEmail, id) == false) {
+	
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
         orderService.addBoxToCart(userEmail, box);
-		}
+		
 
         return "redirect:/products";
     }
@@ -178,14 +179,16 @@ public class BoxController {
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		//box.setName("Caja personalizada"); //puede que luego se tenga que poner aqui
-		//pq si le das a add al prcipio se pone como caja pers y si luego le das a aleatorio, va a seguir como personalizada 
-		//y viceversa
+		
 		box.setPrice(40.00f);
 		box.setMadeByAdmin(false);
+
+		Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
+        cart.updateCart();
+
 		box.setIsOpenBox(false);
 		boxes.save(box);
-		//orderService.addBoxToCart(userEmail, box); con esto aparece dos veces 
+		orderService.addBoxToCart(userEmail, box);
 		return "redirect:/cart";
     }
 	
@@ -274,15 +277,21 @@ public class BoxController {
 	}
 
 	@PostMapping("/adminAddBox/{id}")
-	public String adminAddBox(@PathVariable long id, HttpServletRequest request, String name) {
-		//String userEmail = request.getUserPrincipal().getName(); //no pq es admin
+	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException {
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		if (name != null) {
-			box.setName(name);
-			box.setMadeByAdmin(true);
-			box.setIsOpenBox(false);
-			boxes.save(box);
-		}
+		if (!imageFile.isEmpty()) {
+			try {
+				box.setImage(new SerialBlob(imageFile.getBytes()));
+			} catch (Exception e) {
+				throw new IOException("Failed to create image blob", e);
+			}
+		}	
+		box.setName(name);
+		box.setMadeByAdmin(true);
+		box.setIsOpenBox(false);
+		box.setPrice(19.0f);
+		boxes.save(box);
+		
 		return "redirect:/products";
 	}
 	

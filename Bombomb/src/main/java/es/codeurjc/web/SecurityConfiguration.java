@@ -36,13 +36,43 @@ public class SecurityConfiguration {
         http.authenticationProvider(authenticationProvider());
         http
 			.authorizeHttpRequests(authorize -> authorize
-					// PRIVATE PAGES
+					/// PUBLIC PAGES
+                    
+					.requestMatchers("/").permitAll()
+                    .requestMatchers("/error/**").permitAll()
+                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/signin").permitAll()
+                    .requestMatchers("/css/*").permitAll()
+                    .requestMatchers("/images/*").permitAll()
+                    .requestMatchers("/chocolate/**").permitAll()
+                    .requestMatchers("/products").permitAll()
+                    .requestMatchers("/product/*/image").permitAll()
+                    .requestMatchers("/product/*/details").permitAll()
+                // PRIVATE PAGES
+                    
                     .requestMatchers("/customBox").hasAnyRole("USER")
+                    .requestMatchers("/profile/*").hasAnyRole("USER")
                     .requestMatchers("/profile").hasAnyRole("USER")
-                    .requestMatchers("/userList").hasAnyRole("ADMIN")
+                    .requestMatchers("/editprofile").hasAnyRole("USER")
+                    .requestMatchers("/delete/profile").hasAnyRole("USER")
                     .requestMatchers("/cart").hasAnyRole("USER")
-					// PUBLIC PAGES
-					.anyRequest().permitAll()
+                    .requestMatchers("/customBox").hasAnyRole("USER")
+                    .requestMatchers("/addChocolate/*").hasAnyRole("USER")
+                    .requestMatchers("/emptyCustom").hasAnyRole("USER")
+                    .requestMatchers("/order/close-cart").hasAnyRole("USER")
+                    .requestMatchers("/payment").hasAnyRole("USER")
+                    .requestMatchers("/randomize").hasAnyRole("USER")
+                    .requestMatchers("/product/*/add-to-cart").hasAnyRole("USER")
+                    .requestMatchers("/success").hasAnyRole("USER")
+                    .requestMatchers("/delete-from-cart/*/box").hasAnyRole("USER")
+
+                   
+                    .requestMatchers("/delete/*/profile").hasAnyRole("ADMIN")
+                    .requestMatchers("/delete/*/chocolate").hasAnyRole("ADMIN")
+                    .requestMatchers("/custom/**").hasAnyRole("ADMIN")
+                    .requestMatchers("/userList/**").hasAnyRole("ADMIN")
+                    .requestMatchers("/profile/*/image").hasAnyRole("ADMIN")
+                    .requestMatchers("/create/chocolate").hasAnyRole("ADMIN")
                 )
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")

@@ -27,4 +27,5 @@ Optional<Box> findBoxByStatusAndUserEmail(
         @Param("email") String email
 );
         List <Box> findByChocolatesId(long id);
+        List <Box> findByMadeByAdminAndIsOpenBox(Boolean madeByAdmin, Boolean isOpenBox);
 }

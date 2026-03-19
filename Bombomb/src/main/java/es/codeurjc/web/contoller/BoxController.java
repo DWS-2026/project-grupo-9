@@ -55,8 +55,8 @@ public class BoxController {
 
 	@GetMapping("/products")
 	public String products(Model model) {
-		model.addAttribute("chocolates", chocolateService.findAll());
-		model.addAttribute("boxes", boxes.findByMadeByAdminAndIsOpenBox(true, false));
+		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
+		model.addAttribute("boxes", boxes.findByMadeByAdminAndIsOpenBoxAndIsAvailable(true, false, true));
 		return "productsPage";
 	}
 

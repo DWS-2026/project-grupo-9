@@ -70,7 +70,7 @@ public class ChocolateService {
     }
 
     public Optional <Chocolate> findByIdAndIsAvailable(long id, Boolean isAvailable){
-        chocolateRepository.findByIdAndIsAvailable(id, isAvailable);
+        return chocolateRepository.findByIdAndIsAvailable(id, isAvailable);
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
@@ -11,6 +12,7 @@ import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.ChocolateRepository;
 
+@Service
 public class BoxService {
     @Autowired
     private BoxRepository boxRepository;

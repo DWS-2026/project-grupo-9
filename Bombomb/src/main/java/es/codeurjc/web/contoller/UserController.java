@@ -14,7 +14,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,19 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.model.Order;
-import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.OrderService;
 import es.codeurjc.web.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private OrderService orderService;
@@ -99,39 +91,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "editProfile";
 	}
-/* 
-	@PostMapping("/editprofile")
-	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
-			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
-			 @RequestParam(required = false) MultipartFile imageFile)
-			throws IOException {
-		User actualUser = userRepository.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		if (name != null) {
-			actualUser.setName(name);
-		}
-		if (telephone != null) {
-			actualUser.setTelephone(telephone);
-		}
-		if (surname != null) {
-			actualUser.setSurname(surname);
-		}
-		
-		if (imageFile != null && !imageFile.isEmpty()) {
-			try {
-				actualUser.setImage(new SerialBlob(imageFile.getBytes()));
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}
-		userRepository.save(actualUser);
-		model.addAttribute("user", actualUser);
-		model.addAttribute("name", actualUser.getName());
-		model.addAttribute("telephone", actualUser.getTelephone());
-		model.addAttribute("surname", actualUser.getSurname());
-		model.addAttribute("image", actualUser.getImage());
 
-		return "editprofile";
-	}*/
 	@PostMapping("/editprofile")
 	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
@@ -157,8 +117,6 @@ public class UserController {
 	public String userList(Model model) {
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
-		// model.addAttribute("username", request.getUserPrincipal().getName());
-		// model.addAttribute("admin", request.isUserInRole("ADMIN"));
 		return "userList";
 	}
 
@@ -175,14 +133,15 @@ public class UserController {
 	@PostMapping("/delete/profile")
 	public String deleteUser(Model model, HttpServletRequest request) {
 		User actualUser = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		userRepository.delete(actualUser);
-		return "redirect:/logout";
+		userService.delete(actualUser);
+		request.getSession().invalidate();
+		return "redirect:/";
 	}
 
 	@PostMapping("/delete/{id}/profile")
 	public String deleteUserForAdmin(Model model, @PathVariable long id) {
 		User actualUser = userService.findById(id).orElseThrow();
-		userRepository.delete(actualUser);
+		userService.delete(actualUser);
 		return "redirect:/userList";
 	}
 

@@ -50,6 +50,9 @@ public class UserService {
     public void deleteById(long id){
         userRepository.deleteById(id);
     }
+    public void delete(User user){
+        userRepository.delete(user);
+    }
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }

@@ -28,6 +28,9 @@ public class ChocolateService {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private BoxService boxService;
+
     public void save(Chocolate chocolate, MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
             try {
@@ -53,23 +56,21 @@ public class ChocolateService {
             Chocolate chocolate = op.get();
             chocolate.setIsAvailable(false);
             chocolateRepository.save(chocolate);
-             /*boxService.delete(box)*/
 
             List<Box> boxes = boxRepository.findByChocolatesId(id);
             for (Box box : boxes) {
-                box.setIsAvailable(false);
-                List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
-                for(Order order : orders){
-                    order.removeBox(box);
-                }
-                boxRepository.save(box);
-               
+                boxService.delete(box);
+
             }
         }
     }
 
     public List <Chocolate> findByIsAvailable(Boolean isAvailable){
         return chocolateRepository.findByIsAvailable(isAvailable);
+    }
+
+    public Optional <Chocolate> findByIdAndIsAvailable(long id, Boolean isAvailable){
+        chocolateRepository.findByIdAndIsAvailable(id, isAvailable);
     }
 
 }

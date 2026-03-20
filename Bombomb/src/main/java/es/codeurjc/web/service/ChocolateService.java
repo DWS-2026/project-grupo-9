@@ -69,4 +69,8 @@ public class ChocolateService {
         return chocolateRepository.findByIsAvailable(isAvailable);
     }
 
+    public Optional <Chocolate> findByIdAndIsAvailable(long id, Boolean isAvailable){
+        chocolateRepository.findByIdAndIsAvailable(id, isAvailable);
+    }
+
 }

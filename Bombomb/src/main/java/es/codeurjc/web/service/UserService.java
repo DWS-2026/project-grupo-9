@@ -38,23 +38,8 @@ public class UserService {
         user.setEncodedPassword(passwordEncoder.encode(passwordString));
         userRepository.save(user);
     }
-    //////////////////////////////////////////////
-   
-   /*  if(user.getRoles().isEmpty()) {
-        List<String> cleanRoles = new ArrayList<>();
-        for (String role : user.getRoles()) {
-            if(role.startsWith("ROLE_")) {
-                cleanRoles.add(role.substring(5));
-            } else {
-                cleanRoles.add(role);
-            }
-            user.setRoles(cleanRoles);
-        }
-    }*/
-
-    /// //////////////////////////////////////////////
-
-     public List<User> findAll(){
+    
+    public List<User> findAll(){
         return userRepository.findAll();
     }
 
@@ -68,8 +53,29 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
+   
     public boolean minPasswordLength(String password) {
         return password != null && password.length() >= 8;
     }
+    public User editUserProfile(String email,String name, String surname, String telephone, MultipartFile image) throws IOException {
+        User actualUser=userRepository.findByEmail(email).orElseThrow();
+        if(name !=null){
+            actualUser.setName(name);
+        }
+        if(surname !=null){
+            actualUser.setSurname(surname);
+        }
+        if(telephone !=null){
+            actualUser.setTelephone(telephone);
+        }
+        if (image != null && !image.isEmpty()) {
+            try {
+                actualUser.setImage(new SerialBlob(image.getBytes()));
+            } catch (Exception e) {
+                throw new IOException("Failed to create image blob", e);
+            }
+        }
+        return userRepository.save(actualUser);
+    }
+
 }

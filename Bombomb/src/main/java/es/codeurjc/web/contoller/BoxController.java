@@ -260,7 +260,7 @@ public class BoxController {
 		List<Chocolate> chocolates = box.getChocolates();
 		chocolates.clear();
 		//if the box is empty, fill it with random chocolates, if not,emty it and fill it with random chocolates
-		int totalSize = chocolateService.findAll().size();
+		int totalSize = chocolateService.findByIsAvailable(true).size();
 		int boxSize = box.getSize();
 
 		for(int i=0; i<boxSize; i++){

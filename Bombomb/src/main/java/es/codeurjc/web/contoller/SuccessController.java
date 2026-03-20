@@ -39,5 +39,10 @@ public class SuccessController {
 		model.addAttribute("message", "La contraseña debe tener al menos 8 caracteres");
 		return "error";
 	}
+	@GetMapping("/error/notFound")
+	public String notFound(Model model){
+		model.addAttribute("message", "No encontrado");
+		return "error";
+	}
 	
 }

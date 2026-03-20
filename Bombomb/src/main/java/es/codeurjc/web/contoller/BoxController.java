@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -83,7 +84,8 @@ public class BoxController {
 			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
 			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
 		} else {
-			return ResponseEntity.notFound().build();
+			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
+        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
 		}
 	}
 
@@ -104,14 +106,13 @@ public class BoxController {
 			model.addAttribute("product", box);
 			return "productDetailsPage";
 		}else{
-			model.addAttribute("message", "Producto no encontrado");
-			return "error";
+			return "redirect:/error/notFound";
 		}
 	}
 
 	@GetMapping("/customBox")
 	public String customBox(Model model, HttpServletRequest request) {
-		model.addAttribute("chocolates", chocolateService.findAll());
+		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
 		String userEmail = request.getUserPrincipal().getName();
 		if(request.isUserInRole("ADMIN")){
 			model.addAttribute("admin", true);
@@ -171,10 +172,6 @@ public class BoxController {
 		return "redirect:/cart";
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 	@PostMapping("/custom/{id}/add-to-cart")
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
@@ -226,7 +223,6 @@ public class BoxController {
 		if(!isInOrder){ //if the box is new, add it to the order
 		orderService.addBoxToCart(userEmail, box);
 		}
-		//model.addAttribute("boxChocolates", chocolates);
 		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
 		return "redirect:/customBox";
 	}
@@ -265,7 +261,7 @@ public class BoxController {
 
 		for(int i=0; i<boxSize; i++){
 			int randomIndex = (int) (Math.random() * totalSize);
-			chocolates.add(chocolateService.findAll().get(randomIndex));
+			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
 		}
 		boxes.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
 

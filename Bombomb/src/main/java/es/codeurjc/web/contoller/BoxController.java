@@ -29,6 +29,7 @@ import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.OrderRepository;
+import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoxController {
 
     @Autowired
-	BoxRepository boxes;
+	BoxService boxService;
 	@Autowired
 	ChocolateService chocolateService;
 	@Autowired
@@ -57,7 +58,7 @@ public class BoxController {
 	@GetMapping("/products")
 	public String products(Model model) {
 		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
-		model.addAttribute("boxes", boxes.findByMadeByAdminAndIsOpenBoxAndIsAvailable(true, false, true));
+		model.addAttribute("boxes", boxService.findByMadeByAdminAndIsOpenBoxAndIsAvailable(true, false, true));
 		return "productsPage";
 	}
 
@@ -70,14 +71,14 @@ public class BoxController {
 				throw new IOException("Failed to create image blob", e);
 			}
 		}
-		boxes.save(box);
-		model.addAttribute("boxes", boxes.findAll());
+		boxService.save(box);
+		model.addAttribute("boxes", boxService.findAll());
 		return "redirect:/products";
 	}
 
 	@GetMapping("/product/{id}/image")
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
-		Optional<Box> op = boxes.findById(id);
+		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
 			Blob image = op.get().getImage();
 			Resource imageFile = new InputStreamResource(image.getBinaryStream());
@@ -101,7 +102,8 @@ public class BoxController {
 
 	@GetMapping("/product/{id}/details")
 	public String productDetails(Model model, @PathVariable long id) {
-		Optional <Box> box = boxes.findById(id);
+		Optional <Box> box = boxService.findByIdAndIsAvailable(id, true);
+
 		if(box.isPresent()){
 			model.addAttribute("product", box);
 			return "productDetailsPage";
@@ -118,7 +120,7 @@ public class BoxController {
 			model.addAttribute("admin", true);
 		}
 
-		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		if (op.isPresent()) {
 			model.addAttribute("box", op.get());
 			model.addAttribute("boxChocolates", op.get().getChocolates());
@@ -146,9 +148,14 @@ public class BoxController {
 		String userEmail = request.getUserPrincipal().getName();
 
 	
-        Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
+		if(!op.isPresent()){
+			return "redirect:/error/notFound";
+		}
+		Box box = op.get();
         orderService.addBoxToCart(userEmail, box);
 		
+
 
         return "redirect:/products";
     }
@@ -175,7 +182,11 @@ public class BoxController {
 	@PostMapping("/custom/{id}/add-to-cart")
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
 		String userEmail = request.getUserPrincipal().getName();
-        Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
+		if(!op.isPresent()){
+			return "redirect:/error/notFound";
+		}
+		Box box = op.get();
 		
 		box.setPrice(40.00f);
 		box.setMadeByAdmin(false);
@@ -188,7 +199,7 @@ public class BoxController {
 		Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
         cart.updateCart();
 
-		boxes.save(box);
+		boxService.save(box);
 		orderService.addBoxToCart(userEmail, box);
 		return "redirect:/cart";
     }
@@ -198,10 +209,10 @@ public class BoxController {
 	@PostMapping("/addChocolate/{id}") //{id}=chocolate id
 	public String addToCustomBox(@PathVariable long id, Model model, HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		
-		Chocolate chocolate = chocolateService.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+		Chocolate chocolate = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		
 		String userEmail = request.getUserPrincipal().getName();	
-		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		Box box;
 		Boolean isInOrder=false;
 		
@@ -222,7 +233,7 @@ public class BoxController {
 			chocolates.add(chocolate);
 			box.setChocolates(chocolates);
 		}
-		boxes.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
+		boxService.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
 
 		if(!isInOrder){ //if the box is new, add it to the order
 		orderService.addBoxToCart(userEmail, box);
@@ -234,12 +245,12 @@ public class BoxController {
 	@PostMapping("/emptyCustom")//empty the box
 	public String emptyCustomBox(Model model, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
-		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		Box box;
 		if (op.isPresent()) {
 			box =op.get();
 			box.getChocolates().clear();
-			boxes.save(box);
+			boxService.save(box);
 		} 
 		return "redirect:/customBox";
 	}
@@ -247,7 +258,7 @@ public class BoxController {
 	@PostMapping("/randomize")//make chocolate list random
 	public String randomCustom(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		String userEmail = request.getUserPrincipal().getName();	
-		Optional<Box> op = boxes.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		Box box;
 		Boolean isInOrder=false;
 		if (op.isPresent()) {
@@ -267,7 +278,7 @@ public class BoxController {
 			int randomIndex = (int) (Math.random() * totalSize);
 			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
 		}
-		boxes.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
+		boxService.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
 
 		if(!isInOrder){ //if the box is new, add it to the order
 		orderService.addBoxToCart(userEmail, box);
@@ -278,7 +289,11 @@ public class BoxController {
 
 	@PostMapping("/adminAddBox/{id}")
 	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException {
-        Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
+		if(!op.isPresent()){
+			return "redirect:/error/notFound";
+		}
+		Box box = op.get();
 		if (!imageFile.isEmpty()) {
 			try {
 				box.setImage(new SerialBlob(imageFile.getBytes()));
@@ -290,7 +305,7 @@ public class BoxController {
 		box.setMadeByAdmin(true);
 		box.setIsOpenBox(false);
 		box.setPrice(19.0f);
-		boxes.save(box);
+		boxService.save(box);
 		
 		return "redirect:/products";
 	}

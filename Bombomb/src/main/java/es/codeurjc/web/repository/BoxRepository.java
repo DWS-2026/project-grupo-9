@@ -28,5 +28,6 @@ Optional<Box> findBoxByStatusAndUserEmail(
 );
         List <Box> findByChocolatesId(long id);
         List <Box> findByMadeByAdminAndIsOpenBoxAndIsAvailable(Boolean madeByAdmin, Boolean isOpenBox, Boolean isAvailable);
+        Optional<Box> findByIdAndIsAvailable(long id, Boolean isAvailable);
 
 }

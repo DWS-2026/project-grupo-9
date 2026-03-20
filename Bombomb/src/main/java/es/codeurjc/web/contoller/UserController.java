@@ -166,6 +166,7 @@ public class UserController {
 				.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 		model.addAttribute("admin", true);
 		model.addAttribute("user", user);
+		model.addAttribute("closedOrders", orderService.findClosedOrdersByUserEmail(user.getEmail()));
 		return "profilePage";
 	}
 

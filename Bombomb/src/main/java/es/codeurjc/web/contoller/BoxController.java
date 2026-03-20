@@ -173,17 +173,21 @@ public class BoxController {
 	}
 
 	@PostMapping("/custom/{id}/add-to-cart")
-    public String addCustomToCart(@PathVariable long id, HttpServletRequest request) {
+    public String addCustomToCart(@PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
 		String userEmail = request.getUserPrincipal().getName();
         Box box = boxes.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		
 		box.setPrice(40.00f);
 		box.setMadeByAdmin(false);
+		box.setIsOpenBox(false);
+		ClassPathResource resource = new ClassPathResource("static/images/box_red2.png");
+		byte[] bytes = resource.getInputStream().readAllBytes();
+		Blob blob = new SerialBlob(bytes);
+		box.setImage(blob);
 
 		Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
         cart.updateCart();
 
-		box.setIsOpenBox(false);
 		boxes.save(box);
 		orderService.addBoxToCart(userEmail, box);
 		return "redirect:/cart";
@@ -256,7 +260,7 @@ public class BoxController {
 		List<Chocolate> chocolates = box.getChocolates();
 		chocolates.clear();
 		//if the box is empty, fill it with random chocolates, if not,emty it and fill it with random chocolates
-		int totalSize = chocolateService.findAll().size();
+		int totalSize = chocolateService.findByIsAvailable(true).size();
 		int boxSize = box.getSize();
 
 		for(int i=0; i<boxSize; i++){

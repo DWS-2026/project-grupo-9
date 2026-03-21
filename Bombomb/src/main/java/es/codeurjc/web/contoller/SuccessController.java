@@ -16,7 +16,8 @@ public class SuccessController {
 
     @GetMapping("/fail")
 	public String fail(Model model) {
-		return "fail";
+		model.addAttribute("message", "Fallo en el pago");
+		return "error";
 	}
 
     @GetMapping("/error")

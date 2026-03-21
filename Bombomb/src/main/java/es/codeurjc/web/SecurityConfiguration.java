@@ -64,6 +64,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/randomize").hasAnyRole("USER")
                     .requestMatchers("/product/*/add-to-cart").hasAnyRole("USER")
                     .requestMatchers("/success").hasAnyRole("USER")
+                    .requestMatchers("/fail").hasAnyRole("USER")
                     .requestMatchers("/delete-from-cart/*/box").hasAnyRole("USER")
                     .requestMatchers("/custom/*/add-to-cart").hasAnyRole("USER")
 

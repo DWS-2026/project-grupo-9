@@ -27,8 +27,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
-import es.codeurjc.web.repository.BoxRepository;
-import es.codeurjc.web.repository.OrderRepository;
 import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.OrderService;
@@ -36,7 +34,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import es.codeurjc.web.service.UserService;
 
 import org.springframework.core.io.Resource;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -52,28 +49,13 @@ public class BoxController {
 	OrderService orderService;
 	@Autowired
 	UserService userService;
-	@Autowired
-	OrderRepository orderRepository;
+	
 
 	@GetMapping("/products")
 	public String products(Model model) {
 		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
 		model.addAttribute("boxes", boxService.findByMadeByAdminAndIsOpenBoxAndIsAvailable(true, false, true));
 		return "productsPage";
-	}
-
-	@PostMapping("/createproduct")
-	public String newProduct(Model model, Box box, MultipartFile imageFile) throws IOException {
-		if (!imageFile.isEmpty()) {
-			try {
-				box.setImage(new SerialBlob(imageFile.getBytes()));
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}
-		boxService.save(box);
-		model.addAttribute("boxes", boxService.findAll());
-		return "redirect:/products";
 	}
 
 	@GetMapping("/product/{id}/image")
@@ -90,23 +72,19 @@ public class BoxController {
 		}
 	}
 
-	@GetMapping("/editproduct")
-	public String editProduct(Model model) {
-		model.addAttribute("name", "Violeta");
-		model.addAttribute("price", "0.60€");
-		model.addAttribute("description", "Bombón en forma de flor relleno de moras y brillo metalizado");
-		model.addAttribute("stock", "12");
-		model.addAttribute("image", "images/chocolate_flower.jpeg");
-		return "editProductPage";
-	}
-
 	@GetMapping("/product/{id}/details")
 	public String productDetails(Model model, @PathVariable long id) {
-		Optional <Box> box = boxService.findByIdAndIsAvailable(id, true);
+		Optional <Box> op = boxService.findByIdAndIsAvailable(id, true);
 
-		if(box.isPresent()){
-			model.addAttribute("product", box);
-			return "productDetailsPage";
+		if(op.isPresent()){
+			Box box = op.get();
+			if(box.getMadeByAdmin()){ //if the box wasn't made by an admin, it doesn't show
+				model.addAttribute("box", box);
+				model.addAttribute("boxChocolates", box.getChocolates());
+				return "productDetailsPage";
+			}else{
+				return "redirect:/error/notFound";
+			}
 		}else{
 			return "redirect:/error/notFound";
 		}
@@ -136,18 +114,13 @@ public class BoxController {
 		Order order = orderService.findByUserEmailAndIsOpen(userEmail,
 		 	true).stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No se encontró un carrito activo para el usuario"));
 		model.addAttribute("order", order);
-
-		int amount = order.getBoxes().size();
 		return "cart";
 	}
 
 	@PostMapping("/product/{id}/add-to-cart")
     public String addToCart(@PathVariable long id, HttpServletRequest request) {
-
-
 		String userEmail = request.getUserPrincipal().getName();
 
-	
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if(!op.isPresent()){
 			return "redirect:/error/notFound";
@@ -155,15 +128,11 @@ public class BoxController {
 		Box box = op.get();
         orderService.addBoxToCart(userEmail, box);
 		
-
-
         return "redirect:/products";
     }
 
 	@PostMapping("/order/close-cart")
     public String closeCart(HttpServletRequest request) {
-
-
 		String userEmail = request.getUserPrincipal().getName();
         orderService.closeTheCart(userEmail);
 		orderService.createNewCart(userEmail);
@@ -187,20 +156,9 @@ public class BoxController {
 			return "redirect:/error/notFound";
 		}
 		Box box = op.get();
-		
-		box.setPrice(40.00f);
-		box.setMadeByAdmin(false);
-		box.setIsOpenBox(false);
-		ClassPathResource resource = new ClassPathResource("static/images/box_red2.png");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
-		box.setImage(blob);
 
-		Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
-        cart.updateCart();
-
+		boxService.addCustomToCart(box, userEmail);
 		boxService.save(box);
-		orderService.addBoxToCart(userEmail, box);
 		return "redirect:/cart";
     }
 	
@@ -208,37 +166,24 @@ public class BoxController {
 
 	@PostMapping("/addChocolate/{id}") //{id}=chocolate id
 	public String addToCustomBox(@PathVariable long id, Model model, HttpServletRequest request,RedirectAttributes redirectAttributes) {
-		
 		Chocolate chocolate = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-		
 		String userEmail = request.getUserPrincipal().getName();	
+		
 		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		Box box;
-		Boolean isInOrder=false;
-		
 		if (op.isPresent()) {
-			box =op.get();
-			isInOrder=true;
+			box =op.get();	
 		} else {
-			box = new Box("Caja personalizada", 0.0f, null, false, new ArrayList<>());
-			box.setIsOpenBox(true);
+			box = boxService.createBox("Caja personalizada", 0.0f, null, false, new ArrayList<>(), userEmail);
 		}
-
-		List<Chocolate> chocolates = box.getChocolates();
-		int currentSize = chocolates.size();
-		if (currentSize >= box.getSize()) {//if box has 9 chocolates(max size)
+		if (boxService.isBoxFull(box)) {//if box has 9 chocolates(max size)
 			model.addAttribute("message", "La caja ya está llena");
 			return "error";
 		}else{
-			chocolates.add(chocolate);
-			box.setChocolates(chocolates);
+			boxService.addChocolateToBox(box, chocolate);
 		}
-		boxService.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
-
-		if(!isInOrder){ //if the box is new, add it to the order
-		orderService.addBoxToCart(userEmail, box);
-		}
-		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
+		boxService.save(box);
+		redirectAttributes.addFlashAttribute("boxChocolates", box.getChocolates());
 		return "redirect:/customBox";
 	}
 	
@@ -260,13 +205,10 @@ public class BoxController {
 		String userEmail = request.getUserPrincipal().getName();	
 		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		Box box;
-		Boolean isInOrder=false;
 		if (op.isPresent()) {
 			box =op.get();
-			isInOrder=true;
 		} else {
-			box = new Box("Caja aleatoria", 0.0f, null, false, new ArrayList<>());
-			box.setIsOpenBox(true);
+			box = boxService.createBox("Caja aleatoria", 0.0f, null, false, new ArrayList<>(), userEmail);
 		}
 		List<Chocolate> chocolates = box.getChocolates();
 		chocolates.clear();
@@ -278,11 +220,8 @@ public class BoxController {
 			int randomIndex = (int) (Math.random() * totalSize);
 			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
 		}
-		boxService.save(box); //boxRepository.save(box);  (cambiar luego al repositorio)
+		boxService.save(box); 
 
-		if(!isInOrder){ //if the box is new, add it to the order
-		orderService.addBoxToCart(userEmail, box);
-		}
 		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
 		return "redirect:/customBox";
 	}

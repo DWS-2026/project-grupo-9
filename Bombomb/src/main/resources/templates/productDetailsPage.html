@@ -1,49 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <body>
     {{>navigationBar}}
 
-    <!-- Product section-->
     <section class="py-5">
+        
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="card shadow-sm rounded-4 p-0 overflow-hidden">
                     <div class="row g-0 align-items-center">
-
+        {{#box}}
                         <div class="col-md-6">
-                            <img class="card-img-top mb-5 mb-md-0" src="/product/{{product.id}}/image"
-                                alt="Producto: {{product.name}}" />
+                            <img class="card-img-top mb-5 mb-md-0" src="/product/{{id}}/image" alt="Producto" />
                         </div>
                         <div class=" col-md-6 p-5">
-                            <h1 class="display-5 fw-bolder">{{product.name}}</h1>
+                            <h1 class="display-5 fw-bolder">{{name}}</h1>
                             <div class="fs-5 mb-5">
-                                <span>{{product.price}}/1ud</span>
-                            </div>
-                            <p class="lead">{{product.description}}</p>
-                            <div class="d-flex">
-                                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
-                                    style="max-width: 3rem" />
-
-                                <form action="/product/{{product.id}}/add-to-cart" method="post">
-                                    <input type="submit" value="Añadir al carrito"
-                                        class="btn btn-outline-dark flex-shrink-0" />
-                                </form>
-
-
-                            </div>
-                            <div class="container px-4 px-lg-5 my-5">
-                                <div class="text-center">
-                                    <a href="/editproduct" class="btn btn-primary btn-outline-dark btn-sm">
-                                        Editar detalles
-                                    </a>
-                                </div>
-                            </div>
                         </div>
+         {{/box}}
+                            <div>   
+                            {{#boxChocolates}}
+                            <div class="d-flex align-items-center me-4">
+                                <img src="/chocolate/{{id}}/image" alt="{{name}}" class="me-2" style="width: 50px; height: 50px;">
+                                <span>{{name}}</span>
+                            </div>
+                            {{/boxChocolates}}
+                            </div>
+                            
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center">
+                                        <form action="/product/{{id}}/add-to-cart" method="post">
+                                            <input type="submit" value="Añadir al carrito"
+                                                class="btn btn-outline-dark flex-shrink-0" />
+                                            <input type="hidden" name="_csrf" value="{{token}}"/>
+                                        </form>
+                                    </div>
+       
+                            </div>
 
                     </div>
                 </div>
             </div>
+            
     </section>
 
     <!-- Footer-->

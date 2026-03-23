@@ -117,30 +117,33 @@ public class DBLoader {
 		blob = new SerialBlob(bytes);
 		chocolateRepository.save(new Chocolate("Mármol de frambuesa", blob));
 
-		Optional <Chocolate> chocolate = chocolateService.findById(1);
-		List <Chocolate> chocolates = new ArrayList<Chocolate>();
-		if(chocolate.isPresent()){
-			for(int i = 0; i < 9; i++){
-				chocolates.add(chocolate.get());
+		List <Chocolate> chocolates;
+		int box = 1;
+		Optional <Chocolate> chocolate = chocolateService.findById(box);
+		while(chocolate.isPresent()){
+			chocolates = new ArrayList<Chocolate>();
+			if(chocolate.isPresent()){
+				for(int i = 0; i < 9; i++){
+					chocolates.add(chocolate.get());
+				}
 			}
-		}
-		resource = new ClassPathResource("static/images/box_heart2.png");
-		bytes = resource.getInputStream().readAllBytes();
-		blob = new SerialBlob(bytes);
-		boxes.save(new Box("Caja 1", 19.50f,
+			if(box%2 == 0){
+				resource = new ClassPathResource("static/images/box_heart2.png");
+			}else{
+				if(box%3 == 0){
+					resource = new ClassPathResource("static/images/boxblackCustomized2.png");
+				}else{
+					resource = new ClassPathResource("static/images/box_red2.png");
+				}
+			}
+			
+			bytes = resource.getInputStream().readAllBytes();
+			blob = new SerialBlob(bytes);
+			boxes.save(new Box("Caja " + box, 18.50f,
 			blob, true, chocolates));
-
-		chocolate = chocolateService.findById(2);
-		chocolates = new ArrayList<Chocolate>();
-		if(chocolate.isPresent()){
-			for(int i = 0; i < 9; i++){
-				chocolates.add(chocolate.get());
-			}
+			box++;
+			chocolate = chocolateService.findById(box);
 		}
-		ClassPathResource resource2 = new ClassPathResource("static/images/box_red2.png");
-		byte[] bytes2 = resource2.getInputStream().readAllBytes();
-		Blob blob2 = new SerialBlob(bytes2);
-		boxes.save(new Box("Caja 2", 18.50f,
-			blob2, true, chocolates));
+	
 	}
 }

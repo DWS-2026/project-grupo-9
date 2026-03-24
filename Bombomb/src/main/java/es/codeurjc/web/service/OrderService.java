@@ -16,13 +16,11 @@ import jakarta.annotation.PostConstruct;
 
 @Service
 public class OrderService {
-    private final UserRepository userRepository;
+    @Autowired
+    private UserService userService;
     @Autowired
     private OrderRepository orderRepository;
 
-    OrderService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @PostConstruct
     public void init() {
@@ -61,7 +59,7 @@ public class OrderService {
 
         Order newCart = new Order(LocalDate.now(), 0.0f, 0, true);
         newCart.setBoxes(new ArrayList<>());
-        newCart.setUser(userRepository.findByEmail(userEmail).get());
+        newCart.setUser(userService.findByEmail(userEmail).get());
         return orderRepository.save(newCart);
     }
 

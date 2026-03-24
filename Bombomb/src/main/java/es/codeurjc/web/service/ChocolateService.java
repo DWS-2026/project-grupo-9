@@ -12,8 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
-import es.codeurjc.web.model.Order;
-import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.ChocolateRepository;
 
 @Service
@@ -21,12 +19,6 @@ public class ChocolateService {
 
     @Autowired
     private ChocolateRepository chocolateRepository;
-
-    @Autowired
-    private BoxRepository boxRepository;
-
-    @Autowired
-    private OrderService orderService;
 
     @Autowired
     private BoxService boxService;
@@ -57,7 +49,7 @@ public class ChocolateService {
             chocolate.setIsAvailable(false);
             chocolateRepository.save(chocolate);
 
-            List<Box> boxes = boxRepository.findByChocolatesId(id);
+            List<Box> boxes = boxService.findByChocolatesId(id);
             for (Box box : boxes) {
                 boxService.delete(box);
 

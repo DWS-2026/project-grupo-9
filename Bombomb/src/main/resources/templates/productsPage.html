@@ -109,16 +109,17 @@
                                     </div>
                                     <!-- Product actions-->
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        
                                         <div class="text-center">
                                             <form action="/product/{{id}}/add-to-cart" method="post">
                                                 <input type="submit" value="Añadir al carrito"
-                                                    class="btn btn-outline-dark flex-shrink-0" />
+                                                    class="btn btn-outline-dark flex-shrink-0 mb-1" />
                                                 <input type="hidden" name="_csrf" value="{{token}}"/>
                                             </form>
                                         </div>
                                         <!--Details-->
                                         <div class="text-center">                                           
-                                            <a href="/product/{{id}}/details" class="btn btn-outline-dark flex-shrink-0">Detalles de la caja</a>            
+                                            <a href="/product/{{id}}/details" class="btn btn-outline-dark flex-shrink-0 w-100 mb-1">Detalles de la caja</a>            
                                         </div>
                                         {{#admin}}
                                         <div class="text-center">

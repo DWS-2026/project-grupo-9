@@ -68,33 +68,39 @@
                         </div>
                     </div>
                     {{#admin}}<!--para que el admin no elimine su perfil, el admin elimina a un usuario-->
-                    
+
                     <form action="/delete/{{id}}/profile" method="post">
                         <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
                         <input type="hidden" name="_csrf" value="{{token}}" />
-                        
+
                     </form>
-                   
+
                     {{/admin}}
                     {{^admin}}<!--el usuario elimina su propio perfil-->
-                    <form action="/delete/profile" method="post">
-                        <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-                    </form>
-                
-                    <!--para que el admin no edite un perfil (solo tiene permiso para eliminar)-->
-                    <form action="/editprofile" method="post">
-                        <input type="submit" value="Editar perfil" class="btn btn-primary" />
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-                    </form>
-                    
-                    <form action="/logout" method="post">
-                        <input type="submit" class="btn btn-primary" value="Sign Out" />
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-                    </form>
-                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <form action="/delete/profile" method="post">
+                                <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+                        </div>
+                        <div class="col-sm-4">
+                            <!--para que el admin no edite un perfil (solo tiene permiso para eliminar)-->
+                            <form action="/editprofile" method="post">
+                                <input type="submit" value="Editar perfil" class="btn btn-primary" />
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+                        </div>
+                        <div class="col-sm-4">
+                            <form action="/logout" method="post">
+                                <input type="submit" class="btn btn-primary" value="Sign Out" />
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+                        </div>
+
+                    </div>
                     {{/admin}}
-                   
+
                     <div class="col-lg-12 mt-5">
                         <div class="card mb-4">
                             <div class="card-body text-center">

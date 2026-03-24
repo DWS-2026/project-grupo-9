@@ -76,6 +76,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/profile/*/image").hasAnyRole("ADMIN")
                     .requestMatchers("/create/chocolate").hasAnyRole("ADMIN")
                     .requestMatchers("/adminAddBox/*").hasAnyRole("ADMIN")
+                    .requestMatchers("/box/*/delete").hasAnyRole("ADMIN")
                 )
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")

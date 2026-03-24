@@ -61,7 +61,7 @@ public class BoxService {
         box.setPrice(19.99f);
 		box.setMadeByAdmin(false);
 		box.setIsOpenBox(false);
-		ClassPathResource resource = new ClassPathResource("static/images/box_red2.png");
+		ClassPathResource resource = new ClassPathResource("static/images/Boxes/box_red2.png");
 		byte[] bytes = resource.getInputStream().readAllBytes();
 		Blob blob = new SerialBlob(bytes);
 		box.setImage(blob);

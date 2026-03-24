@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/login").permitAll()
                     .requestMatchers("/signin").permitAll()
                     .requestMatchers("/css/*").permitAll()
-                    .requestMatchers("/images/*").permitAll()
+                    .requestMatchers("/images/**").permitAll()
                     .requestMatchers("/chocolate/**").permitAll()
                     .requestMatchers("/products").permitAll()
                     .requestMatchers("/product/*/image").permitAll()

@@ -57,6 +57,7 @@
                                         </div>
                                     </div>
                                     <!-- Product actions-->
+                                     {{#admin}}
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                         <div class="text-center">
                                             <form action="/delete/{{id}}/chocolate" method="post"
@@ -68,6 +69,7 @@
                                             </form>
                                         </div>
                                     </div>
+                                    {{/admin}}
                                 </div>
                             </div>
                             {{/chocolates}}
@@ -115,9 +117,18 @@
                                             </form>
                                         </div>
                                         <!--Details-->
-                                        <div class="info-product-group">
+                                        <div class="text-center">                                           
                                             <a href="/product/{{id}}/details" class="btn btn-outline-dark flex-shrink-0">Detalles de la caja</a>            
                                         </div>
+                                        {{#admin}}
+                                        <div class="text-center">
+                                            <form action="/box/{{id}}/delete" method="post">
+                                                <input type="submit" value="Borrar caja"
+                                                    class="btn btn-outline-danger mt-auto" />
+                                                <input type="hidden" name="_csrf" value="{{token}}"/>
+                                            </form>
+                                        </div>
+                                        {{/admin}}
                                     </div>
                                 </div>
                             </div>
@@ -135,6 +146,7 @@
                         </div>
                     </div>
                 </div>
+                {{#admin}}
                 <div class="container px-4 px-lg-5 my-5">
                     <div class="text-center">
                         <a href="/create/chocolate" class="btn btn-primary btn-outline-dark btn-sm">
@@ -142,6 +154,7 @@
                         </a>
                     </div>
                 </div>
+                {{/admin}}
         </section>
     </main>
     <!-- Footer-->

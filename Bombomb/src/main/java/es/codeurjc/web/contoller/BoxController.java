@@ -52,7 +52,10 @@ public class BoxController {
 	
 
 	@GetMapping("/products")
-	public String products(Model model) {
+	public String products(Model model, HttpServletRequest request) {
+		if(request.isUserInRole("ADMIN")){
+			model.addAttribute("admin", true);
+		}
 		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
 		model.addAttribute("boxes", boxService.findByMadeByAdminAndIsOpenBoxAndIsAvailable(true, false, true));
 		return "productsPage";
@@ -249,5 +252,17 @@ public class BoxController {
 		return "redirect:/products";
 	}
 	
+	@PostMapping("/box/{id}/delete")
+	public String boxDelete(@PathVariable long id, HttpServletRequest request){
+		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
+		if(!op.isPresent()){
+			return "redirect:/error/notFound";
+		}else{
+			Box box= op.get();
+			boxService.delete(box);
+			return "redirect:/products";
+		}
+
+	}
 
 }

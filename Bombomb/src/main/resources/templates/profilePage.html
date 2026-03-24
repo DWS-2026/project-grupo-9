@@ -68,13 +68,14 @@
                         </div>
                     </div>
                     {{#admin}}<!--para que el admin no elimine su perfil, el admin elimina a un usuario-->
-
-                    <form action="/delete/{{id}}/profile" method="post">
-                        <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-
-                    </form>
-
+                    <div class="row">
+                        <div class="col-sm-3 offset-sm-5">
+                            <form action="/delete/{{id}}/profile" method="post">
+                                <input type="submit" value="Eliminar perfil" class="btn btn-primary" />
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+                        </div>
+                    </div>
                     {{/admin}}
                     {{^admin}}<!--el usuario elimina su propio perfil-->
                     <div class="row">

@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -55,7 +56,8 @@ public class UserController {
 			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
 			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
 		} else {
-			return ResponseEntity.notFound().build();
+			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
+        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
 		}
 	}
 
@@ -103,7 +105,6 @@ public class UserController {
 		model.addAttribute("name", actualUser.getName());
 		model.addAttribute("telephone", actualUser.getTelephone());
 		model.addAttribute("surname", actualUser.getSurname());
-		model.addAttribute("image", actualUser.getImage());
 
 		return "editprofile";
 	}
@@ -140,7 +141,7 @@ public class UserController {
 
 	@PostMapping("/delete/{id}/profile")
 	public String deleteUserForAdmin(Model model, @PathVariable long id) {
-		User actualUser = userService.findById(id).orElseThrow();
+		User actualUser = userService.findById(id).orElseThrow(()-> new IllegalArgumentException("Usuario no encontrado"));
 		userService.delete(actualUser);
 		return "redirect:/userList";
 	}

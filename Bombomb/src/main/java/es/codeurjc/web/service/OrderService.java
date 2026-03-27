@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.Box;
-import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.repository.OrderRepository;
 import jakarta.annotation.PostConstruct;
 
@@ -64,16 +63,12 @@ public class OrderService {
     }
 
     public void addBoxToCart(String userEmail, Box box) {
+        Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
         if(isBoxInCart(userEmail, box.getId())==false){
-            Order cart = orderRepository.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();
-
-            List<Box> boxes = cart.getBoxes();
-            boxes.add(box);
-            
-            cart.updateCart();
-            orderRepository.save(cart);
+            cart.addBox(box);      
         }
-        
+        cart.updateCart();
+        orderRepository.save(cart);
     }
 
     public void closeTheCart(String userEmail) {

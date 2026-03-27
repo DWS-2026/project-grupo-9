@@ -128,4 +128,8 @@ public class User {
         this.orders = orders;
     }
 
+    public boolean isThisRole(String role){
+        return this.roles.contains(role);
+    }
+
 }

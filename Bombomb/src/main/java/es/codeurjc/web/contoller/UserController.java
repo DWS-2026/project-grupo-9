@@ -140,8 +140,11 @@ public class UserController {
 	}
 
 	@PostMapping("/delete/{id}/profile")
-	public String deleteUserForAdmin(Model model, @PathVariable long id) {
+	public String deleteUserForAdmin(Model model, @PathVariable long id, HttpServletRequest request) {
 		User actualUser = userService.findById(id).orElseThrow(()-> new IllegalArgumentException("Usuario no encontrado"));
+		if(actualUser.isThisRole("ADMIN")){
+			request.getSession().invalidate();
+		}
 		userService.delete(actualUser);
 		return "redirect:/userList";
 	}

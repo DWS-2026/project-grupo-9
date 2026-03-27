@@ -35,13 +35,14 @@
         {{^admin}}<!--not admin-->
         <div class="add-to-cart">
             <form action="/custom/{{box.id}}/add-to-cart" method="post">
+                <input class="form-control text-center me-3" id="input" type="text" name="name"  value="{{name}}" style="max-width: 20rem" required/>
                 <input type="submit" value="Añadir al carrito" class="btn buy-btn" />
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
         </div>       
         {{/admin}}
         {{#admin}}<!--admin-->
-        <div class="col-md-8"> <!--para que aparezcan los dos a la derecha-->
+        <div class="col-md-8"> 
         </div>
         <div class="add-to-boxes">
             <div class="col-md-8"></div>

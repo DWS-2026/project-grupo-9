@@ -116,6 +116,7 @@ public class BoxController {
 
 		Order order = orderService.findByUserEmailAndIsOpen(userEmail,
 		 	true).stream().findFirst().orElseThrow(() -> new IllegalArgumentException("No se encontró un carrito activo para el usuario"));
+		order.updatePrice();
 		model.addAttribute("order", order);
 		return "cart";
 	}
@@ -152,14 +153,14 @@ public class BoxController {
 	}
 
 	@PostMapping("/custom/{id}/add-to-cart")
-    public String addCustomToCart(@PathVariable long id, HttpServletRequest request) throws IOException, SQLException {
+    public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name) throws IOException, SQLException {
 		String userEmail = request.getUserPrincipal().getName();
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if(!op.isPresent()){
 			return "redirect:/error/notFound";
 		}
 		Box box = op.get();
-
+		box.setName(name);
 		boxService.addCustomToCart(box, userEmail);
 		boxService.save(box);
 		return "redirect:/cart";

@@ -325,7 +325,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 #### **Alumno 3 - [Inés Uclés Ortiz]**
 
-[En esta parte de la práctica me he encargado en su mayoría de darle funcionalidad a todo lo que tiene que ver con los roles de usuario y administrador (excepto el login) y la creación del servicio de usuario, además de volver a hacer el diagrama de navegación con los cambios.]
+En esta parte de la práctica me he encargado en su mayoría de darle funcionalidad a todo lo que tiene que ver con los roles de usuario y administrador (excepto el login) y la creación del servicio de usuario, además de volver a hacer el diagrama de navegación con los cambios.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|

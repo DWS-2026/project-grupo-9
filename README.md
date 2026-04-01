@@ -219,11 +219,42 @@ He creado las páginas de personalizar caja, lista de usuarios y editar perfil. 
 
 #### **Diagrama de Navegación**
 
-Solo si ha cambiado.
+![Diagrama de Navegación](P2/navigation-diagram2.png)
+
+> Ahora las cajas personalizadas son accesibles solo si estás registrado.
+(*) La única diferencia en la caja personalizada entre usuario y administrador es que en administrador hay unos botones para hacer que la caja que está haciendo el administrador vaya a la paginas e productos. (**) La página de productos de administrador es igual pero con el botón de añadir y borrar producto.
+> Página de error: página de error de pago eliminada porque siempre se hace bien.
+
 
 #### **Capturas de Pantalla Actualizadas**
+#### **1. Página de carrito**
+![Página de carrito](P2/cart.png)
 
-Solo si han cambiado.
+>Ahora no están los botones para aumentar o disminuir la cantidad de una misma caja. Solo se puede comprar el mismo producto una vez por pedido.
+#### **2. Página de añadir producto**
+![Página de añadir producto](P2/add-product.png)
+
+>Sigue añadiendo nuevos tipos de bombones pero con solo el nombre y la imagen para poder ser añadido en la caja personalizada o crear una nueva caja predeterminada con ese bombón.
+#### **3. Página de productos**
+![Página de productos](P2/boxUser.png)
+
+>Ahora primero aparecen las cajas con la opción de añadir al carrito y después los bombones, que no se pueden comprar de forma individual.
+#### **4. Página de detalles**
+![Página de detalles](P2/detailsUser.png)
+
+>Los detalles son de las cajas.
+#### **5. Página de perfil**
+![Página de perfil](P2/profileUser.png)
+
+>Añadido el botón de cerrar sesión y los botones están alineados con la imagen y descripción del usuario.
+#### **6. Página de personalizar una caja**
+![Página de caja personalizada](P2/customizeUser.png)
+
+>La caja ahora es redonda y con espacio para 9 bombones y debajo de las imágenes de los bombones aparece el nombre de cada uno. Además, los bombones parecen a la izquierda en forma de lista, no cada uno en un hueco de la caja.
+#### **7. Página de editar perfil**
+![Página de editar perfil](P2/edit-profile.png)
+
+>Quitada la opción de modificar el correo electrónico y el número de teléfono, además de añadido el botón de guardar cambios.
 
 ### **Instrucciones de Ejecución**
 

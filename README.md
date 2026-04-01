@@ -323,17 +323,17 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Inés Uclés Ortiz]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+[En esta parte de la práctica me he encargado en su mayoría de darle funcionalidad a todo lo que tiene que ver con los roles de usuario y administrador (excepto el login) y la creación del servicio de usuario, además de volver a hacer el diagrama de navegación con los cambios.]
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Funcionalidad del sign in](https://github.com/DWS-2026/dws-2026-project-base/commit/80c63a40007a1d4bd3423c7512be0d9e2a40f80b)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|2| [Funcionalidad del botón Ir a perfil en userList](https://github.com/DWS-2026/project-grupo-9/commit/8efbef4103557f88d349a865305a82787bcd8c15)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|3| [Visitar perfil como admin](https://github.com/DWS-2026/project-grupo-9/commit/1c7cfa02c69d404fd099fa82fca5eabcae5533f1)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|4| [Funcionalidad de editar perfil](https://github.com/DWS-2026/project-grupo-9/commit/3a22c29936a6749fd69d8c2c625c6b0fe2c0614f)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|5| [Diagrama de navegación](https://github.com/DWS-2026/project-grupo-9/commit/00ad576009201e759832bd1c6da209949db67522)  | [Diagrama de navegación](P2/navigation-diagram2.png)   |
 
 ---
 

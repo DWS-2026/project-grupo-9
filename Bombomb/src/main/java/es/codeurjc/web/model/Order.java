@@ -83,6 +83,10 @@ public class Order {
         return boxes;
     }
 
+    public void addBox(Box box) {
+        this.boxes.add(box);
+    }
+
     public void setBoxes(List<Box> products) {
         this.boxes = products;
     }

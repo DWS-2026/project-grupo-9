@@ -297,7 +297,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 #### **Alumno 1 - Ainoa Acosta Sánchez**
 
-Me he encargado de la funcionalidad de la clase Chocolate, de la seguridad, de la creación de las bases de datos, he gestionado el cambio a https y el csrf y he creado el diagrama de clases y templates. Además, como mi parte era más corta, he ayudado en la parte de la funcionalidad de los usuarios y las cajas he ayudado en la organización de las tareas.
+Me he encargado de la funcionalidad de la clase Chocolate, de la seguridad, de la creación de las bases de datos, he gestionado el cambio a https y el csrf y he creado el diagrama de clases y templates. Además, como mi parte era más corta, he ayudado en la parte de la funcionalidad de los usuarios y las cajas, también he ayudado en la organización de las tareas.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|

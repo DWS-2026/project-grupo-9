@@ -295,17 +295,17 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 > [Descripción] El diagrama muestra en color gris las vistas, en morado los html que incluye cada vista, en verde los controladores, en rojo los servicios, en azul los repositorios y en blanco las entidades.
 ### **Participación de Miembros en la Práctica 2**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ainoa Acosta Sánchez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de la funcionalidad de la clase Chocolate, de la seguridad, de la creación de las bases de datos, he gestionado el cambio a https y el csrf y he creado el diagrama de clases y templates. Además, como mi parte era más corta, he ayudado en la parte de la funcionalidad de los usuarios y las cajas he ayudado en la organización de las tareas.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Perfil dinámico](https://github.com/DWS-2026/project-grupo-9/commit/2d191f6a744804af8399bc049c720cc1827e612e)  | [SecurityConfiguration](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/SecurityConfiguration.java)   |
+|2| [Creación clase Chocolate](https://github.com/DWS-2026/project-grupo-9/commit/a5017486c700353e1d1daef4c8a53e6f4962fac1)  | [UserController](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|3| [Funcionalidad de borrar bombón](https://github.com/DWS-2026/project-grupo-9/commit/664c756b88431a9e5ce17163901b299e95c50599)  | [Diagrama de Clases y Templates](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/classAndTemplatesDiagram.png)   |
+|4| [Funcionalidad de Chocolate en el controlador](https://github.com/DWS-2026/project-grupo-9/commit/24bffc8446630c7772646c71da19b91b23c4decb)  | [ChocolateController](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/contoller/ChocolateController.java)   |
+|5| [Creación del ChocolateService](https://github.com/DWS-2026/project-grupo-9/commit/c4f63e18fdc6747b651070cc96c2a65734c5de22)  | [ChocolateService](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/service/ChocolateService.java)   |
 
 ---
 

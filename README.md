@@ -282,9 +282,9 @@ He creado las páginas de personalizar caja, lista de usuarios y editar perfil. 
 
 Diagrama mostrando las entidades, sus campos y relaciones:
 
-![Diagrama Entidad-Relación](/ReadmeTemplateImages/database-diagram.png)
+![Diagrama Entidad-Relación Simple](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/EntitiesDiagram.png)
+![Diagrama Entidad-Relación Completo](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/dataBaseEntitiesDiagram.png)
 
-> [Descripción opcional: Ej: "El diagrama muestra las 4 entidades principales: Usuario, Producto, Pedido y Categoría, con sus respectivos atributos y relaciones 1:N y N:M."]
 
 ### **Diagrama de Clases y Templates**
 
@@ -309,17 +309,17 @@ Me he encargado de la funcionalidad de la clase Chocolate, de la seguridad, de l
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - Ángela Briceño Ramírez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de trabajar en la vista dinámica de productos en los htmls, trabajar en todo lo relacionado a los carritos y he creado los diagramas de entidades. También me he encargado de grabar el vídeo y ponerle los subtítulos.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Creación del Order.java](https://github.com/DWS-2026/project-grupo-9/commit/e2b3988bdb0a058452cd94ff96dbb11382c0ce1a)  | [Order.java](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/model/Order.java)   |
+|2| [Creación del Product.java](https://github.com/DWS-2026/project-grupo-9/commit/b6d889149e75fa4baa3fa51470af3407f1554e5d)  | [Diagrama Entidades](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/EntitiesDiagram.png)   |
+|3| [OrderService](https://github.com/DWS-2026/project-grupo-9/commit/52ab208607564cc37b84e4c8dd041c6c7c17ee23)  | [OrderService.java](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/service/OrderService.java)   |
+|4| [Borrado en el carrito y gestión de duplicados](https://github.com/DWS-2026/project-grupo-9/commit/8a27a329c8f409333712df962b3e74e891f2b2a0)  | [BoxController.java](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
+|5| [Vídeo](https://github.com/DWS-2026/project-grupo-9/commit/079c9cf92466d550ab049eadd4c30e335484dc09)  | [Vídeo](https://www.youtube.com/watch?v=x91MPoITQ3I)   |
 
 ---
 

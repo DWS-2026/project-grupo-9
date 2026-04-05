@@ -36,13 +36,12 @@ public class ChocolateController {
     @PostMapping("/create/chocolate")
 	public String newChocolate(Model model, Chocolate chocolate, MultipartFile imageFile) throws IOException {
 		chocolateService.save(chocolate, imageFile);
-		model.addAttribute("products", chocolateService.findAll());
 		return "redirect:/products";
 	}
 
     @GetMapping("/chocolate/{id}/image")
 	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
-		Optional<Chocolate> op = chocolateService.findById(id);
+		Optional<Chocolate> op = chocolateService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
 			Blob image = op.get().getImage();
 			Resource imageFile = new InputStreamResource(image.getBinaryStream());

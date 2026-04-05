@@ -70,13 +70,13 @@ public class UserController {
 			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
 			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
 		} else {
-			return ResponseEntity.notFound().build();
+			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
+        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
 		}
 	}
 
 	@GetMapping("/login")
 	public String logIn(Model model) {
-
 		return "logInPage";
 	}
 
@@ -158,7 +158,6 @@ public class UserController {
 			}
 		}
 		if(!userService.minPasswordLength(password)){
-			model.addAttribute("message", "La contraseña no tiene 8 caracteres");
 			return "redirect:/error/minPassword";
 		}
 		userService.save(user, password);

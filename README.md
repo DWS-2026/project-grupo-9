@@ -219,11 +219,42 @@ He creado las páginas de personalizar caja, lista de usuarios y editar perfil. 
 
 #### **Diagrama de Navegación**
 
-Solo si ha cambiado.
+![Diagrama de Navegación](P2/navigation-diagram2.png)
+
+> Ahora las cajas personalizadas son accesibles solo si estás registrado.
+(*) La única diferencia en la caja personalizada entre usuario y administrador es que en administrador hay unos botones para hacer que la caja que está haciendo el administrador vaya a la paginas e productos. (**) La página de productos de administrador es igual pero con el botón de añadir y borrar producto.
+> Página de error: página de error de pago eliminada porque siempre se hace bien.
+
 
 #### **Capturas de Pantalla Actualizadas**
+#### **1. Página de carrito**
+![Página de carrito](P2/cart.png)
 
-Solo si han cambiado.
+>Ahora no están los botones para aumentar o disminuir la cantidad de una misma caja. Solo se puede comprar el mismo producto una vez por pedido.
+#### **2. Página de añadir producto**
+![Página de añadir producto](P2/add-product.png)
+
+>Sigue añadiendo nuevos tipos de bombones pero con solo el nombre y la imagen para poder ser añadido en la caja personalizada o crear una nueva caja predeterminada con ese bombón.
+#### **3. Página de productos**
+![Página de productos](P2/boxUser.png)
+
+>Ahora primero aparecen las cajas con la opción de añadir al carrito y después los bombones, que no se pueden comprar de forma individual.
+#### **4. Página de detalles**
+![Página de detalles](P2/detailsUser.png)
+
+>Los detalles son de las cajas.
+#### **5. Página de perfil**
+![Página de perfil](P2/profileUser.png)
+
+>Añadido el botón de cerrar sesión y los botones están alineados con la imagen y descripción del usuario.
+#### **6. Página de personalizar una caja**
+![Página de caja personalizada](P2/customizeUser.png)
+
+>La caja ahora es redonda y con espacio para 9 bombones y debajo de las imágenes de los bombones aparece el nombre de cada uno. Además, los bombones parecen a la izquierda en forma de lista, no cada uno en un hueco de la caja.
+#### **7. Página de editar perfil**
+![Página de editar perfil](P2/edit-profile.png)
+
+>Quitada la opción de modificar el correo electrónico y el número de teléfono, además de añadido el botón de guardar cambios.
 
 ### **Instrucciones de Ejecución**
 
@@ -264,17 +295,17 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 > [Descripción] El diagrama muestra en color gris las vistas, en morado los html que incluye cada vista, en verde los controladores, en rojo los servicios, en azul los repositorios y en blanco las entidades.
 ### **Participación de Miembros en la Práctica 2**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ainoa Acosta Sánchez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de la funcionalidad de la clase Chocolate, de la seguridad, de la creación de las bases de datos, he gestionado el cambio a https y el csrf y he creado el diagrama de clases y templates. Además, como mi parte era más corta, he ayudado en la parte de la funcionalidad de los usuarios y las cajas, también he ayudado en la organización de las tareas.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Perfil dinámico](https://github.com/DWS-2026/project-grupo-9/commit/2d191f6a744804af8399bc049c720cc1827e612e)  | [SecurityConfiguration](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/SecurityConfiguration.java)   |
+|2| [Creación clase Chocolate](https://github.com/DWS-2026/project-grupo-9/commit/a5017486c700353e1d1daef4c8a53e6f4962fac1)  | [UserController](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|3| [Funcionalidad de borrar bombón](https://github.com/DWS-2026/project-grupo-9/commit/664c756b88431a9e5ce17163901b299e95c50599)  | [Diagrama de Clases y Templates](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/classAndTemplatesDiagram.png)   |
+|4| [Funcionalidad de Chocolate en el controlador](https://github.com/DWS-2026/project-grupo-9/commit/24bffc8446630c7772646c71da19b91b23c4decb)  | [ChocolateController](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/contoller/ChocolateController.java)   |
+|5| [Creación del ChocolateService](https://github.com/DWS-2026/project-grupo-9/commit/c4f63e18fdc6747b651070cc96c2a65734c5de22)  | [ChocolateService](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/service/ChocolateService.java)   |
 
 ---
 
@@ -292,17 +323,17 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - Inés Uclés Ortiz**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+En esta parte de la práctica me he encargado en su mayoría de darle funcionalidad a todo lo que tiene que ver con los roles de usuario y administrador (excepto el login) y la creación del servicio de usuario, además de volver a hacer el diagrama de navegación con los cambios.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Funcionalidad del sign in](https://github.com/DWS-2026/dws-2026-project-base/commit/80c63a40007a1d4bd3423c7512be0d9e2a40f80b)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|2| [Funcionalidad del botón Ir a perfil en userList](https://github.com/DWS-2026/project-grupo-9/commit/8efbef4103557f88d349a865305a82787bcd8c15)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|3| [Visitar perfil como admin](https://github.com/DWS-2026/project-grupo-9/commit/1c7cfa02c69d404fd099fa82fca5eabcae5533f1)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|4| [Funcionalidad de editar perfil](https://github.com/DWS-2026/project-grupo-9/commit/3a22c29936a6749fd69d8c2c625c6b0fe2c0614f)  | [UserController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserController.java)   |
+|5| [Diagrama de navegación](https://github.com/DWS-2026/project-grupo-9/commit/00ad576009201e759832bd1c6da209949db67522)  | [Diagrama de navegación](P2/navigation-diagram2.png)   |
 
 ---
 

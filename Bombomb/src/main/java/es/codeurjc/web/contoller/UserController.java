@@ -101,9 +101,6 @@ public class UserController {
 		User actualUser = userService.editUserProfile(request.getUserPrincipal().getName(), name, surname, telephone, imageFile);
 		
 		model.addAttribute("user", actualUser);
-		model.addAttribute("name", actualUser.getName());
-		model.addAttribute("telephone", actualUser.getTelephone());
-		model.addAttribute("surname", actualUser.getSurname());
 
 		return "editprofile";
 	}

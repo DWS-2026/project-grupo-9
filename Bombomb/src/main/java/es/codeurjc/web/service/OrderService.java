@@ -21,10 +21,6 @@ public class OrderService {
     private OrderRepository orderRepository;
 
 
-    @PostConstruct
-    public void init() {
-
-    }
 
     public void save(Order order) {
         orderRepository.save(order);

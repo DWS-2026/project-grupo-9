@@ -269,26 +269,31 @@ He creado las páginas de personalizar caja, lista de usuarios y editar perfil. 
 1. **Clonar el repositorio**
    ```bash
    git clone https://github.com/DWS-2026/project-grupo-9.git
-	 cd project-grupo-9
+   cd project-grupo-9
    ```
 
 2. **Iniciar la base de datos MySQL**
-Crear un esquema con el nombre bombomb.
-La aplicación se conecta a la base de datos MySQL usando usuario: root y contraseña: lac0jaYlapr0fe
-Configurar el archivo application.properties cambiando la contraseña a la que se tenga configurada en MySQL 
-4. **Iniciar la aplicación**
-Ejecuta
+	
+	Crear un esquema con el nombre bombomb.
+	La aplicación se conecta a la base de datos MySQL usando usuario: root y contraseña: lac0jaYlapr0fe
+	Configurar el archivo application.properties cambiando la contraseña a la que se tenga configurada en MySQL
+
+3. **Iniciar la aplicación**
+	
+	Ejecuta
    ```bash
    mvn clean install
    mvn spring-boot:run
    ```
-o desde VSCode, con las extensiones de Java y SpringBoot, ejecutar el programa desde Application.java o desde el apartado de Spring Boot Dashboard
-5. **Acceder a la aplicación**
-Sólo se puede acceder a la aplicación desde HTTPS. Acceder a
-  ```bash
-  https://localhost:8443/
-  ```
-Aparecerá que no es un sitio seguro, darle a 'Avanzado' y a 'Ir a localhost (no es seguro)'
+	o desde VSCode, con las extensiones de Java y SpringBoot, ejecutar el programa desde Application.java o desde el apartado de 	Spring Boot Dashboard
+
+4. **Acceder a la aplicación**
+	
+	Sólo se puede acceder a la aplicación desde HTTPS. Acceder a
+  	```bash
+  	https://localhost:8443/
+  	```
+	Aparecerá que no es un sitio seguro, darle a 'Avanzado' y a 'Ir a localhost (no es seguro)'
    
 
 #### **Credenciales de prueba**
@@ -364,9 +369,9 @@ Me he encargado de la clase Box (incluyendo su service y repositorio), de la fun
 |:------------: |:------------:| :------------:|
 |1| [Clase Box](https://github.com/DWS-2026/project-grupo-9/commit/9f44891653b22b44b28285e05444858f27172a92)  | [Box](Bombomb/src/main/java/es/codeurjc/web/model/Box.java)   |
 |2| [Función añadir bombón](https://github.com/DWS-2026/project-grupo-9/commit/eb58fcfa37eabf50ecabaf9b8ef3d427caf4204c)  | [BoxContoller](Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
-|3| [Función crear caja aleatoria]((https://github.com/DWS-2026/project-grupo-9/commit/7e1fb5c7dbc209ae8b50797298a57c54371aad7e))  | [BoxController](Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
-|4| [BoxService]([URL_commit_3](https://github.com/DWS-2026/project-grupo-9/commit/f46193499c8eea527b0d2e47154ac8183154d812))  | [BoxService](Bombomb/src/main/java/es/codeurjc/web/service/BoxService.java)   |
-|5| [Página de detalles del producto]([URL_commit_5](https://github.com/DWS-2026/project-grupo-9/commit/8763e4c33f3220e087034faa484d9ff9220fcaa5))  | [productDetailsPage](Bombomb/src/main/resources/templates/productDetailsPage.html)   |
+|3| [Función crear caja aleatoria](https://github.com/DWS-2026/project-grupo-9/commit/7e1fb5c7dbc209ae8b50797298a57c54371aad7e)  | [BoxController](Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
+|4| [BoxService](https://github.com/DWS-2026/project-grupo-9/commit/f46193499c8eea527b0d2e47154ac8183154d812)  | [BoxService](Bombomb/src/main/java/es/codeurjc/web/service/BoxService.java)   |
+|5| [Página de detalles del producto](https://github.com/DWS-2026/project-grupo-9/commit/8763e4c33f3220e087034faa484d9ff9220fcaa5)  | [productDetailsPage](Bombomb/src/main/resources/templates/productDetailsPage.html)   |
 
 ---
 

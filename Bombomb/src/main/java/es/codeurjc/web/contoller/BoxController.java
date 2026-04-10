@@ -1,7 +1,6 @@
 package es.codeurjc.web.contoller;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -11,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +24,11 @@ import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import es.codeurjc.web.service.UserService;
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -49,6 +44,8 @@ public class BoxController {
 	OrderService orderService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	ImageService imageService;
 	
 
 	@GetMapping("/products")
@@ -65,13 +62,9 @@ public class BoxController {
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			Blob image = op.get().getImage();
-			Resource imageFile = new InputStreamResource(image.getBinaryStream());
-			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+			return imageService.getImage(op.get().getImage());
 		} else {
-			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
-        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
+        	return imageService.getNotFoundImage();
 		}
 	}
 

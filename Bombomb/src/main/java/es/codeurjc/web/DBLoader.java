@@ -24,10 +24,6 @@ import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.service.ChocolateService;
 import jakarta.annotation.PostConstruct;
 
-/*FALTA POR HACER EL 
-1.SECURITYCONFIGURATION 
-2.KEYSTORE.JKS 
-3.WEBCONTROLLER*/
 @Component
 public class DBLoader {
 
@@ -57,14 +53,14 @@ public class DBLoader {
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Administrador", "Adminis Trado",
-				"666 666 666", "admin@gmail.com", blob,
+				"666666666", "admin@gmail.com", blob,
 				passwordEncoder.encode("admin"), "USER", "ADMIN"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Usu", "Ario",
-				"000 000 000", "user@gmail.com", blob,
+				"000000000", "user@gmail.com", blob,
 				passwordEncoder.encode("user"), "USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_flower.jpeg");

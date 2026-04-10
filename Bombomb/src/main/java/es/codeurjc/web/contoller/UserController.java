@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.model.Order;
+import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.OrderService;
 import es.codeurjc.web.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +37,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ImageService imageService;
 
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
@@ -50,13 +54,9 @@ public class UserController {
 	public ResponseEntity<Object> downloadProfileImageAdminList(@PathVariable long id) throws SQLException {
 		Optional<User> op = userService.findById(id);
 		if (op.isPresent() && op.get().getImage() != null) {
-			Blob image = op.get().getImage();
-			InputStreamResource imageFile = new InputStreamResource(image.getBinaryStream());
-			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+			return imageService.getImage(op.get().getImage());
 		} else {
-			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
-        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
+			return imageService.getNotFoundImage();
 		}
 	}
 
@@ -65,13 +65,9 @@ public class UserController {
 		Optional<User> op = userService.findByEmail(request.getUserPrincipal().getName());
 
 		if (op.isPresent() && op.get().getImage() != null) {
-			Blob image = op.get().getImage();
-			InputStreamResource imageFile = new InputStreamResource(image.getBinaryStream());
-			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+			return imageService.getImage(op.get().getImage());
 		} else {
-			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
-        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
+			return imageService.getNotFoundImage();
 		}
 	}
 
@@ -149,7 +145,7 @@ public class UserController {
 	public String newUser(Model model, User user, MultipartFile imageFile,HttpServletRequest request, @RequestParam String password) throws IOException {
 		if (!imageFile.isEmpty()) {
 			try {
-				user.setImage(new SerialBlob(imageFile.getBytes()));
+				user.setImage(new SerialBlob(imageFile.getBytes()));//userService.setImage(user, imageFile)
 			} catch (Exception e) {
 				throw new IOException("Failed to create image blob", e);
 			}

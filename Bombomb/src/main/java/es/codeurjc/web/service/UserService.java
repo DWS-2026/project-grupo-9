@@ -79,5 +79,18 @@ public class UserService {
         }
         return userRepository.save(actualUser);
     }
+    public boolean isAdminRole(User user){
+        return user.getRoles().contains("ADMIN");
+    }
 
+    public void setImage(User user, MultipartFile imageFile) throws IOException {
+        if (!imageFile.isEmpty()) {
+            try {
+                user.setImage(new SerialBlob(imageFile.getBytes()));
+            } catch (Exception e) {
+                throw new IOException("Failed to create image blob", e);
+            }
+        }
+
+    }
 }

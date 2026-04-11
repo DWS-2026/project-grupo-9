@@ -134,7 +134,7 @@ public class UserController {
 	@PostMapping("/delete/{id}/profile")
 	public String deleteUserForAdmin(Model model, @PathVariable long id, HttpServletRequest request) {
 		User actualUser = userService.findById(id).orElseThrow(()-> new IllegalArgumentException("Usuario no encontrado"));
-		if(actualUser.isThisRole("ADMIN")){
+		if(userService.isAdminRole(actualUser)){
 			request.getSession().invalidate();
 		}
 		userService.delete(actualUser);
@@ -145,7 +145,7 @@ public class UserController {
 	public String newUser(Model model, User user, MultipartFile imageFile,HttpServletRequest request, @RequestParam String password) throws IOException {
 		if (!imageFile.isEmpty()) {
 			try {
-				user.setImage(new SerialBlob(imageFile.getBytes()));//userService.setImage(user, imageFile)
+				userService.setImage(user, imageFile);
 			} catch (Exception e) {
 				throw new IOException("Failed to create image blob", e);
 			}

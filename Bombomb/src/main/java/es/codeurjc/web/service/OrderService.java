@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.repository.OrderRepository;
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class OrderService {

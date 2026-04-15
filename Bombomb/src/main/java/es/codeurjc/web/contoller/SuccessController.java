@@ -45,5 +45,10 @@ public class SuccessController {
 		model.addAttribute("message", "No encontrado");
 		return "error";
 	}
+	@GetMapping("/error/NotYourBox")
+	public String notYourBox(Model model){
+		model.addAttribute("message", "No es tu caja, amigo");
+		return "error";
+	}
 	
 }

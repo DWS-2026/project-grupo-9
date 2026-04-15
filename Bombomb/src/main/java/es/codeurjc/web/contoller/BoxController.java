@@ -1,7 +1,6 @@
 package es.codeurjc.web.contoller;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -11,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +22,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
+import es.codeurjc.web.model.User;
 import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import es.codeurjc.web.service.UserService;
 
-import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -49,6 +45,8 @@ public class BoxController {
 	OrderService orderService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	ImageService imageService;
 	
 
 	@GetMapping("/products")
@@ -65,13 +63,9 @@ public class BoxController {
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			Blob image = op.get().getImage();
-			Resource imageFile = new InputStreamResource(image.getBinaryStream());
-			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+			return imageService.getImage(op.get().getImage());
 		} else {
-			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
-        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
+        	return imageService.getNotFoundImage();
 		}
 	}
 
@@ -97,10 +91,10 @@ public class BoxController {
 	public String customBox(Model model, HttpServletRequest request) {
 		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
 		String userEmail = request.getUserPrincipal().getName();
-		if(request.isUserInRole("ADMIN")){
+		User user = userService.findByEmail(userEmail).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+		if(userService.isAdminRole(user)){  //usar la fincion de userService para verificar si es admin
 			model.addAttribute("admin", true);
 		}
-
 		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
 		if (op.isPresent()) {
 			model.addAttribute("box", op.get());
@@ -125,7 +119,7 @@ public class BoxController {
     public String addToCart(@PathVariable long id, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
 
-        Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
+        Optional<Box> op = boxService.findByIdAndIsAvailableAndMadeByAdmin(id, true, true);
 		if(!op.isPresent()){
 			return "redirect:/error/notFound";
 		}
@@ -152,12 +146,15 @@ public class BoxController {
 		return "redirect:/cart";
 	}
 
-	@PostMapping("/custom/{id}/add-to-cart")
-    public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name) throws IOException, SQLException {
+	@PostMapping("/custom/{id}/add-to-cart") 
+    public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name) throws IOException, SQLException {	
 		String userEmail = request.getUserPrincipal().getName();
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if(!op.isPresent()){
 			return "redirect:/error/notFound";
+		}
+		if(!orderService.isBoxInCart( userEmail,id)){
+			return "redirect:/error/NotYourBox";
 		}
 		Box box = op.get();
 		box.setName(name);
@@ -230,7 +227,8 @@ public class BoxController {
 		return "redirect:/customBox";
 	}
 
-	@PostMapping("/adminAddBox/{id}")
+	@PostMapping("/adminAddBox/{id}") //meter también verificacion de si es admin? (por si alguien mete la url a mano)
+	//está ya en el security que solo puede acceder el admin a este, poner segunda verificación?
 	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException {
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if(!op.isPresent()){

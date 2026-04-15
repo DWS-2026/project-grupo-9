@@ -268,23 +268,46 @@ He creado las páginas de personalizar caja, lista de usuarios y editar perfil. 
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/[usuario]/[nombre-repositorio].git
-   cd [nombre-repositorio]
+   git clone https://github.com/DWS-2026/project-grupo-9.git
+   cd project-grupo-9
    ```
 
-2. **AQUÍ INDICAR LO SIGUIENTES PASOS**
+2. **Iniciar la base de datos MySQL**
+	
+	Crear un esquema con el nombre bombomb.
+	La aplicación se conecta a la base de datos MySQL usando usuario: root y contraseña: lac0jaYlapr0fe
+	Configurar el archivo application.properties cambiando la contraseña a la que se tenga configurada en MySQL
+
+3. **Iniciar la aplicación**
+	
+	Ejecuta
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
+	o desde VSCode, con las extensiones de Java y SpringBoot, ejecutar el programa desde Application.java o desde el apartado de 	Spring Boot Dashboard
+
+4. **Acceder a la aplicación**
+	
+	Sólo se puede acceder a la aplicación desde HTTPS. Acceder a
+  	```bash
+  	https://localhost:8443/
+  	```
+	Aparecerá que no es un sitio seguro, darle a 'Avanzado' y a 'Ir a localhost (no es seguro)'
+   
 
 #### **Credenciales de prueba**
-- **Usuario Admin**: usuario: `admin`, contraseña: `admin`
-- **Usuario Registrado**: usuario: `user`, contraseña: `user`
+- **Usuario Admin**: usuario: `admin@gmail.com`, contraseña: `admin`
+- **Usuario Registrado**: usuario: `user@gmail.com`, contraseña: `user`
+- **Otro Usuario Registrado**: usuario: `mariasanchezsanchez@hotmail.com`, contraseña: `pass`
 
 ### **Diagrama de Entidades de Base de Datos**
 
 Diagrama mostrando las entidades, sus campos y relaciones:
 
-![Diagrama Entidad-Relación](/ReadmeTemplateImages/database-diagram.png)
+![Diagrama Entidad-Relación Simple](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/EntitiesDiagram.png)
+![Diagrama Entidad-Relación Completo](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/dataBaseEntitiesDiagram.png)
 
-> [Descripción opcional: Ej: "El diagrama muestra las 4 entidades principales: Usuario, Producto, Pedido y Categoría, con sus respectivos atributos y relaciones 1:N y N:M."]
 
 ### **Diagrama de Clases y Templates**
 
@@ -309,17 +332,17 @@ Me he encargado de la funcionalidad de la clase Chocolate, de la seguridad, de l
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - Ángela Briceño Ramírez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de trabajar en la vista dinámica de productos en los htmls, trabajar en todo lo relacionado a los carritos y he creado los diagramas de entidades. También me he encargado de grabar el vídeo y ponerle los subtítulos.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Creación del Order.java](https://github.com/DWS-2026/project-grupo-9/commit/e2b3988bdb0a058452cd94ff96dbb11382c0ce1a)  | [Order.java](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/model/Order.java)   |
+|2| [Creación del Product.java](https://github.com/DWS-2026/project-grupo-9/commit/b6d889149e75fa4baa3fa51470af3407f1554e5d)  | [Diagrama Entidades](https://github.com/DWS-2026/project-grupo-9/blob/main/P2/EntitiesDiagram.png)   |
+|3| [OrderService](https://github.com/DWS-2026/project-grupo-9/commit/52ab208607564cc37b84e4c8dd041c6c7c17ee23)  | [OrderService.java](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/service/OrderService.java)   |
+|4| [Borrado en el carrito y gestión de duplicados](https://github.com/DWS-2026/project-grupo-9/commit/8a27a329c8f409333712df962b3e74e891f2b2a0)  | [BoxController.java](https://github.com/DWS-2026/project-grupo-9/blame/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
+|5| [Vídeo](https://github.com/DWS-2026/project-grupo-9/commit/079c9cf92466d550ab049eadd4c30e335484dc09)  | [Vídeo](https://youtu.be/xabdmidJrWQ)   |
 
 ---
 
@@ -337,17 +360,18 @@ En esta parte de la práctica me he encargado en su mayoría de darle funcionali
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
+#### **Alumno 4 - Sandra García Rodríguez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de la clase Box (incluyendo su service y repositorio), de la funcionalidad de la página de crear cajas personalizadas, incluyendo la parte de creación como user y admin y de la página de detalles de productos.
+
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Clase Box](https://github.com/DWS-2026/project-grupo-9/commit/9f44891653b22b44b28285e05444858f27172a92)  | [Box](Bombomb/src/main/java/es/codeurjc/web/model/Box.java)   |
+|2| [Función añadir bombón](https://github.com/DWS-2026/project-grupo-9/commit/eb58fcfa37eabf50ecabaf9b8ef3d427caf4204c)  | [BoxContoller](Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
+|3| [Función crear caja aleatoria](https://github.com/DWS-2026/project-grupo-9/commit/7e1fb5c7dbc209ae8b50797298a57c54371aad7e)  | [BoxController](Bombomb/src/main/java/es/codeurjc/web/contoller/BoxController.java)   |
+|4| [BoxService](https://github.com/DWS-2026/project-grupo-9/commit/f46193499c8eea527b0d2e47154ac8183154d812)  | [BoxService](Bombomb/src/main/java/es/codeurjc/web/service/BoxService.java)   |
+|5| [Página de detalles del producto](https://github.com/DWS-2026/project-grupo-9/commit/8763e4c33f3220e087034faa484d9ff9220fcaa5)  | [productDetailsPage](Bombomb/src/main/resources/templates/productDetailsPage.html)   |
 
 ---
 

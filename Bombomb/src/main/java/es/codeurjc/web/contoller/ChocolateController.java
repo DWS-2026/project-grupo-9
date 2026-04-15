@@ -3,30 +3,27 @@ package es.codeurjc.web.contoller;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import java.sql.Blob;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.ImageService;
 
 @Controller
 public class ChocolateController {
     @Autowired
 	ChocolateService chocolateService;
+	@Autowired
+	ImageService imageService;
         
     @GetMapping("/create/chocolate")
 	public String createProduct(Model model) {
@@ -43,13 +40,9 @@ public class ChocolateController {
 	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
 		Optional<Chocolate> op = chocolateService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			Blob image = op.get().getImage();
-			Resource imageFile = new InputStreamResource(image.getBinaryStream());
-			MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-			return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+			return imageService.getImage(op.get().getImage());
 		} else {
-			ClassPathResource notFoundImage = new ClassPathResource("static/images/notFound.png");
-        	return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundImage);
+			return imageService.getNotFoundImage();
 		}
 	}
 

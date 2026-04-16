@@ -15,11 +15,11 @@
                             <div class="card-body text-center">
                                 {{#admin}}
                                 <img src="/profile/{{id}}/image" alt="avatar" class="rounded-circle img-fluid"
-                                    style="width: 150px;">
+                                    style="width: 215px;">
                                 {{/admin}}
                                 {{^admin}}
                                 <img src="/profile/image" alt="avatar" class="rounded-circle img-fluid"
-                                    style="width: 150px;">
+                                    style="width: 215px;">
                                 {{/admin}}
                                 <h5 class="my-3 fw-bold">{{name}}</h5>
                             </div>
@@ -64,9 +64,20 @@
                                         <p class="text-muted mb-0">{{telephone}}</p>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Descripción</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="mb-0">{{{description}}}</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
                     {{#admin}}<!--for admin to not delete his own profile-->
                     <div class="row">
                         <div class="col-sm-3 offset-sm-5">
@@ -164,7 +175,7 @@
         </section>
         {{/user}}
     </main>
-
+    {{>descriptext}}
     {{>footer}}
 </body>
 

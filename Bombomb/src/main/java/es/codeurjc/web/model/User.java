@@ -29,6 +29,7 @@ public class User {
     private String telephone;
     private String email;
     private String encodedPassword; 
+    private String description;
     @Lob
     private Blob image;
 
@@ -41,7 +42,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String surname, String telephone, String email, Blob image, String encodedPassword,String... roles) {
+    public User(String name, String surname, String telephone, String email, Blob image, String encodedPassword,String description,String... roles) {
 
         this.name = name;
         this.surname = surname;
@@ -49,6 +50,7 @@ public class User {
         this.email = email;
         this.image = image;
         this.encodedPassword = encodedPassword;
+        this.description = description;
         this.roles = List.of(roles);
         Order order = new Order(true);
         addOrder(order);
@@ -62,8 +64,8 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-                "User[id=%d, name='%s', surname='%s', telephone='%s', email='%s', encodedPassword='%s']",
-                id, name, surname, telephone, email, encodedPassword);
+                "User[id=%d, name='%s', surname='%s', telephone='%s', email='%s', encodedPassword='%s',description='%s']",
+                id, name, surname, telephone, email, encodedPassword,description);
     }
 
     public String getName() {
@@ -130,6 +132,14 @@ public class User {
 
     public boolean isThisRole(String role){
         return this.roles.contains(role);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

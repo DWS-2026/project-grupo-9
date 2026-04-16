@@ -59,7 +59,7 @@ public class UserService {
     public boolean minPasswordLength(String password) {
         return password != null && password.length() >= 8;
     }
-    public User editUserProfile(String email,String name, String surname, String telephone, MultipartFile image) throws IOException {
+    public User editUserProfile(String email,String name, String surname, String telephone,String description, MultipartFile image) throws IOException {
         User actualUser=userRepository.findByEmail(email).orElseThrow();
         if(name !=null){
             actualUser.setName(name);
@@ -69,6 +69,9 @@ public class UserService {
         }
         if(telephone !=null){
             actualUser.setTelephone(telephone);
+        }
+        if(description !=null){
+            actualUser.setDescription(description);
         }
         if (image != null && !image.isEmpty()) {
             try {

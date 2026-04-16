@@ -88,9 +88,10 @@ public class UserController {
 	@PostMapping("/editprofile")
 	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
+			@RequestParam(required = false) String description,
 			@RequestParam(required = false) MultipartFile imageFile)
 			throws IOException {
-		User actualUser = userService.editUserProfile(request.getUserPrincipal().getName(), name, surname, telephone, imageFile);
+		User actualUser = userService.editUserProfile(request.getUserPrincipal().getName(), name, surname, telephone,description, imageFile);
 		
 		model.addAttribute("user", actualUser);
 

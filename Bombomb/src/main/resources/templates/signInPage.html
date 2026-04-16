@@ -29,6 +29,13 @@
                         <label for="inputPassword4" class="form-label">Contraseña</label>
                         <input type="password" name="password" class="form-control" id="inputPassword4" required minlength="8">
                     </div>
+                    <div class="col-md-8">
+                        <label for="description" class="form-label">Descripción</label>
+                        <!-- Real description -->
+                        <textarea style="display: none;" id="description-textarea" name="description"></textarea>
+                        <!-- Create the editor container -->
+                        <div id="editor"></div>
+                    </div>
                     <div class="col-md-4 mt-4">
                         
                             <div class="form-group">
@@ -51,7 +58,8 @@
             </div>
         </div>
     </main>
-
+   
+    {{>descriptext}}
     {{>footer}}
 
 </body>

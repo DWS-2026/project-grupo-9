@@ -47,21 +47,21 @@ public class DBLoader {
 		Blob blob = new SerialBlob(bytes);
 		userRepository.save(new User("María de la O", "Sánchez Sánchez",
 				"600808080", "mariasanchezsanchez@hotmail.com", blob,
-				passwordEncoder.encode("pass"), "USER"));
+				passwordEncoder.encode("pass"), "a","USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Administrador", "Adminis Trado",
 				"666666666", "admin@gmail.com", blob,
-				passwordEncoder.encode("admin"), "USER", "ADMIN"));
+				passwordEncoder.encode("admin"), "buenas","USER", "ADMIN"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Usu", "Ario",
 				"000000000", "user@gmail.com", blob,
-				passwordEncoder.encode("user"), "USER"));
+				passwordEncoder.encode("user"),"holaa" ,"USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_flower.jpeg");
 		bytes = resource.getInputStream().readAllBytes();

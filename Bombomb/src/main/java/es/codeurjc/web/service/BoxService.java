@@ -39,6 +39,7 @@ public class BoxService {
     public List<Box> findByMadeByAdminAndIsOpenBoxAndIsAvailable(Boolean madeByAdmin, Boolean isOpenBox, Boolean isAvailable) {
         return boxRepository.findByMadeByAdminAndIsOpenBoxAndIsAvailable(madeByAdmin, isOpenBox, isAvailable);
     }
+
     public void delete(Box box) {
         box.setIsAvailable(false);
                 List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
@@ -56,7 +57,9 @@ public class BoxService {
     public Optional<Box> findByIdAndIsAvailable(long id, Boolean isAvailable) {
         return boxRepository.findByIdAndIsAvailable(id, isAvailable);
     }
-
+    public Optional<Box> findByIdAndIsAvailableAndMadeByAdmin(long id, Boolean isAvailable, Boolean madeByAdmin) {
+        return boxRepository.findByIdAndIsAvailableAndMadeByAdmin(id, isAvailable, madeByAdmin);
+    }
     public void addCustomToCart(Box box, String userEmail) throws IOException, SQLException {
         box.setPrice(19.99f);
 		box.setMadeByAdmin(false);

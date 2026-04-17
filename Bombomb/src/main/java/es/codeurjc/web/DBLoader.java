@@ -137,7 +137,7 @@ public class DBLoader {
 			bytes = resource.getInputStream().readAllBytes();
 			blob = new SerialBlob(bytes);
 			boxes.save(new Box("Caja " + box, 18.50f,
-			blob, true, chocolates));
+			new Image(blob), true, chocolates));
 			box++;
 			chocolate = chocolateService.findById(box);
 		}

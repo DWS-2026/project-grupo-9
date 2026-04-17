@@ -150,6 +150,9 @@ public class UserController {
 		if(!userService.minPasswordLength(password)){
 			return "redirect:/error/minPassword";
 		}
+		if(!userService.isEmailUnique(user.getEmail())){
+			return "redirect:/error/emailInUse";
+		}
 		userService.save(user, password);
 		return "redirect:/login";
 	}

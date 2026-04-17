@@ -51,4 +51,9 @@ public class SuccessController {
 		return "error";
 	}
 	
+	@GetMapping("/error/emailInUse")
+	public String emailInUse(Model model){
+		model.addAttribute("message", "El email ya está en uso");
+		return "error";
+	}
 }

@@ -96,4 +96,9 @@ public class UserService {
         }
 
     }
+    //if email is already in use, return false, otherwise return true
+    public boolean isEmailUnique(String email) {
+        return !userRepository.findByEmail(email).isPresent();
+    }
+   
 }

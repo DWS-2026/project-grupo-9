@@ -50,7 +50,7 @@ public class UserController {
 	public ResponseEntity<Object> downloadProfileImageAdminList(@PathVariable long id) throws SQLException {
 		Optional<User> op = userService.findById(id);
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage());
+			return imageService.getImage(op.get().getImage().getImage());
 		} else {
 			return imageService.getNotFoundImage();
 		}
@@ -61,7 +61,7 @@ public class UserController {
 		Optional<User> op = userService.findByEmail(request.getUserPrincipal().getName());
 
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage());
+			return imageService.getImage(op.get().getImage().getImage());
 		} else {
 			return imageService.getNotFoundImage();
 		}
@@ -149,6 +149,9 @@ public class UserController {
 		}
 		if(!userService.minPasswordLength(password)){
 			return "redirect:/error/minPassword";
+		}
+		if(!userService.isEmailUnique(user.getEmail())){
+			return "redirect:/error/emailInUse";
 		}
 		userService.save(user, password);
 		return "redirect:/login";

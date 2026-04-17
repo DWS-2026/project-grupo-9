@@ -2,6 +2,9 @@ package es.codeurjc.web.model;
 
 import java.sql.Blob;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 
 
@@ -13,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 
@@ -30,8 +34,8 @@ public class User {
     private String email;
     private String encodedPassword; 
     private String description;
-    @Lob
-    private Blob image;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 
     @ElementCollection(fetch=FetchType.EAGER)
     private List<String> roles;
@@ -42,7 +46,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String surname, String telephone, String email, Blob image, String encodedPassword,String description,String... roles) {
+    public User(String name, String surname, String telephone, String email, Image image, String encodedPassword,String description,String... roles) {
 
         this.name = name;
         this.surname = surname;
@@ -100,11 +104,11 @@ public class User {
         this.email = email;
     }
 
-    public Blob getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

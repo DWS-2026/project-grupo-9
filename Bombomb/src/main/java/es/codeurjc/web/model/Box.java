@@ -1,13 +1,13 @@
 package es.codeurjc.web.model;
 
-import java.sql.Blob;
-
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Id;
 
 @Entity
@@ -25,15 +25,15 @@ public class Box {
     private List<Chocolate> chocolates;
     @ManyToMany(mappedBy="boxes")
     private List<Order> orders;
-    @Lob
-    Blob image;
+    @OneToOne(cascade=CascadeType.ALL)
+    Image image;
 
     public Box() {
         
     }
     
 
-    public Box(String name, float price, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates) {
+    public Box(String name, float price, Image image, Boolean madeByAdmin, List<Chocolate> chocolates) {
         this.name=name;
         this.price= price;
         this.image= image;
@@ -91,10 +91,10 @@ public class Box {
     public String getName(){
         return this.name;
     }
-    public Blob getImage() { 
+    public Image getImage() { 
         return image;
     }
-    public void setImage(Blob image) {
+    public void setImage(Image image) {
         this.image = image;
     }
     public int getSize() {

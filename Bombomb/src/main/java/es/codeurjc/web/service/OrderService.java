@@ -41,6 +41,10 @@ public class OrderService {
         return orderRepository.findAll().stream().filter(order -> order.isOpen()).findFirst().get();
     }
 
+    public List<Order> findByIsOpen(Boolean isOpen) {
+        return orderRepository.findByIsOpen(isOpen);
+    }
+
     public List<Order> findByUserEmailAndIsOpen(String Email, Boolean isOpen) {
         return orderRepository.findByUserEmailAndIsOpen(Email, isOpen);
     }

@@ -40,7 +40,7 @@ public class ChocolateController {
 	public ResponseEntity<Object> downloadChocolateImage(@PathVariable long id) throws SQLException {
 		Optional<Chocolate> op = chocolateService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage());
+			return imageService.getImage(op.get().getImage().getImage());
 		} else {
 			return imageService.getNotFoundImage();
 		}

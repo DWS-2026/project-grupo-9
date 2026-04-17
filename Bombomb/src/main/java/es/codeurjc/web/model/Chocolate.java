@@ -1,12 +1,11 @@
 package es.codeurjc.web.model;
 
-import java.sql.Blob;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Chocolate {
@@ -15,11 +14,20 @@ public class Chocolate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    String name;
+    private String name;
 
-    @Lob
-    Blob image;
-    Boolean isAvailable = true;
+    @OneToOne(cascade=CascadeType.ALL)
+    private Image image;
+
+    private Boolean isAvailable = true;
+
+    protected Chocolate() {
+    }
+
+    public Chocolate(String chocolateName, Image chocolateImage){
+        this.name = chocolateName;
+        this.image = chocolateImage;
+    }
 
     public Boolean getIsAvailable() {
         return isAvailable;
@@ -27,14 +35,6 @@ public class Chocolate {
 
     public void setIsAvailable(Boolean isAvailable) {
         this.isAvailable = isAvailable;
-    }
-
-    protected Chocolate() {
-    }
-
-    public Chocolate(String chocolateName, Blob chocolateImage){
-        this.name = chocolateName;
-        this.image = chocolateImage;
     }
 
     public String getName() {
@@ -45,12 +45,20 @@ public class Chocolate {
         this.name = name;
     }
 
-    public Blob getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(Image image) {
         this.image = image;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 }

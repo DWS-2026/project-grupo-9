@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.repository.ChocolateRepository;
 
 @Service
@@ -26,7 +27,7 @@ public class ChocolateService {
     public void save(Chocolate chocolate, MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
             try {
-                chocolate.setImage(new SerialBlob(image.getBytes()));
+                chocolate.setImage(new Image(new SerialBlob(image.getBytes())));
             } catch (Exception e) {
                 throw new IOException("Failed to create image blob", e);
             }

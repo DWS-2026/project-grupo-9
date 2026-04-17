@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.ChocolateRepository;
@@ -66,52 +67,52 @@ public class DBLoader {
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_flower.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Violeta", blob));
+		chocolateRepository.save(new Chocolate("Violeta", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_black.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Espiral de Medianoche", blob));
+		chocolateRepository.save(new Chocolate("Espiral de Medianoche", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_boat.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Barca de Avellana", blob));
+		chocolateRepository.save(new Chocolate("Barca de Avellana", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_cake.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Triángulo de las delicias", blob));
+		chocolateRepository.save(new Chocolate("Triángulo de las delicias", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_cube.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Caramelo Imperial", blob));
+		chocolateRepository.save(new Chocolate("Caramelo Imperial", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_green.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Bosque de cacao", blob));
+		chocolateRepository.save(new Chocolate("Bosque de cacao", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_lemon.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Delicia de Cítrico", blob));
+		chocolateRepository.save(new Chocolate("Delicia de Cítrico", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_orange.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Puesta de Sol", blob));
+		chocolateRepository.save(new Chocolate("Puesta de Sol", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink_heart.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Corazón Silvestre", blob));
+		chocolateRepository.save(new Chocolate("Corazón Silvestre", new Image(blob)));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Mármol de frambuesa", blob));
+		chocolateRepository.save(new Chocolate("Mármol de frambuesa", new Image(blob)));
 
 		List <Chocolate> chocolates;
 		int box = 1;

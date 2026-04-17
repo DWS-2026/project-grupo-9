@@ -92,10 +92,10 @@ public class BoxController {
 		model.addAttribute("chocolates", chocolateService.findByIsAvailable(true));
 		String userEmail = request.getUserPrincipal().getName();
 		User user = userService.findByEmail(userEmail).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-		if(userService.isAdminRole(user)){  //usar la fincion de userService para verificar si es admin
+		if(userService.isAdminRole(user)){  
 			model.addAttribute("admin", true);
 		}
-		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); 
 		if (op.isPresent()) {
 			model.addAttribute("box", op.get());
 			model.addAttribute("boxChocolates", op.get().getChocolates());
@@ -170,7 +170,7 @@ public class BoxController {
 		Chocolate chocolate = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 		String userEmail = request.getUserPrincipal().getName();	
 		
-		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); 
 		Box box;
 		if (op.isPresent()) {
 			box =op.get();	
@@ -191,7 +191,7 @@ public class BoxController {
 	@PostMapping("/emptyCustom")//empty the box
 	public String emptyCustomBox(Model model, HttpServletRequest request) {
 		String userEmail = request.getUserPrincipal().getName();
-		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); 
 		Box box;
 		if (op.isPresent()) {
 			box =op.get();
@@ -204,7 +204,7 @@ public class BoxController {
 	@PostMapping("/randomize")//make chocolate list random
 	public String randomCustom(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		String userEmail = request.getUserPrincipal().getName();	
-		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); //findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail); 
 		Box box;
 		if (op.isPresent()) {
 			box =op.get();
@@ -227,8 +227,7 @@ public class BoxController {
 		return "redirect:/customBox";
 	}
 
-	@PostMapping("/adminAddBox/{id}") //meter también verificacion de si es admin? (por si alguien mete la url a mano)
-	//está ya en el security que solo puede acceder el admin a este, poner segunda verificación?
+	@PostMapping("/adminAddBox/{id}") 
 	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException {
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if(!op.isPresent()){

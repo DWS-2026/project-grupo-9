@@ -2,6 +2,8 @@ package es.codeurjc.web.model;
 
 import java.sql.Blob;
 
+import org.springframework.core.io.InputStreamSource;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

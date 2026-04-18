@@ -47,21 +47,21 @@ public class DBLoader {
 		byte[] bytes = resource.getInputStream().readAllBytes();
 		Blob blob = new SerialBlob(bytes);
 		userRepository.save(new User("María de la O", "Sánchez Sánchez",
-				"600808080", "mariasanchezsanchez@hotmail.com", blob,
+				"600808080", "mariasanchezsanchez@hotmail.com", new Image(blob),
 				passwordEncoder.encode("pass"), "a","USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Administrador", "Adminis Trado",
-				"666666666", "admin@gmail.com", blob,
+				"666666666", "admin@gmail.com", new Image(blob),
 				passwordEncoder.encode("admin"), "buenas","USER", "ADMIN"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Usu", "Ario",
-				"000000000", "user@gmail.com", blob,
+				"000000000", "user@gmail.com", new Image(blob),
 				passwordEncoder.encode("user"),"holaa" ,"USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_flower.jpeg");
@@ -137,7 +137,7 @@ public class DBLoader {
 			bytes = resource.getInputStream().readAllBytes();
 			blob = new SerialBlob(bytes);
 			boxes.save(new Box("Caja " + box, 18.50f,
-			blob, true, chocolates));
+			new Image(blob), true, chocolates));
 			box++;
 			chocolate = chocolateService.findById(box);
 		}

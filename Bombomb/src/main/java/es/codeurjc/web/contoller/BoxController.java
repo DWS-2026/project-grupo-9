@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;
@@ -63,7 +64,7 @@ public class BoxController {
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage());
+			return imageService.getImage(op.get().getImage().getImage());
 		} else {
         	return imageService.getNotFoundImage();
 		}
@@ -236,7 +237,7 @@ public class BoxController {
 		Box box = op.get();
 		if (!imageFile.isEmpty()) {
 			try {
-				box.setImage(new SerialBlob(imageFile.getBytes()));
+				box.setImage(new Image(new SerialBlob(imageFile.getBytes())));
 			} catch (Exception e) {
 				throw new IOException("Failed to create image blob", e);
 			}

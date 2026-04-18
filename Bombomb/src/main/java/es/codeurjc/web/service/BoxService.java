@@ -1,7 +1,6 @@
 package es.codeurjc.web.service;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.repository.BoxRepository;
 
@@ -66,7 +66,7 @@ public class BoxService {
 		box.setIsOpenBox(false);
 		ClassPathResource resource = new ClassPathResource("static/images/Boxes/box_red2.png");
 		byte[] bytes = resource.getInputStream().readAllBytes();
-		Blob blob = new SerialBlob(bytes);
+		Image blob = new Image(new SerialBlob(bytes));
 		box.setImage(blob);
 
 		Order cart = orderService.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
@@ -85,7 +85,7 @@ public class BoxService {
         return box.getChocolates().size() >= box.getSize();
     }
 
-    public Box createBox(String name,float price, Blob image, Boolean madeByAdmin, List<Chocolate> chocolates, String userEmail) {
+    public Box createBox(String name,float price, Image image, Boolean madeByAdmin, List<Chocolate> chocolates, String userEmail) {
         Box box= new Box(name, price, image, madeByAdmin, chocolates);
 		box.setIsOpenBox(true);
         box = boxRepository.save(box);

@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.UserRepository;
@@ -75,7 +75,7 @@ public class UserService {
         }
         if (image != null && !image.isEmpty()) {
             try {
-                actualUser.setImage(new SerialBlob(image.getBytes()));
+                actualUser.setImage(new Image(new SerialBlob(image.getBytes())));
             } catch (Exception e) {
                 throw new IOException("Failed to create image blob", e);
             }
@@ -89,11 +89,16 @@ public class UserService {
     public void setImage(User user, MultipartFile imageFile) throws IOException {
         if (!imageFile.isEmpty()) {
             try {
-                user.setImage(new SerialBlob(imageFile.getBytes()));
+                user.setImage(new Image(new SerialBlob(imageFile.getBytes())));
             } catch (Exception e) {
                 throw new IOException("Failed to create image blob", e);
             }
         }
 
     }
+    //if email is already in use, return false, otherwise return true
+    public boolean isEmailUnique(String email) {
+        return !userRepository.findByEmail(email).isPresent();
+    }
+   
 }

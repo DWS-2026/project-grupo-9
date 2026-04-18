@@ -1,5 +1,6 @@
 package es.codeurjc.web.contoller;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,17 @@ public class ChocolateRestController {
 	public ChocolateDTO getChocolate(@PathVariable long id) {
 		return mapper.toDTO(chocolateService.findByIdAndIsAvailable(id, true).orElseThrow());
 	}
-	//Post not working yet
-	/**@PostMapping("/")
-	public ResponseEntity<ChocolateDTO> createChocolate(@RequestBody ChocolateDTO chocolateDTO) {
+	
+	@PostMapping("/")
+	public ResponseEntity<ChocolateDTO> createChocolate(@RequestBody ChocolateDTO chocolateDTO) throws IOException {
 
 		Chocolate chocolate = mapper.toDomain(chocolateDTO);
+		chocolateService.save(chocolate, null);
 		ChocolateDTO responseDTO = mapper.toDTO(chocolate);
-
 		URI location = fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id()).toUri();
 
 		return ResponseEntity.created(location).body(responseDTO);
-	}**/
+	}
 
 	@DeleteMapping("/{id}")
 	public ChocolateDTO deleteChocolate(@PathVariable long id) {

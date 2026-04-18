@@ -1,5 +1,5 @@
 package es.codeurjc.web.dto;
 
-public record ChocolateDTO(long id, String name, ImageDTO image) {
+public record ChocolateDTO(Long id, String name, ImageDTO image) {
     
 }

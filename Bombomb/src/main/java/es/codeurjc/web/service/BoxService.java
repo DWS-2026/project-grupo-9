@@ -2,6 +2,7 @@ package es.codeurjc.web.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +93,13 @@ public class BoxService {
         orderService.addBoxToCart(userEmail, box);
         return box;
     }
+    public Collection<Box> findByIsAvailable(boolean isAvailable) {
+        return boxRepository.findByIsAvailable(isAvailable);
+    }
     
-
-
+    public Collection<Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable){
+        return boxRepository.findByMadeByAdminAndIsAvailable(madeByAdmin, isAvailable);
+    }
 
 
 

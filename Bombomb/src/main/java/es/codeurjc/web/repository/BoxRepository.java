@@ -30,7 +30,8 @@ Optional<Box> findBoxByStatusAndUserEmail(
         List <Box> findByMadeByAdminAndIsOpenBoxAndIsAvailable(Boolean madeByAdmin, Boolean isOpenBox, Boolean isAvailable);
         Optional<Box> findByIdAndIsAvailable(long id, Boolean isAvailable);
         Optional<Box> findByIdAndIsAvailableAndMadeByAdmin(long id, Boolean isAvailable, Boolean madeByAdmin);
-
+        List<Box> findByIsAvailable(boolean isAvailable);
+        List <Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable);
 
 
 }

@@ -1,4 +1,4 @@
-package es.codeurjc.web;
+package es.codeurjc.web.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

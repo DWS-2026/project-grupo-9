@@ -1,4 +1,4 @@
-package es.codeurjc.web;
+package es.codeurjc.web.service;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -22,7 +22,6 @@ import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.ChocolateRepository;
 import es.codeurjc.web.repository.UserRepository;
-import es.codeurjc.web.service.ChocolateService;
 import jakarta.annotation.PostConstruct;
 
 @Component

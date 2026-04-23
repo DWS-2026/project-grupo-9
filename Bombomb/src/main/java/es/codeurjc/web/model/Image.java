@@ -2,8 +2,6 @@ package es.codeurjc.web.model;
 
 import java.sql.Blob;
 
-import org.springframework.core.io.InputStreamSource;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,13 +16,19 @@ public class Image {
     private long id;
 
     @Lob
-    private Blob image;
+    private Blob blobImage;
+
+    private String owner;//This is going to be or "public" or the email of the owner of the object that has this image
+    //If owner is "public" the image is public
+    //If owner is an email, it wil be available for the owner and the admin
+    //If its the profile image of the admin, owner = "admin@gmail.com", not "public"
 
     public Image() {
     }
 
-    public Image(Blob image) {
-        this.image = image;
+    public Image(Blob blobImage, String owner) {
+        this.blobImage = blobImage;
+        this.owner = owner;
     }
 
     public long getId() {
@@ -35,14 +39,20 @@ public class Image {
         this.id = id;
     }
 
-    public Blob getImage() {
-        return image;
+    public Blob getBlobImage() {
+        return blobImage;
     }
 
-    public void setImage(Blob image) {
-        this.image = image;
+    public void setBlobImage(Blob blobImage) {
+        this.blobImage = blobImage;
     }
 
+    public String getOwner() {
+        return owner;
+    }
 
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
     
 }

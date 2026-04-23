@@ -27,12 +27,12 @@ public class ChocolateService {
     public void save(Chocolate chocolate, MultipartFile image) throws IOException {
         if (image!=null && !image.isEmpty()) {
             try {
-                chocolate.setImage(new Image(new SerialBlob(image.getBytes())));
+                chocolate.setImage(new Image(new SerialBlob(image.getBytes()), "public"));
             } catch (Exception e) {
                 throw new IOException("Failed to create image blob", e);
             }
         }else{
-            chocolate.setImage(null);
+            chocolate.setImage(new Image(null, "public"));
         }
         chocolateRepository.save(chocolate);
     }

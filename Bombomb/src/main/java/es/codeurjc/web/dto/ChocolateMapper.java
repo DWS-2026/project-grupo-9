@@ -1,6 +1,7 @@
 package es.codeurjc.web.dto;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import es.codeurjc.web.model.Chocolate;
 
@@ -14,5 +15,6 @@ public interface ChocolateMapper {
 
     List<ChocolateDTO> toDTOs(Collection<Chocolate> chocolates);
 
+    @Mapping(target = "image", ignore = true)
     Chocolate toDomain(ChocolateDTO chocolateDTO);
 }

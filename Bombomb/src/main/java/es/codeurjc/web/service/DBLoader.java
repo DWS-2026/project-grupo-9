@@ -46,72 +46,72 @@ public class DBLoader {
 		byte[] bytes = resource.getInputStream().readAllBytes();
 		Blob blob = new SerialBlob(bytes);
 		userRepository.save(new User("María de la O", "Sánchez Sánchez",
-				"600808080", "mariasanchezsanchez@hotmail.com", new Image(blob),
+				"600808080", "mariasanchezsanchez@hotmail.com", new Image(blob, "mariasanchezsanchez@hotmail.com"),
 				passwordEncoder.encode("pass"), "a","USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Administrador", "Adminis Trado",
-				"666666666", "admin@gmail.com", new Image(blob),
+				"666666666", "admin@gmail.com", new Image(blob, "admin@gmail.com"),
 				passwordEncoder.encode("admin"), "buenas","USER", "ADMIN"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Usu", "Ario",
-				"000000000", "user@gmail.com", new Image(blob),
+				"000000000", "user@gmail.com", new Image(blob, "user@gmail.com"),
 				passwordEncoder.encode("user"),"holaa" ,"USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_flower.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Violeta", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Violeta", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_black.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Espiral de Medianoche", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Espiral de Medianoche", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_boat.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Barca de Avellana", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Barca de Avellana", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_cake.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Triángulo de las delicias", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Triángulo de las delicias", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_cube.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Caramelo Imperial", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Caramelo Imperial", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_green.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Bosque de cacao", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Bosque de cacao", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_lemon.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Delicia de Cítrico", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Delicia de Cítrico", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_orange.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Puesta de Sol", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Puesta de Sol", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink_heart.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Corazón Silvestre", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Corazón Silvestre", new Image(blob, "public")));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();
 		blob = new SerialBlob(bytes);
-		chocolateRepository.save(new Chocolate("Mármol de frambuesa", new Image(blob)));
+		chocolateRepository.save(new Chocolate("Mármol de frambuesa", new Image(blob, "public")));
 
 		List <Chocolate> chocolates;
 		int box = 1;
@@ -136,7 +136,7 @@ public class DBLoader {
 			bytes = resource.getInputStream().readAllBytes();
 			blob = new SerialBlob(bytes);
 			boxes.save(new Box("Caja " + box, 18.50f,
-			new Image(blob), true, chocolates));
+			new Image(blob, "public"), true, chocolates));
 			box++;
 			chocolate = chocolateService.findById(box);
 		}

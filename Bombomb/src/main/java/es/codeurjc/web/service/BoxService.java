@@ -32,7 +32,7 @@ public class BoxService {
         return boxRepository.findAll();
     }
     public Box findById(Long id) {
-        return boxRepository.findById(id).orElse(null);
+        return boxRepository.findById(id).orElseThrow();
     }
     public Box save(Box box) {
         return boxRepository.save(box);
@@ -67,7 +67,7 @@ public class BoxService {
 		box.setIsOpenBox(false);
 		ClassPathResource resource = new ClassPathResource("static/images/Boxes/box_red2.png");
 		byte[] bytes = resource.getInputStream().readAllBytes();
-		Image blob = new Image(new SerialBlob(bytes));
+		Image blob = new Image(new SerialBlob(bytes), userEmail);
 		box.setImage(blob);
 
 		Order cart = orderService.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
@@ -100,8 +100,5 @@ public class BoxService {
     public Collection<Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable){
         return boxRepository.findByMadeByAdminAndIsAvailable(madeByAdmin, isAvailable);
     }
-
-
-
 
 }

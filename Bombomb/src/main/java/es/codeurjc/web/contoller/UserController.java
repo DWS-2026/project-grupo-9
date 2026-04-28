@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.User;
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.OrderService;
@@ -50,7 +51,7 @@ public class UserController {
 	public ResponseEntity<Object> downloadProfileImageAdminList(@PathVariable long id) throws SQLException {
 		Optional<User> op = userService.findById(id);
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage().getImage());
+			return imageService.getImage(op.get().getImage());
 		} else {
 			return imageService.getNotFoundImage();
 		}
@@ -61,7 +62,7 @@ public class UserController {
 		Optional<User> op = userService.findByEmail(request.getUserPrincipal().getName());
 
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage().getImage());
+			return imageService.getImage(op.get().getImage());
 		} else {
 			return imageService.getNotFoundImage();
 		}
@@ -89,8 +90,8 @@ public class UserController {
 	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
 			@RequestParam(required = false) String description,
-			@RequestParam(required = false) MultipartFile imageFile)
-			throws IOException {
+			@RequestParam(required = false) Image imageFile)
+			throws IOException, SQLException {
 		User actualUser = userService.editUserProfile(request.getUserPrincipal().getName(), name, surname, telephone,description, imageFile);
 		
 		model.addAttribute("user", actualUser);

@@ -54,7 +54,7 @@ public class DBLoader {
 		blob = new SerialBlob(bytes);
 		userRepository.save(new User("Administrador", "Adminis Trado",
 				"666666666", "admin@gmail.com", new Image(blob, "admin@gmail.com"),
-				passwordEncoder.encode("admin"), "buenas","USER", "ADMIN"));
+				passwordEncoder.encode("admin"), "buenas", "ADMIN","USER"));
 
 		resource = new ClassPathResource("static/images/Chocolates/chocolate_pink.jpeg");
 		bytes = resource.getInputStream().readAllBytes();

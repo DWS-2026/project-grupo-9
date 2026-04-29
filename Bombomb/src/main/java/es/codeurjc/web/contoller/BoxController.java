@@ -64,7 +64,7 @@ public class BoxController {
 	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
 		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage().getImage());
+			return imageService.getImage(op.get().getImage());
 		} else {
         	return imageService.getNotFoundImage();
 		}
@@ -237,7 +237,7 @@ public class BoxController {
 		Box box = op.get();
 		if (!imageFile.isEmpty()) {
 			try {
-				box.setImage(new Image(new SerialBlob(imageFile.getBytes())));
+				box.setImage(new Image(new SerialBlob(imageFile.getBytes()), "public"));			
 			} catch (Exception e) {
 				throw new IOException("Failed to create image blob", e);
 			}

@@ -3,6 +3,7 @@ package es.codeurjc.web.service;
 import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.ImageRepository;
+import es.codeurjc.web.repository.UserRepository;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -31,7 +32,7 @@ public class ImageService {
     private ImageRepository imageRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     public ResponseEntity<Object> getImage(Image image) throws SQLException {
         InputStreamResource imageFile = new InputStreamResource(image.getBlobImage().getBinaryStream());
@@ -66,7 +67,7 @@ public class ImageService {
         String imageOwner = image.getOwner();
         return imageOwner.equals("public") || 
         (userEmail!= null && imageOwner.equals(userEmail)) || 
-        (userEmail!= null && userService.isAdminRole(userService.findByEmail(userEmail).orElseThrow()));
+        (userEmail!= null && userRepository.findByEmail(userEmail).orElseThrow().getRoles().equals("ADMIN"));
     }
 
     public Boolean hasEditPermision(Principal principal, Image image){

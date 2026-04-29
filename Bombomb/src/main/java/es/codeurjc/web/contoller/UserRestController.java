@@ -98,6 +98,42 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
+
+    @PostMapping("/")
+    public ResponseEntity<UserGetDTO> createUser(@RequestBody UserPostDTO user) throws IOException {
+        
+        if(!userService.isEmailUnique(user.email())) {
+            throw new RuntimeException("Email already exists");
+        }
+        if(!userService.minPasswordLength(user.password())) {
+            throw new RuntimeException("Password must be at least 8 characters long");
+        } 
+        User newuser = mapperPost.toDomain(user);
+		userService.save(newuser, user.password());
+		UserGetDTO responseDTO = mapper.toDTO(newuser);
+        URI location = fromCurrentRequest().path("/{id}") .buildAndExpand(responseDTO.id()).toUri();
+       
+        return ResponseEntity.created(location).body(responseDTO);  
+   }
+   
+
+    //admin cannot edit other users profiles
+    
+   @PutMapping("/{id}")
+   public ResponseEntity<UserGetDTO> editUser(@PathVariable long id, @RequestBody UserGetDTO updatedUser, HttpServletRequest request) throws IOException, SQLException{
+       
+        Principal principal = request.getUserPrincipal();
+        User actualUser = userService.findById(id).orElseThrow();
+        
+        if(actualUser.getEmail().equals(principal.getName())){
+            userService.updateUser(actualUser,updatedUser);
+            return ResponseEntity.ok(mapper.toDTO(actualUser));
+        }else{
+            
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        }
+    }
     
    
 }  

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 
@@ -33,13 +35,18 @@ public class User {
     private String telephone;
     private String email;
     private String encodedPassword; 
+    @Lob
     private String description;
+    
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
-
+    
+    @JsonIgnore
     @ElementCollection(fetch=FetchType.EAGER)
-    private List<String> roles;
+    private List<String> roles= new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
@@ -146,4 +153,11 @@ public class User {
         this.description = description;
     }
 
+    public long getId() {
+        return id;
+    }
+    
+    
+
+   
 }

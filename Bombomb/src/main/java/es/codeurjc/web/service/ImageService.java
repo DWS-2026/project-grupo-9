@@ -4,6 +4,8 @@ import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.ImageRepository;
 import es.codeurjc.web.repository.UserRepository;
+import es.codeurjc.web.repository.UserRepository;
+
 
 import java.io.IOException;
 import java.security.Principal;

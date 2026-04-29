@@ -1,6 +1,8 @@
 package es.codeurjc.web.dto;
 import java.time.LocalDate;
+import java.util.List;
 
-public record OrderDTO (long id, LocalDate date, float price, int amount, boolean isOpen) {
+
+public record OrderDTO (long id, LocalDate date, float price, int amount, boolean isOpen, UserEmailDTO user, List<BoxDTO> boxes) {
     
 }

@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.Box;
+import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.OrderRepository;
 
 @Service
@@ -53,6 +55,14 @@ public class OrderService {
         return orderRepository.findByUserEmailAndIsOpen(userEmail, false);
     }
 
+    public List<Order>findByIdAndIsOpen(long id, Boolean isOpen){
+        return orderRepository.findByIdAndIsOpen(id, isOpen);
+    }
+
+    public List<Order> findByUserEmail(String userEmail){
+        return orderRepository.findByUserEmail(userEmail);
+    }
+
     public Order createNewCart(String userEmail) {
 
         Order newCart = new Order(LocalDate.now(), 0.0f, 0, true);
@@ -88,8 +98,20 @@ public class OrderService {
         cart.updateCart();
         orderRepository.save(cart);
     }
+
     public List<Order> findByBoxesAndIsOpen(Box box, Boolean isOpen){
         return orderRepository.findByBoxesAndIsOpen(box, isOpen);
+    }
+
+    public boolean hasPermisionToSee(String userEmail, long orderId){
+        Order cart = orderRepository.findByIdAndIsOpen(orderId, true).stream().findFirst().orElseThrow();
+        User user = userService.findByEmail(userEmail).get();
+        if (cart == null) {
+			return false;
+		} else if (cart.getUser().getEmail().equals(userEmail) || user.isThisRole("ADMIN")) {
+            return true;
+		}
+        return false;
     }
 
 }

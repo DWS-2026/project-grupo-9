@@ -32,7 +32,7 @@ public class Order {
     private int amount;
     private boolean isOpen;
 
-    protected Order() {
+    public Order() {
     }
 
     public Order(LocalDate date, float price, int amount, boolean isOpen) {
@@ -80,6 +80,10 @@ public class Order {
     }
 
     public boolean isOpen() {
+        return isOpen;
+    }
+
+    public boolean getIsOpen() {
         return isOpen;
     }
 

@@ -90,7 +90,7 @@ public class UserController {
 	public String editProfile(Model model, HttpServletRequest request, @RequestParam(required = false) String name,
 			@RequestParam(required = false) String telephone, @RequestParam(required = false) String surname,
 			@RequestParam(required = false) String description,
-			@RequestParam(required = false) Image imageFile)
+			@RequestParam(required = false) MultipartFile imageFile)
 			throws IOException, SQLException {
 		User actualUser = userService.editUserProfile(request.getUserPrincipal().getName(), name, surname, telephone,description, imageFile);
 		
@@ -140,7 +140,7 @@ public class UserController {
 	}
 
 	@PostMapping("/signin")
-	public String newUser(Model model, User user, MultipartFile imageFile,HttpServletRequest request, @RequestParam String password) throws IOException {
+	public String newUser(Model model, User user, MultipartFile imageFile,HttpServletRequest request, @RequestParam String password, @RequestParam String description) throws IOException {
 		if (!imageFile.isEmpty()) {
 			try {
 				userService.setImage(user, imageFile);
@@ -154,7 +154,7 @@ public class UserController {
 		if(!userService.isEmailUnique(user.getEmail())){
 			return "redirect:/error/emailInUse";
 		}
-		userService.save(user, password);
+		userService.save(user, password, description);
 		return "redirect:/login";
 	}
 

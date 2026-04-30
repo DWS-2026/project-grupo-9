@@ -3,6 +3,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-public record OrderDTO (long id, LocalDate date, float price, int amount, boolean isOpen, UserEmailDTO user, List<BoxDTO> boxes) {
+public record OrderDTO (long id, LocalDate date, float price, int amount, Boolean isOpen, UserEmailDTO user, List<BoxDTO> boxes) {
     
 }

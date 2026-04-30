@@ -5,16 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.User;
+import es.codeurjc.web.dto.IsOpenRequest;
 import es.codeurjc.web.dto.OrderDTO;
 import es.codeurjc.web.dto.OrderMapper;
 import es.codeurjc.web.service.OrderService;
@@ -63,15 +65,16 @@ public class OrderRestController {
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}
-//We don't need a URL to create a new cart because to get a new cart you must have had closed the one you have already open
+//We don't need a URL to create a new cart because to get a new cart you must have closed the already open one you own
 //so the closing function creates the cart, preventing any chance to have more than one open cart or creating one for someone.
-	@PostMapping("/")
-	public ResponseEntity<OrderDTO> closeOrder(HttpServletRequest request) { 
+	@PatchMapping("/isOpen")
+	public ResponseEntity<OrderDTO> closeOrder(HttpServletRequest request, @RequestBody	IsOpenRequest isOpenRequest) { 
 		User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		
 		Order order = orderService.findByUserEmailAndIsOpen(user.getEmail(), true).stream().findFirst().orElseThrow();
-		orderService.closeTheCart(user.getEmail());
-		orderService.createNewCart(user.getEmail());
+		if(isOpenRequest.getIsOpen()==false){
+			orderService.closeTheCart(user.getEmail());
+			orderService.createNewCart(user.getEmail());
+		}
 		return ResponseEntity.ok(orderMapper.toDTO(order));
 		
 	}

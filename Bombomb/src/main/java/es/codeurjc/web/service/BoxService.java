@@ -140,4 +140,14 @@ public class BoxService {
 		boxRepository.save(box); 
     }
 
+    public void closeBox(String name, Boolean madeByAdmin, float price, Box box) {
+        if(name != null){
+             box.setName(name);
+        }
+        box.setMadeByAdmin(madeByAdmin);
+        box.setIsOpenBox(false);
+        box.setPrice(price);
+        boxRepository.save(box);
+        }
+
 }

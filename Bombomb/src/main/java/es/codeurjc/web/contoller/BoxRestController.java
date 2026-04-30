@@ -2,7 +2,9 @@ package es.codeurjc.web.contoller;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
+import java.io.IOException;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -11,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 import es.codeurjc.web.dto.BoxGetDTO;
 import es.codeurjc.web.dto.BoxPostDTO;
 import es.codeurjc.web.dto.BoxPostMapper;
+import es.codeurjc.web.dto.IsOpenRequest;
 import es.codeurjc.web.dto.BoxGetMapper;
 
 import es.codeurjc.web.model.Box;
+import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.service.BoxService;
+import es.codeurjc.web.service.ChocolateService;
 import es.codeurjc.web.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -44,21 +51,9 @@ public class BoxRestController {
 
 	@Autowired
 	private UserService userService;
-	        
-	/* hecho
-   				get de cajas cerradas de admin (las de /products), de cajas cerradas de admin y custom de un user (abiertas y cerradas) y de todas las cajas (si es admin)
-			    get de caja por id
-			    delete de caja 
-				delete de lista de bombones de caja
-			    crear caja (con opción de random)
-
-		POR HACER
-				cerrar la caja //(que se pueda cerrar la caja, y que al cerrarla ya no se puedan añadir bombones ni nada, y que se pueda hacer el pedido con esa caja cerrada)
-			    añadir bombón a la caja
-		En el post:
-		Si es random, se crea con el nombre de "caja random" y ahí también se hace lo de generar la lista aleatoria de bombones y meterla
-		Si es custom, se creea con el nombre de "Caja perosnalizada", se crea con la lista de bombones vacía y algo más.
-	*/
+	
+	@Autowired
+	private ChocolateService chocolateService;
 
 	@GetMapping("/") 
 	public Collection<BoxGetDTO> getAdminBoxes(HttpServletRequest request) {
@@ -74,8 +69,6 @@ public class BoxRestController {
 		}
 
 	}
-
-
 
 	
 	@GetMapping("/{id}") 
@@ -99,14 +92,6 @@ public class BoxRestController {
 		 
 	}
     
-
-
-
-
- 
-
-
-
 	
 	@DeleteMapping("/{id}") 
 	public ResponseEntity<BoxGetDTO> deleteBox(@PathVariable Long id, HttpServletRequest request) {
@@ -122,9 +107,10 @@ public class BoxRestController {
 		
 	}
 
+
  	@DeleteMapping("/{id}/chocolates") //vaciar chocolates lista de bombones en caja
  	public ResponseEntity<BoxGetDTO> emptyBox(@PathVariable Long id, HttpServletRequest request) {
- 		Box box = boxService.findById(id).orElseThrow();  
+ 		Box box = boxService.findById(id).orElseThrow(); 
 		if(boxService.hasPermission(userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow(), box, false)){
 		//only the owner can empty the box
 			box.getChocolates().clear();
@@ -133,9 +119,6 @@ public class BoxRestController {
  		return ResponseEntity.ok(boxGetMapper.toDTO(box));
 
  	}
-
-
-
 
 
 	@PostMapping("/")
@@ -157,6 +140,53 @@ public class BoxRestController {
 		URI location = fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id()).toUri();
 
 		return ResponseEntity.created(location).body(responseDTO);
+	}
+
+
+	@PutMapping("/{boxId}/chocolates/{chocolateId}") //añadir bombon
+	public BoxPostDTO addChocolateToBox(@PathVariable long boxId, @PathVariable long chocolateId, HttpServletRequest request) { //devuelve boxDTO o void?   Y  necesita recibir userEmail?
+		String userEmail = request.getUserPrincipal().getName();	
+		
+		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail);  
+		if(op.isPresent()){
+			Box box = op.get();
+			if(!boxService.isBoxFull(box)){ //box is not full
+				Optional<Chocolate> chocolate = chocolateService.findById(chocolateId); 
+				if(chocolate.isPresent()) {
+					boxService.addChocolateToBox(box, chocolate.get()); 
+					boxService.save(box);
+					return boxPostMapper.toDTO(box); 
+				}
+			}else{ //box is full
+				//cambiar a que devuelva responseEntity?
+				//return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+			
+		}
+		return null; //devolver not found o algo así (pero está para devolver un boxDTO)
+		//return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+
+
+	@PatchMapping("/{boxId}/isOpenBox") 
+	public ResponseEntity<BoxGetDTO> closeBox(@PathVariable long boxId, HttpServletRequest request, @RequestBody IsOpenRequest isOpenRequest) throws IOException, SQLException {
+		Box box = boxService.findById(boxId).orElseThrow();
+		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		
+		if(boxService.hasPermission(user, box, false)){  
+			
+			if(isOpenRequest.getIsOpen()==false){
+				if(userService.isAdminRole(user)){
+					boxService.closeBox(null, true, 19.0f, box);
+				}else{
+					boxService.closeBox(null, false, 19.99f, box);
+					boxService.addCustomToCart(box, user.getEmail());
+				}
+				return ResponseEntity.ok(boxGetMapper.toDTO(box));
+			}
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();		
 	}
 
 }

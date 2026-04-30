@@ -31,15 +31,19 @@ public class UserService {
     @Autowired
 	ImageService imageService;
 
+    @Autowired
+    HtmlSanitizerService htmlSanitizer;
+
     UserService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }   
     //pass description separately and sanitize it before saving it
-    public void save(User user, String passwordString) throws IOException{
+    public void save(User user, String passwordString, String description) throws IOException{
         if (user.getRoles() == null) {
         	user.setRoles(new ArrayList<>());
     	}
     	user.getRoles().add("USER");
+        user.setDescription(htmlSanitizer.sanitize(description));
         user.addOrder(new Order(true));
         user.setImage(new Image (null, user.getEmail()));
         user.setEncodedPassword(passwordEncoder.encode(passwordString));
@@ -67,7 +71,7 @@ public class UserService {
     public boolean minPasswordLength(String password) {
         return password != null && password.length() >= 8;
     }
-    public User editUserProfile(String email,String name, String surname, String telephone,String description, Image image) throws IOException, SQLException {
+    public User editUserProfile(String email,String name, String surname, String telephone,String description, MultipartFile imageFile) throws IOException, SQLException {
         User actualUser=userRepository.findByEmail(email).orElseThrow();
         if(name !=null){
             actualUser.setName(name);
@@ -79,11 +83,11 @@ public class UserService {
             actualUser.setTelephone(telephone);
         }
         if(description !=null){
-            actualUser.setDescription(description);
+            actualUser.setDescription(htmlSanitizer.sanitize(description));
         }
-        if (image != null && (!(image.getBlobImage().length() == 0))) {
+        if (imageFile != null && (!(imageFile.isEmpty()))) {
             try {
-                actualUser.setImage(new Image(new SerialBlob(image.getBlobImage()),actualUser.getEmail()));
+                actualUser.setImage(new Image(new SerialBlob(imageFile.getBytes()),actualUser.getEmail()));
             } catch (Exception e) {
                 throw new IOException("Failed to create image blob", e);
             }
@@ -119,7 +123,7 @@ public class UserService {
         actualUser.setSurname(userDTO.surname());
     }
     if(userDTO.description() != null){
-        actualUser.setDescription(userDTO.description());
+        actualUser.setDescription(htmlSanitizer.sanitize(userDTO.description()));
     }
     if(userDTO.telephone() != null){
             actualUser.setTelephone(userDTO.telephone());

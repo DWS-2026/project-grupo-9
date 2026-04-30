@@ -109,7 +109,7 @@ public class UserRestController {
             throw new RuntimeException("Password must be at least 8 characters long");
         } 
         User newuser = mapperPost.toDomain(user);
-		userService.save(newuser, user.password());
+		userService.save(newuser, user.password(),user.description());
 		UserGetDTO responseDTO = mapper.toDTO(newuser);
         URI location = fromCurrentRequest().path("/{id}") .buildAndExpand(responseDTO.id()).toUri();
        

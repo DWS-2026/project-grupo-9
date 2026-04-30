@@ -84,7 +84,7 @@ public class SecurityConfiguration {
 
 		// Disable CSRF protection (it is difficult to implement in REST APIs)
 		http.csrf(csrf -> csrf.disable());
-
+                
 		// Disable Basic Authentication
 		http.httpBasic(httpBasic -> httpBasic.disable());
 
@@ -116,6 +116,8 @@ public class SecurityConfiguration {
                     .requestMatchers("/products").permitAll()
                     .requestMatchers("/product/*/image").permitAll()
                     .requestMatchers("/product/*/details").permitAll()
+                
+
                 // PRIVATE PAGES
                     
                     .requestMatchers("/customBox").hasAnyRole("USER")
@@ -135,6 +137,8 @@ public class SecurityConfiguration {
                     .requestMatchers("/fail").hasAnyRole("USER")
                     .requestMatchers("/delete-from-cart/*/box").hasAnyRole("USER")
                     .requestMatchers("/custom/*/add-to-cart").hasAnyRole("USER")
+                    .requestMatchers("/new_file").hasAnyRole("USER")
+                    .requestMatchers("/upload_file").hasAnyRole("USER")
 
                    
                     .requestMatchers("/delete/*/profile").hasAnyRole("ADMIN")
@@ -160,7 +164,6 @@ public class SecurityConfiguration {
 			);
 		
 		
-
 		return http.build();
     }
 

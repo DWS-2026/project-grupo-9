@@ -9,13 +9,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface BoxMapper {
+public interface BoxPostMapper {
 
-    BoxDTO toDTO(Box box);
+    BoxPostDTO toDTO(Box box);
 
-    List<BoxDTO> toDTOs(Collection<Box> boxes);
+    List<BoxPostDTO> toDTOs(Collection<Box> boxes);
 
     @Mapping(target = "image", ignore = true)
+    @Mapping(target = "price", ignore = true)
 
-    Box toDomain(BoxDTO boxDTO);
+    Box toDomain(BoxPostDTO boxPostDTO);
 }

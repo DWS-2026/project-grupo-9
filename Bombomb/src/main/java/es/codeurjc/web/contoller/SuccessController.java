@@ -56,4 +56,10 @@ public class SuccessController {
 		model.addAttribute("message", "El email ya está en uso");
 		return "error";
 	}
+
+	@GetMapping("/error/invalidFile")
+	public String invalidFile(Model model){
+		model.addAttribute("message", "Archivo no válido");
+		return "error";
+	}
 }

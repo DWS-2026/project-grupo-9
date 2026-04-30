@@ -1,6 +1,7 @@
 package es.codeurjc.web.dto;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import es.codeurjc.web.model.Box;
 
@@ -13,6 +14,8 @@ public interface BoxMapper {
     BoxDTO toDTO(Box box);
 
     List<BoxDTO> toDTOs(Collection<Box> boxes);
+
+    @Mapping(target = "image", ignore = true)
 
     Box toDomain(BoxDTO boxDTO);
 }

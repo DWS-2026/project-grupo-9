@@ -11,7 +11,6 @@ import es.codeurjc.web.model.Box;
 
 public interface BoxRepository extends JpaRepository<Box, Long>{
 
-    //Optional<Box> findByIsOpenBoxAndOrdersIsOpenAndOrdersUserEmail(Boolean isOpenBox, Boolean isOpen, String email);
     @Query("""
     SELECT b
     FROM Box b
@@ -26,12 +25,13 @@ Optional<Box> findBoxByStatusAndUserEmail(
         @Param("isOpen") Boolean isOpen,
         @Param("email") String email
 );
+        Optional<Box> findById(long id);
         List <Box> findByChocolatesId(long id);
         List <Box> findByMadeByAdminAndIsOpenBoxAndIsAvailable(Boolean madeByAdmin, Boolean isOpenBox, Boolean isAvailable);
         Optional<Box> findByIdAndIsAvailable(long id, Boolean isAvailable);
         Optional<Box> findByIdAndIsAvailableAndMadeByAdmin(long id, Boolean isAvailable, Boolean madeByAdmin);
         List<Box> findByIsAvailable(boolean isAvailable);
         List <Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable);
-
+        List<Box> findByOrdersUserEmail(String email);
 
 }

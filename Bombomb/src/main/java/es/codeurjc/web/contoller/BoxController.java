@@ -7,7 +7,6 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialBlob;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -154,7 +153,7 @@ public class BoxController {
 		if(!op.isPresent()){
 			return "redirect:/error/notFound";
 		}
-		if(!orderService.isBoxInCart( userEmail,id)){
+		if(!orderService.isBoxInCart(userEmail,id)){
 			return "redirect:/error/NotYourBox";
 		}
 		Box box = op.get();
@@ -212,19 +211,8 @@ public class BoxController {
 		} else {
 			box = boxService.createBox("Caja aleatoria", 0.0f, null, false, new ArrayList<>(), userEmail);
 		}
-		List<Chocolate> chocolates = box.getChocolates();
-		chocolates.clear();
-		//if the box is empty, fill it with random chocolates, if not,emty it and fill it with random chocolates
-		int totalSize = chocolateService.findByIsAvailable(true).size();
-		int boxSize = box.getSize();
-
-		for(int i=0; i<boxSize; i++){
-			int randomIndex = (int) (Math.random() * totalSize);
-			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
-		}
-		boxService.save(box); 
-
-		redirectAttributes.addFlashAttribute("boxChocolates", chocolates);
+		boxService.randomizeBox(box);
+		redirectAttributes.addFlashAttribute("boxChocolates", box.getChocolates());
 		return "redirect:/customBox";
 	}
 

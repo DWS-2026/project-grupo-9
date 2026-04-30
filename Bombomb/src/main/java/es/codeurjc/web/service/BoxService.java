@@ -2,6 +2,7 @@ package es.codeurjc.web.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
+import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.BoxRepository;
 
 @Service
@@ -24,6 +26,8 @@ public class BoxService {
     private BoxRepository boxRepository;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ChocolateService chocolateService;
 
 
 
@@ -31,23 +35,14 @@ public class BoxService {
     public List<Box> findAll() {
         return boxRepository.findAll();
     }
-    public Box findById(Long id) {
-        return boxRepository.findById(id).orElseThrow();
+    public Optional<Box> findById(Long id) {
+        return boxRepository.findById(id);
     }
     public Box save(Box box) {
         return boxRepository.save(box);
     }
     public List<Box> findByMadeByAdminAndIsOpenBoxAndIsAvailable(Boolean madeByAdmin, Boolean isOpenBox, Boolean isAvailable) {
         return boxRepository.findByMadeByAdminAndIsOpenBoxAndIsAvailable(madeByAdmin, isOpenBox, isAvailable);
-    }
-
-    public void delete(Box box) {
-        box.setIsAvailable(false);
-                List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
-                for(Order order : orders){
-                    order.removeBox(box);
-                }
-                boxRepository.save(box);
     }
     public List<Box> findByChocolatesId(long id) {
         return boxRepository.findByChocolatesId(id);
@@ -61,10 +56,35 @@ public class BoxService {
     public Optional<Box> findByIdAndIsAvailableAndMadeByAdmin(long id, Boolean isAvailable, Boolean madeByAdmin) {
         return boxRepository.findByIdAndIsAvailableAndMadeByAdmin(id, isAvailable, madeByAdmin);
     }
+    public Collection<Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable){
+        return boxRepository.findByMadeByAdminAndIsAvailable(madeByAdmin, isAvailable);
+    }
+
+    public List<Box> findOwnedAndAdminBoxes(User user) {
+        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
+        List<Box> adminBoxes = boxRepository.findByMadeByAdminAndIsAvailable(true, true);
+        ownedBoxes.addAll(adminBoxes);
+        return ownedBoxes;
+    }
+
+    public boolean hasPermission(User user, Box box, Boolean verifyAdmin) {
+        if (user.isThisRole("ADMIN") && verifyAdmin) {
+            return true;
+        }
+        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
+        return ownedBoxes.contains(box);
+    }
+
+    public void delete(Box box) {
+        box.setIsAvailable(false);
+                List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
+                for(Order order : orders){
+                    order.removeBox(box);
+                }
+                boxRepository.save(box);
+    }
+    
     public void addCustomToCart(Box box, String userEmail) throws IOException, SQLException {
-        box.setPrice(19.99f);
-		box.setMadeByAdmin(false);
-		box.setIsOpenBox(false);
 		ClassPathResource resource = new ClassPathResource("static/images/Boxes/box_red2.png");
 		byte[] bytes = resource.getInputStream().readAllBytes();
 		Image blob = new Image(new SerialBlob(bytes), userEmail);
@@ -74,12 +94,10 @@ public class BoxService {
         cart.updateCart();
     }
     
-    public void addChocolateToBox(Box box, Chocolate chocolate) {
-        
+    public void addChocolateToBox(Box box, Chocolate chocolate) {  
         List<Chocolate> chocolates = box.getChocolates();
         chocolates.add(chocolate);
 		box.setChocolates(chocolates);
-	
     }
 
     public Boolean isBoxFull(Box box) { 
@@ -93,12 +111,33 @@ public class BoxService {
         orderService.addBoxToCart(userEmail, box);
         return box;
     }
-    public Collection<Box> findByIsAvailable(boolean isAvailable) {
-        return boxRepository.findByIsAvailable(isAvailable);
-    }
     
-    public Collection<Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable){
-        return boxRepository.findByMadeByAdminAndIsAvailable(madeByAdmin, isAvailable);
+    public void createApiBox(Box box, User user) {
+        box.setIsOpenBox(true);
+        box.setChocolates(new ArrayList<>());
+        box.setMadeByAdmin(user.getRoles().contains("ADMIN"));
+        boxRepository.save(box);
+        orderService.addBoxToCart(user.getEmail(), box);
+    }
+
+
+
+    public void randomizeBox(Box box) {
+        List<Chocolate> chocolates = box.getChocolates();
+        if(chocolates != null){
+		    chocolates.clear(); //empty the box before filling it with random chocolates
+        }else{
+            chocolates = new ArrayList<>();
+        }
+		//if the box is empty, fill it with random chocolates, if not,emty it and fill it with random chocolates
+		int totalSize = chocolateService.findByIsAvailable(true).size();
+		int boxSize = box.getSize();
+
+		for(int i=0; i<boxSize; i++){
+			int randomIndex = (int) (Math.random() * totalSize);
+			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
+		}
+		boxRepository.save(box); 
     }
 
 }

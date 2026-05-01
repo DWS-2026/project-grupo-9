@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +23,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.dto.BoxGetDTO;
 import es.codeurjc.web.dto.BoxPostDTO;
 import es.codeurjc.web.dto.BoxPostMapper;
+import es.codeurjc.web.dto.ImageDTO;
+import es.codeurjc.web.dto.ImageMapper;
 import es.codeurjc.web.dto.IsOpenRequest;
 import es.codeurjc.web.dto.BoxGetMapper;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentContextPath;
 
 
 @RestController
@@ -46,11 +55,17 @@ public class BoxRestController {
 	@Autowired
 	private BoxPostMapper boxPostMapper;
 
+	@Autowired
+	private ImageMapper imageMapper;
+
     @Autowired
 	private BoxService boxService;
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ImageService imageService;
 	
 	@Autowired
 	private ChocolateService chocolateService;
@@ -189,4 +204,26 @@ public class BoxRestController {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();		
 	}
 
+	@PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
+	public ResponseEntity<ImageDTO> createBoxImage(@PathVariable long id,
+			@RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, SerialException, SQLException {
+		if (imageFile.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		Box box = boxService.findById(id).orElseThrow();
+		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		if(boxService.hasPermission(user, box, false)){
+			Image image = boxService.findByIdAndIsAvailable(id, true).orElseThrow().getImage();
+			if (image.getBlobImage() == null) {//Only add image if it does not have one
+				imageService.replaceImage(image.getId(), imageFile);
+			}
+			URI location = fromCurrentContextPath()
+				.path("/images/{imageId}/media")
+				.buildAndExpand(image.getId())
+				.toUri();
+			return ResponseEntity.created(location).body(imageMapper.toDTO(image));
+		}
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+	}
 }

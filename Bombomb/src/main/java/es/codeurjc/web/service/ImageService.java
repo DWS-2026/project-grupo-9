@@ -37,9 +37,12 @@ public class ImageService {
     private UserRepository userRepository;
 
     public ResponseEntity<Object> getImage(Image image) throws SQLException {
-        InputStreamResource imageFile = new InputStreamResource(image.getBlobImage().getBinaryStream());
-        MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
-        return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+        if(image.getBlobImage() != null){
+            InputStreamResource imageFile = new InputStreamResource(image.getBlobImage().getBinaryStream());
+            MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
+            return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+        }
+        return this.getNotFoundImage();
     }
 
     public ResponseEntity<Object> getNotFoundImage() {

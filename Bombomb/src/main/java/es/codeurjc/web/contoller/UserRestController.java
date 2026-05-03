@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 
+import javax.sql.rowset.serial.SerialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +37,14 @@ import org.springframework.web.bind.annotation.RestController;
 import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.dto.ImageDTO;
+import es.codeurjc.web.dto.ImageMapper;
 import es.codeurjc.web.dto.UserGetDTO;
 import es.codeurjc.web.dto.UserGetMapper;
 import es.codeurjc.web.dto.UserPostDTO;
 import es.codeurjc.web.dto.UserPostMapper;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentContextPath;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -56,6 +60,9 @@ public class UserRestController {
 
     @Autowired
     private UserPostMapper mapperPost;
+
+    @Autowired
+    private ImageMapper imageMapper;
 
     UserRestController(ImageService imageService) {
         this.imageService = imageService;
@@ -135,5 +142,29 @@ public class UserRestController {
         }
     }
     
+    @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
+	public ResponseEntity<ImageDTO> createUserImage(@PathVariable long id,
+			@RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, SerialException, SQLException {
+		if (imageFile.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+        Principal principal = request.getUserPrincipal();
+        User actualUser = userService.findById(id).orElseThrow();
+        
+        if(actualUser.getEmail().equals(principal.getName())){
+            Image image = userService.findById(id).orElseThrow().getImage();
+		    if (image.getBlobImage() == null) {//Only add image if it does not have one
+			    imageService.replaceImage(image.getId(), imageFile);
+		    }
+		    URI location = fromCurrentContextPath()
+				.path("/images/{imageId}/media")
+				.buildAndExpand(image.getId())
+				.toUri();
+		    return ResponseEntity.created(location).body(imageMapper.toDTO(image));
+        }
+
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+	}
    
 }  

@@ -116,6 +116,7 @@ public class BoxService {
         box.setIsOpenBox(true);
         box.setChocolates(new ArrayList<>());
         box.setMadeByAdmin(user.getRoles().contains("ADMIN"));
+        box.setImage(new Image(null, user.getEmail()));
         boxRepository.save(box);
         orderService.addBoxToCart(user.getEmail(), box);
     }

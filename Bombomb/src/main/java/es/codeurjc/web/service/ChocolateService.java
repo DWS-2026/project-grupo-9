@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
 import es.codeurjc.web.model.Image;
-import es.codeurjc.web.repository.BoxRepository;
 import es.codeurjc.web.repository.ChocolateRepository;
 
 @Service
@@ -23,7 +22,7 @@ public class ChocolateService {
     private ChocolateRepository chocolateRepository;
 
     @Autowired
-    private BoxRepository boxRepository;
+    private BoxService boxService;
 
     public void save(Chocolate chocolate, MultipartFile image) throws IOException {
         if (image!=null && !image.isEmpty()) {
@@ -53,9 +52,9 @@ public class ChocolateService {
             chocolate.setIsAvailable(false);
             chocolateRepository.save(chocolate);
 
-            List<Box> boxes = boxRepository.findByChocolatesId(id);
+            List<Box> boxes = boxService.findByChocolatesId(id);
             for (Box box : boxes) {
-                boxRepository.delete(box);
+                boxService.delete(box);
             }
         }
     }

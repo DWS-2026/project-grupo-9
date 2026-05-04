@@ -19,6 +19,7 @@ import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.BoxRepository;
+import es.codeurjc.web.repository.ChocolateRepository;
 
 @Service
 public class BoxService {
@@ -27,7 +28,7 @@ public class BoxService {
     @Autowired
     private OrderService orderService;
     @Autowired
-    private ChocolateService chocolateService;
+    private ChocolateRepository chocolateRepository;
 
 
 
@@ -58,6 +59,9 @@ public class BoxService {
     }
     public Collection<Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable){
         return boxRepository.findByMadeByAdminAndIsAvailable(madeByAdmin, isAvailable);
+    }
+    public Collection<Box> findByMadeByAdminAndIsAvailableAndIsOpenBox(Boolean madeByAdmin, Boolean isAvailable, Boolean isOpenBox){
+        return boxRepository.findByMadeByAdminAndIsAvailableAndIsOpenBox(madeByAdmin, isAvailable, isOpenBox);
     }
 
     public List<Box> findOwnedAndAdminBoxes(User user) {
@@ -116,6 +120,7 @@ public class BoxService {
         box.setIsOpenBox(true);
         box.setChocolates(new ArrayList<>());
         box.setMadeByAdmin(user.getRoles().contains("ADMIN"));
+        box.setImage(new Image(null, user.getEmail()));
         boxRepository.save(box);
         orderService.addBoxToCart(user.getEmail(), box);
     }
@@ -130,12 +135,12 @@ public class BoxService {
             chocolates = new ArrayList<>();
         }
 		//if the box is empty, fill it with random chocolates, if not,emty it and fill it with random chocolates
-		int totalSize = chocolateService.findByIsAvailable(true).size();
+		int totalSize = chocolateRepository.findByIsAvailable(true).size();
 		int boxSize = box.getSize();
 
 		for(int i=0; i<boxSize; i++){
 			int randomIndex = (int) (Math.random() * totalSize);
-			chocolates.add(chocolateService.findByIsAvailable(true).get(randomIndex));
+			chocolates.add(chocolateRepository.findByIsAvailable(true).get(randomIndex));
 		}
 		boxRepository.save(box); 
     }

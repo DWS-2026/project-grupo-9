@@ -109,7 +109,7 @@ public class FileController {
             return "redirect:/error/NotYourFile";
         }
         model.addAttribute("fileId", id);
-        model.addAttribute("fileName", file.getName());
+        model.addAttribute("fileName", file.getOriginalName());
 
         return "viewFile";
     }

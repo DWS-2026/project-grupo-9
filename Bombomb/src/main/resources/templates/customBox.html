@@ -33,13 +33,20 @@
 
         {{#box}}
         {{^admin}}<!--not admin-->
+        
         <div class="add-to-cart">
-            <form action="/custom/{{box.id}}/add-to-cart" method="post">
+            <form action="/custom/{{box.id}}/add-to-cart" method="post" enctype="multipart/form-data">
+                
+                <h3>Añadir nota</h3> 
+                <input type="file" name="file" accept=".jpg, .jpeg, .png, .pdf, .gif"/>
+
                 <input class="form-control text-center me-3" id="input" type="text" name="name"  value="{{name}}" style="max-width: 20rem" required/>
                 <input type="submit" value="Añadir al carrito" class="btn buy-btn" />
                 <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
-        </div>       
+           
+        </div>  
+            
         {{/admin}}
         {{#admin}}<!--admin-->
         <div class="col-md-8"> 

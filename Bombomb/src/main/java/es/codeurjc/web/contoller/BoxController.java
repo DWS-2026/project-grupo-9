@@ -25,6 +25,7 @@ import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.FileService;
 import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +48,9 @@ public class BoxController {
 	UserService userService;
 	@Autowired
 	ImageService imageService;
+	@Autowired
+	FileService fileService;
+
 	
 
 	@GetMapping("/products")
@@ -146,7 +150,7 @@ public class BoxController {
 		return "redirect:/cart";
 	}
 
-	@PostMapping("/custom/{id}/add-to-cart") 
+	/*@PostMapping("/custom/{id}/add-to-cart") 
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name) throws IOException, SQLException {	
 		String userEmail = request.getUserPrincipal().getName();
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
@@ -161,8 +165,43 @@ public class BoxController {
 		boxService.addCustomToCart(box, userEmail);
 		boxService.save(box);
 		return "redirect:/cart";
+    }*/
+
+	@PostMapping("/custom/{id}/add-to-cart") 
+    public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name,@RequestParam(required=false) MultipartFile file) throws IOException, SQLException {	
+		String userEmail = request.getUserPrincipal().getName();
+        Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
+		
+		if(file!=null && !file.isEmpty()){
+			
+			String filename = file.getOriginalFilename();
+
+			if(!fileService.isValidExtension(filename)) {
+            	return "redirect:/error/invalidFile";
+        	}
+        	
+            if (fileService.validateExtTika(file)) {
+           
+                User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+            	fileService.uploadFile(file, user);
+        	} else {
+            	return "redirect:/error/invalidFile";
+        	}
+        	
+		}
+		if(!op.isPresent()){
+			return "redirect:/error/notFound";
+		}
+		if(!orderService.isBoxInCart(userEmail,id)){
+			return "redirect:/error/NotYourBox";
+		}
+
+		Box box = op.get();
+		boxService.closeBox(name, false, 19.99f, box);
+		boxService.addCustomToCart(box, userEmail);
+		boxService.save(box);
+		return "redirect:/cart";
     }
-	
 
 
 	@PostMapping("/addChocolate/{id}") //{id}=chocolate id

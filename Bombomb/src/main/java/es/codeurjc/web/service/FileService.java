@@ -22,12 +22,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tika.Tika;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
@@ -35,19 +37,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Service
 public class FileService {
 
+    private final Tika tika= new Tika();
+    private final List <String> allowedMimeTypes= List.of("application/pdf","image/jpeg","image/png","image/gif","image/jpg");
+    /* 
     private final Map<String, String> signatures = Map.of(
     "gif", "474946383761",
     "pdf", "255044462D",
     "jpg", "FFD8FFE0",
     "jpeg", "FFD8FFE0",
     "png", "89504E470D0A1A0A"
-    );
+    );*/
     @Autowired
     private FileRepository fileRepository;
 
@@ -91,14 +97,31 @@ public class FileService {
         file.setUser(user);
         fileRepository.save(file);
 
-        file.setName("file"+file.getId()+FilenameUtils.getExtension(originalFile.getOriginalFilename()));
+        file.setName("file"+file.getId()+"."+FilenameUtils.getExtension(originalFile.getOriginalFilename()));
 
 		Path filePath = FILES_FOLDER.resolve(file.getName());
 		
 		originalFile.transferTo(filePath);
 
 	}
+    public boolean isValidExtension(String filename){
+        if (filename == null || !filename.contains(".")) {
+            return false;
+        }
+        String extension=filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+        return List.of("pdf","jpg","jpeg","png","gif").contains(extension);
+    }
 
+    public boolean validateExtTika(MultipartFile file) throws IOException {
+        String mimeType = tika.detect(file.getInputStream());
+        return allowedMimeTypes.contains(mimeType);
+    }
+   /* public boolean validateExtTika(InputStream file) throws IOException {
+        String mimeType = tika.detect(file);
+        return allowedMimeTypes.contains(mimeType);
+    }*/
+ 
+    /* 
     public String fromBytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
@@ -131,5 +154,5 @@ public class FileService {
         }
         String extension=filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
         return signatures.containsKey(extension);
-    }
+    }*/
 }

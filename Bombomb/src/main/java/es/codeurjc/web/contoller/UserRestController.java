@@ -73,6 +73,16 @@ public class UserRestController {
         return mapper.toDTOs(userService.findAll());
     }
 
+    /*@GetMapping("/")
+    public Collection<UserGetDTO> getAllUsers(HttpServletRequest request) {
+        if(request.isUserInRole("ADMIN")){
+            return mapper.toDTOs(userService.findAll()); 
+        }else{
+            return mapper.toDTOs(userService.findByEmail(request.getUserPrincipal().getName()).stream().toList());
+        }
+    }*/
+
+
     
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> getUser(@PathVariable long id, HttpServletRequest request) {
@@ -99,7 +109,7 @@ public class UserRestController {
         if (user.getEmail().equals(principal.getName()) || request.isUserInRole("ADMIN")) {
             request.getSession().invalidate();
             userService.delete(user);
-            return ResponseEntity.ok(mapper.toDTO(user));
+            return ResponseEntity.ok().build();
         }else{
  
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -110,10 +120,10 @@ public class UserRestController {
     public ResponseEntity<UserGetDTO> createUser(@RequestBody UserPostDTO user) throws IOException {
         
         if(!userService.isEmailUnique(user.email())) {
-            throw new RuntimeException("Email already exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         if(!userService.minPasswordLength(user.password())) {
-            throw new RuntimeException("Password must be at least 8 characters long");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } 
         User newuser = mapperPost.toDomain(user);
 		userService.save(newuser, user.password(),user.description());

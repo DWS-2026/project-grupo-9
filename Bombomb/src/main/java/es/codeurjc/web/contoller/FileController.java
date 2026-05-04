@@ -1,7 +1,5 @@
 package es.codeurjc.web.contoller;
 
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -44,7 +42,8 @@ public class FileController {
         return "pruebaFile";
 	}*/
 
-    @PostMapping("/new_file")
+    //moverlo a box controller cuando se añada una caja personalizada
+    /*@PostMapping("/new_file")
     public String postFile(@RequestParam MultipartFile file, Model model, HttpServletRequest request)
             throws IOException {
 
@@ -53,10 +52,8 @@ public class FileController {
             return "redirect:/error/invalidFile";
         }
         try (InputStream is = file.getInputStream()) {
-            if (fileService.validateExtensionFromBytes(is)) {
+            if (fileService.validateExtTika(is)) {
            
-            // 2. Si es válido, lo subimos.
-            // Spring nos dará un stream nuevo y fresco dentro de uploadFile()
                 User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
                 fileService.uploadFile(file, user);
            
@@ -65,12 +62,12 @@ public class FileController {
                 return "redirect:/error/invalidFile";
             }
         }
-    }
+    }*/
 
 
-    @GetMapping("/upload_file")
+    /*@GetMapping("/upload_file")
     public String getFile(){
         return "pruebaFile";
-    }
+    }*/
     
 }

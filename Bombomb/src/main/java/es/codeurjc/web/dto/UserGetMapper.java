@@ -16,7 +16,7 @@ public interface UserGetMapper {
     List<UserGetDTO> toDTOs(Collection<User> users);
 
     @Mapping (target="image", ignore=true)
-    @Mapping (target="orders", ignore=true)
+    //@Mapping (target="orders", ignore=true)
     User toDomain(UserGetDTO userGetDTO);
 
 }

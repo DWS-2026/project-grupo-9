@@ -157,7 +157,7 @@ public class BoxController {
 			return "redirect:/error/NotYourBox";
 		}
 		Box box = op.get();
-		box.setName(name);
+		boxService.closeBox(name, false, 19.99f, box);
 		boxService.addCustomToCart(box, userEmail);
 		boxService.save(box);
 		return "redirect:/cart";
@@ -223,19 +223,18 @@ public class BoxController {
 			return "redirect:/error/notFound";
 		}
 		Box box = op.get();
-		if (!imageFile.isEmpty()) {
-			try {
-				box.setImage(new Image(new SerialBlob(imageFile.getBytes()), "public"));			
-			} catch (Exception e) {
-				throw new IOException("Failed to create image blob", e);
-			}
-		}	
-		box.setName(name);
-		box.setMadeByAdmin(true);
-		box.setIsOpenBox(false);
-		box.setPrice(19.0f);
-		boxService.save(box);
-		
+		if(boxService.hasPermission(userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow(), box,false)){
+			if (!imageFile.isEmpty()) {
+				try {
+					box.setImage(new Image(new SerialBlob(imageFile.getBytes()), "public"));			
+				} catch (Exception e) {
+					throw new IOException("Failed to create image blob", e);
+				}
+			}	
+			boxService.closeBox(name, true, 19.0f, box);	
+		}else{
+			return "redirect:/error/NotYourBox";
+		}
 		return "redirect:/products";
 	}
 	

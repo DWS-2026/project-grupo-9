@@ -60,6 +60,9 @@ public class BoxService {
     public Collection<Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable){
         return boxRepository.findByMadeByAdminAndIsAvailable(madeByAdmin, isAvailable);
     }
+    public Collection<Box> findByMadeByAdminAndIsAvailableAndIsOpenBox(Boolean madeByAdmin, Boolean isAvailable, Boolean isOpenBox){
+        return boxRepository.findByMadeByAdminAndIsAvailableAndIsOpenBox(madeByAdmin, isAvailable, isOpenBox);
+    }
 
     public List<Box> findOwnedAndAdminBoxes(User user) {
         List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());

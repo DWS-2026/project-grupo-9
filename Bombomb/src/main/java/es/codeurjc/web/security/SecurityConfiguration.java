@@ -139,6 +139,9 @@ public class SecurityConfiguration {
                     .requestMatchers("/custom/*/add-to-cart").hasAnyRole("USER")
                     .requestMatchers("/new_file").hasAnyRole("USER")
                     .requestMatchers("/upload_file").hasAnyRole("USER")
+                    .requestMatchers("/viewFile/*").hasAnyRole("USER")
+                    .requestMatchers("/files/*").hasAnyRole("USER")
+
 
                    
                     .requestMatchers("/delete/*/profile").hasAnyRole("ADMIN")

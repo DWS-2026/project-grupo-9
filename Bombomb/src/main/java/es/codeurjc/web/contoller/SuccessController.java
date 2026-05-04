@@ -50,7 +50,11 @@ public class SuccessController {
 		model.addAttribute("message", "No es tu caja, amigo");
 		return "error";
 	}
-	
+	@GetMapping("/error/NotYourFile")
+	public String notYourFile(Model model){
+		model.addAttribute("message", "El archivo que buscas no es tuyo.");
+		return "error";
+	}
 	@GetMapping("/error/emailInUse")
 	public String emailInUse(Model model){
 		model.addAttribute("message", "El email ya está en uso");

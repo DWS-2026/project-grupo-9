@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<body class="d-flex flex-column min-vh-100">
+    <main class="flex-grow-1">
+        {{>navigationBar}}
+        <div class="container d-flex justify-content-center mt-5">
+            <div class="card shadow-lg" style="max-width: 500px; width: 100%;">
+
+                <div class="card-header text-center">
+                    <h5 class="mb-0">{{fileName}}</h5>
+                </div>
+
+                <div class="card-body text-center">
+                    <img src="/files/{{fileId}}" class="img-fluid rounded" alt="archivo">
+                </div>
+
+            </div>
+        </div>
+    </main>
+    {{>footer}}
+</body>
+
+</html>

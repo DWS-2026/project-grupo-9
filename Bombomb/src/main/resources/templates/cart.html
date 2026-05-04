@@ -29,6 +29,11 @@
                                 <div class="col-price">
                                     <div class="price">{{price}}€</div>
                                 </div>
+                                {{#file}}
+                                <div class="col-file">
+                                    <a href="/viewFile/{{id}}" target="_blank" class="btn btn-outline-dark">Ver archivo</a>
+                                </div>
+                                {{/file}}
                                 <form action="/delete-from-cart/{{id}}/box" method="post" style="display: inline;">
                                     <button type="submit" class="btn btn-outline-danger mt-auto">
                                         Borrar

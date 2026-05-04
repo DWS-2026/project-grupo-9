@@ -26,7 +26,9 @@ public class Box {
     @ManyToMany(mappedBy="boxes")
     private List<Order> orders;
     @OneToOne(cascade=CascadeType.ALL)
-    Image image;
+    private Image image;
+    @OneToOne(cascade=CascadeType.ALL)
+    private File file;
 
     public Box() {
         
@@ -99,6 +101,12 @@ public class Box {
     }
     public int getSize() {
         return size;
+    }
+    public File getFile() {
+        return file;
+    }
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public long getId() {

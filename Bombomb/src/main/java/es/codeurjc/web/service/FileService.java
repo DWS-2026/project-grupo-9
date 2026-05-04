@@ -111,6 +111,7 @@ public class FileService {
         fileRepository.save(file);
 
         Path filePath = FILES_FOLDER.resolve(file.getName());
+        originalFile.transferTo(filePath);
 
 	}
     public boolean isValidExtension(String filename){
@@ -119,7 +120,6 @@ public class FileService {
         }
         String extension=filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
         return List.of("pdf","jpg","jpeg","png","gif").contains(extension);
-        //originalFile.transferTo(filePath);
 
     }
 

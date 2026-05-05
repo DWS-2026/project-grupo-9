@@ -80,16 +80,15 @@ public class UserRestController {
         }else{
             return mapper.toDTOs(userService.findByEmail(request.getUserPrincipal().getName()).stream().toList());
         }
-    }*/
-
+    }
+*/
 
     
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> getUser(@PathVariable long id, HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
         User user = userService.findById(id).orElseThrow();
                
-        if (user.getEmail().equals(principal.getName()) || request.isUserInRole("ADMIN")) {
+        if (request.isUserInRole("ADMIN")) {
             return ResponseEntity.ok(mapper.toDTO(user));
         }else{
  
@@ -98,6 +97,19 @@ public class UserRestController {
 
     }
    
+    @GetMapping("/me")
+    public ResponseEntity<UserGetDTO> getUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userService.findByEmail(principal.getName()).orElseThrow();
+               
+        if (principal !=null) {
+            return ResponseEntity.ok(mapper.toDTO(user));
+        }else{
+ 
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+    }
 
     
     //if the user is not admin, only can delete his own profile, if is admin can delete to all users profiles   

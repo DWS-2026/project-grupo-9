@@ -70,9 +70,9 @@ public class ChocolateRestController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ChocolateDTO deleteChocolate(@PathVariable long id) {
+	public ResponseEntity<ChocolateDTO> deleteChocolate(@PathVariable long id) {
 		chocolateService.deleteById(id);
-		return chocolateMapper.toDTO(chocolateService.findById(id).orElseThrow());
+		return ResponseEntity.ok(chocolateMapper.toDTO(chocolateService.findById(id).orElseThrow()));
 	}
 
 	@PostMapping(value = "/{id}/images", consumes = "multipart/form-data")

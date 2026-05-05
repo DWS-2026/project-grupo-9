@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.web.dto.BoxGetDTO;
 import es.codeurjc.web.dto.BoxPostDTO;
 import es.codeurjc.web.dto.BoxPostMapper;
+import es.codeurjc.web.dto.FileDTO;
+import es.codeurjc.web.dto.FileMapper;
 import es.codeurjc.web.dto.ImageDTO;
 import es.codeurjc.web.dto.ImageMapper;
 import es.codeurjc.web.dto.IsOpenRequest;
@@ -35,10 +37,12 @@ import es.codeurjc.web.dto.BoxGetMapper;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
+import es.codeurjc.web.model.File;
 import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.service.BoxService;
 import es.codeurjc.web.service.ChocolateService;
+import es.codeurjc.web.service.FileService;
 import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -70,6 +74,13 @@ public class BoxRestController {
 	@Autowired
 	private ChocolateService chocolateService;
 
+	@Autowired
+	private FileMapper fileMapper;
+	
+	@Autowired
+	private FileService fileService;
+
+
 	@GetMapping("/") 
 	public Collection<BoxGetDTO> getAdminBoxes(HttpServletRequest request) {
         if(request.getUserPrincipal() ==null){ //not registered user sees the boxes made by the admin that are available 
@@ -91,7 +102,7 @@ public class BoxRestController {
 		Box box = boxService.findById(id).orElseThrow();
 
 		if(request.getUserPrincipal() == null){ //not registered
-			if(box.getMadeByAdmin() && box.getIsAvailable()){
+			if(box.getMadeByAdmin() && box.getIsAvailable() && !box.getIsOpenBox()){ //only sees available closed boxes made by admin
 				return ResponseEntity.ok(boxGetMapper.toDTO(box));
 			}else{
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -140,26 +151,6 @@ public class BoxRestController {
  	}
 
 
-	@PostMapping("/")
-	public ResponseEntity<BoxGetDTO> createBox(@RequestBody BoxPostDTO boxDTO, @RequestParam(required = false) Boolean isRandom, HttpServletRequest request) throws IOException {
-		User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-
-		//if the user already has an open box, it can't create another one
-		Optional<Box> existingBox = boxService.findBoxByStatusAndUserEmail(true, true, user.getEmail());
-		if (existingBox.isPresent()) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		}
-
-		Box box = boxPostMapper.toDomain(boxDTO);
-		boxService.createApiBox(box, user);
-		if(isRandom != null && isRandom != false){ 
-			boxService.randomizeBox(box);
-		}
-		BoxGetDTO responseDTO = boxGetMapper.toDTO(box);
-		URI location = fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id()).toUri(); 
-
-		return ResponseEntity.created(location).body(responseDTO);
-	}
 
 
 	@PutMapping("/chocolates/{chocolateId}") //añadir bombon
@@ -211,6 +202,27 @@ public class BoxRestController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();	
 	}
 
+	@PostMapping("/")
+	public ResponseEntity<BoxGetDTO> createBox(@RequestBody BoxPostDTO boxDTO, @RequestParam(required = false) Boolean isRandom, HttpServletRequest request) throws IOException {
+		User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+
+		//if the user already has an open box, it can't create another one
+		Optional<Box> existingBox = boxService.findBoxByStatusAndUserEmail(true, true, user.getEmail());
+		if (existingBox.isPresent()) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}
+
+		Box box = boxPostMapper.toDomain(boxDTO);
+		boxService.createApiBox(box, user);
+		if(isRandom != null && isRandom != false){ 
+			boxService.randomizeBox(box);
+		}
+		BoxGetDTO responseDTO = boxGetMapper.toDTO(box);
+		URI location = fromCurrentRequest().path("/{id}").buildAndExpand(responseDTO.id()).toUri(); 
+
+		return ResponseEntity.created(location).body(responseDTO);
+	}
+
 	@PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
 	public ResponseEntity<ImageDTO> createBoxImage(@PathVariable long id,
 			@RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, SerialException, SQLException {
@@ -229,6 +241,30 @@ public class BoxRestController {
 				.buildAndExpand(image.getId())
 				.toUri();
 			return ResponseEntity.created(location).body(imageMapper.toDTO(image));
+		}
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+	}
+
+	@PostMapping(value = "/{id}/files", consumes = "multipart/form-data")
+	public ResponseEntity<FileDTO> createBoxFile(@PathVariable long id, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException, SerialException, SQLException {
+		if (file.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		Box box = boxService.findById(id).orElseThrow();
+		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		if(boxService.hasPermission(user, box, false)){
+			File fileBox = box.getFile();
+			if(fileBox == null){ //Only add file if it does not have one
+				fileService.uploadFile(file, user, box);
+			}
+			File fileBox2 = box.getFile();
+			URI location = fromCurrentContextPath()
+				.path("/images/{imageId}/media")
+				.buildAndExpand(fileBox2.getId())
+				.toUri();
+			return ResponseEntity.created(location).body(fileMapper.toDTO(fileBox2));
+		
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 

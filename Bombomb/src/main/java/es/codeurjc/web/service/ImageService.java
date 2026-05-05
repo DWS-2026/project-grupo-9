@@ -72,7 +72,7 @@ public class ImageService {
         String imageOwner = image.getOwner();
         return imageOwner.equals("public") || 
         (userEmail!= null && imageOwner.equals(userEmail)) || 
-        (userEmail!= null && userRepository.findByEmail(userEmail).orElseThrow().getRoles().equals("ADMIN"));
+        (userEmail!= null && userRepository.findByEmail(userEmail).orElseThrow().isThisRole("ADMIN"));
     }
 
     public Boolean hasEditPermision(Principal principal, Image image){

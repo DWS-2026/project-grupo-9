@@ -172,6 +172,13 @@ public class BoxController {
 		String userEmail = request.getUserPrincipal().getName();
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		
+		if(!op.isPresent()){
+			return "redirect:/error/notFound";
+		}
+		if(!orderService.isBoxInCart(userEmail,id)){
+			return "redirect:/error/NotYourBox";
+		}
+
 		if(file!=null && !file.isEmpty()){
 			
 			String filename = file.getOriginalFilename();
@@ -183,18 +190,14 @@ public class BoxController {
             if (fileService.validateExtTika(file)) {
            
                 User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-            	fileService.uploadFile(file, user);
+            	fileService.uploadFile(file, user, op.get());
+				
         	} else {
             	return "redirect:/error/invalidFile";
         	}
         	
 		}
-		if(!op.isPresent()){
-			return "redirect:/error/notFound";
-		}
-		if(!orderService.isBoxInCart(userEmail,id)){
-			return "redirect:/error/NotYourBox";
-		}
+		
 
 		Box box = op.get();
 		boxService.closeBox(name, false, 19.99f, box);

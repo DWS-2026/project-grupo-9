@@ -12,6 +12,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;
@@ -66,7 +67,7 @@ public class BoxService {
 
     public List<Box> findOwnedAndAdminBoxes(User user) {
         List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
-        List<Box> adminBoxes = boxRepository.findByMadeByAdminAndIsAvailable(true, true);
+        List<Box> adminBoxes = boxRepository.findByMadeByAdminAndIsAvailableAndIsOpenBox(true, true, false);
         ownedBoxes.addAll(adminBoxes);
         return ownedBoxes;
     }

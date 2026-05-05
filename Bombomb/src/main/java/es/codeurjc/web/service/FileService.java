@@ -1,5 +1,6 @@
 package es.codeurjc.web.service;
 
+import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.File;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.FileRepository;
@@ -99,7 +100,7 @@ public class FileService {
 
     private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files");
 
-    public void uploadFile(MultipartFile originalFile, User user) throws IOException {
+    public void uploadFile(MultipartFile originalFile, User user, Box box) throws IOException {
 
         Files.createDirectories(FILES_FOLDER);
         File file = new File();
@@ -110,6 +111,7 @@ public class FileService {
         file.setName("file" + file.getId() + "." + FilenameUtils.getExtension(originalFile.getOriginalFilename()));
         fileRepository.save(file);
 
+        box.setFile(file);
         Path filePath = FILES_FOLDER.resolve(file.getName());
         originalFile.transferTo(filePath);
 
@@ -125,6 +127,7 @@ public class FileService {
 
     public boolean validateExtTika(MultipartFile file) throws IOException {
         String mimeType = tika.detect(file.getInputStream());
+        FilenameUtils.normalize(file.getOriginalFilename());
         return allowedMimeTypes.contains(mimeType);
     }
    /* public boolean validateExtTika(InputStream file) throws IOException {

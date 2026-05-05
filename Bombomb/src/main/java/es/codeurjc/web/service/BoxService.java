@@ -67,7 +67,7 @@ public class BoxService {
 
     public List<Box> findOwnedAndAdminBoxes(User user) {
         List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
-        List<Box> adminBoxes = boxRepository.findByMadeByAdminAndIsAvailable(true, true);
+        List<Box> adminBoxes = boxRepository.findByMadeByAdminAndIsAvailableAndIsOpenBox(true, true, false);
         ownedBoxes.addAll(adminBoxes);
         return ownedBoxes;
     }

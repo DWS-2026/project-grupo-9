@@ -84,9 +84,8 @@ public class BoxRestController {
 	@GetMapping("/") 
 	public Collection<BoxGetDTO> getAdminBoxes(HttpServletRequest request) {
         if(request.getUserPrincipal() ==null){ //not registered user sees the boxes made by the admin that are available 
-			return boxGetMapper.toDTOs(boxService.findByMadeByAdminAndIsAvailableAndIsOpenBox(true, true, true));
+			return boxGetMapper.toDTOs(boxService.findByMadeByAdminAndIsAvailableAndIsOpenBox(true, true, false));
 		}
-
 		User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		if(user.isThisRole("ADMIN")){ //admin user sees all the boxes
 			return boxGetMapper.toDTOs(boxService.findAll());
@@ -137,7 +136,7 @@ public class BoxRestController {
 	}
 
 
- 	@DeleteMapping("/chocolates") //vaciar chocolates lista de bombones en caja
+ 	@DeleteMapping("/chocolates") 
  	public ResponseEntity<BoxGetDTO> emptyBox(HttpServletRequest request) { 
 		User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
  		Box box = boxService.findBoxByStatusAndUserEmail(true,true, user.getEmail()).orElseThrow(); 
@@ -153,8 +152,8 @@ public class BoxRestController {
 
 
 
-	@PutMapping("/chocolates/{chocolateId}") //añadir bombon
-	public ResponseEntity<BoxGetDTO> addChocolateToBox(@PathVariable long boxId, @PathVariable long chocolateId, HttpServletRequest request) { 
+	@PutMapping("/chocolates/{chocolateId}") 
+	public ResponseEntity<BoxGetDTO> addChocolateToBox(@PathVariable long chocolateId, HttpServletRequest request) { 
 		String userEmail = request.getUserPrincipal().getName();	
 		
 		Optional<Box> op = boxService.findBoxByStatusAndUserEmail(true, true, userEmail);  

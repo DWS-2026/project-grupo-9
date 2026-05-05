@@ -79,11 +79,7 @@ public class FileController {
         return "pruebaFile";
     }*/
     
-    @GetMapping("/upload_file")
-    public String getFile() {
-        return "pruebaFile";
-    }
-
+    
     @GetMapping("/files/{id}")
     public ResponseEntity<Resource> serveFile(@PathVariable long id,
             HttpServletRequest request) throws IOException {

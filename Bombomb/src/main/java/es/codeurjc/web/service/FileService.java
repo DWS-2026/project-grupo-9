@@ -105,6 +105,7 @@ public class FileService {
         Files.createDirectories(FILES_FOLDER);
         File file = new File();
         file.setOriginalName(originalFile.getOriginalFilename());
+
         file.setUser(user);
         fileRepository.save(file);
 
@@ -127,8 +128,9 @@ public class FileService {
 
     public boolean validateExtTika(MultipartFile file) throws IOException {
         String mimeType = tika.detect(file.getInputStream());
-        FilenameUtils.normalize(file.getOriginalFilename());
-        return allowedMimeTypes.contains(mimeType);
+        String normalizedFilename = FilenameUtils.normalize(file.getOriginalFilename());
+
+        return allowedMimeTypes.contains(mimeType) && normalizedFilename.equals(file.getOriginalFilename());
     }
    /* public boolean validateExtTika(InputStream file) throws IOException {
         String mimeType = tika.detect(file);

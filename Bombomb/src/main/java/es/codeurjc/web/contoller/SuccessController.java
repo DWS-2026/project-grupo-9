@@ -20,10 +20,10 @@ public class SuccessController {
 		return "error";
 	}
 
-    @GetMapping("/error")
+    /*@GetMapping("/error")
 	public String error(Model model) {
 		return "error";
-	}
+	}*/
 
     @GetMapping("/success")
 	public String success(Model model) {

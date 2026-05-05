@@ -79,27 +79,25 @@ public class OrderRestController {
 		
 	}
 
-	@PutMapping("/{id}/boxes/{boxId}") 
-	public ResponseEntity<OrderDTO> addBoxToCart(@PathVariable long id, @PathVariable long boxId, HttpServletRequest request) {
-		Order cart = orderService.findByIdAndIsOpen(id, true).stream().findFirst().get();
-
-		if (orderService.hasPermisionToSee(request.getUserPrincipal().getName(), id) && request.getUserPrincipal().getName().equals(cart.getUser().getEmail())) {
+	@PutMapping("/boxes/{boxId}") 
+	public ResponseEntity<OrderDTO> addBoxToCart(@PathVariable long boxId, HttpServletRequest request) {
+		Order cart = orderService.findByUserEmailAndIsOpen(request.getUserPrincipal().getName(), true).stream().findFirst().get();
+	
+		if (cart.getUser().getEmail().equals(request.getUserPrincipal().getName())) {
 			Box box = boxService.findByIdAndIsAvailableAndMadeByAdmin(boxId, true, true).orElseThrow();
 			orderService.addBoxToCart(cart.getUser().getEmail(), box);
-			Order updatedCart = orderService.findByIdAndIsOpen(id, true).stream().findFirst().orElseThrow();
-			return ResponseEntity.ok(orderMapper.toDTO(updatedCart));
+			return ResponseEntity.ok(orderMapper.toDTO(cart));
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}
 
-	@DeleteMapping("/{id}/boxes/{boxId}") 
-	public ResponseEntity<OrderDTO> removeBoxFromCart(@PathVariable long id, @PathVariable long boxId, HttpServletRequest request) {
-		Order cart = orderService.findByIdAndIsOpen(id, true).stream().findFirst().get();
+	@DeleteMapping("/boxes/{boxId}") 
+	public ResponseEntity<OrderDTO> removeBoxFromCart(@PathVariable long boxId, HttpServletRequest request) {
+		Order cart = orderService.findByUserEmailAndIsOpen(request.getUserPrincipal().getName(), true).stream().findFirst().get();
 		
-		if (orderService.hasPermisionToSee(request.getUserPrincipal().getName(), id) && request.getUserPrincipal().getName().equals(cart.getUser().getEmail())){
+		if (cart.getUser().getEmail().equals(request.getUserPrincipal().getName())) {
 			orderService.removeBoxFromCart(request.getUserPrincipal().getName(), boxId);
-			Order updatedCart = orderService.findByIdAndIsOpen(id, true).stream().findFirst().get();
-			return ResponseEntity.ok(orderMapper.toDTO(updatedCart));
+			return ResponseEntity.ok(orderMapper.toDTO(cart));
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}

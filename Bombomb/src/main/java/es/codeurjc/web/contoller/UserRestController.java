@@ -16,6 +16,8 @@ import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
@@ -145,7 +147,7 @@ public class UserRestController {
     }
 
 
-    @PostMapping("/")
+   /* @PostMapping("/")
     public ResponseEntity<UserGetDTO> createUser(@RequestBody UserPostDTO user) throws IOException {
         
         if(!userService.isEmailUnique(user.email())) {
@@ -161,7 +163,37 @@ public class UserRestController {
        
         return ResponseEntity.created(location).body(responseDTO);  
    }
-   
+   */
+
+   @PostMapping("/")
+    public ResponseEntity<Object> createUser(@RequestBody UserPostDTO user) throws IOException {
+        
+        if(!userService.isEmailUnique(user.email())&& !userService.minPasswordLength(user.password())){
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "El email ya está registrado y la contraseña debe tener al menos 8 caracteres");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+        if(!userService.isEmailUnique(user.email())) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "El email ya está registrado");
+            error.put("field", "email");
+            error.put("value", user.email());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+        if(!userService.minPasswordLength(user.password())) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "La contraseña debe tener al menos 8 caracteres");
+            error.put("field", "password");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+        
+        User newuser = mapperPost.toDomain(user);
+		userService.save(newuser, user.password(),user.description());
+		UserGetDTO responseDTO = mapper.toDTO(newuser);
+        URI location = fromCurrentRequest().path("/{id}") .buildAndExpand(responseDTO.id()).toUri();
+       
+        return ResponseEntity.created(location).body(responseDTO);  
+   }
 
     //admin cannot edit other users profiles
     //for users

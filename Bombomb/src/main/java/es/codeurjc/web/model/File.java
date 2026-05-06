@@ -18,8 +18,6 @@ public class File {
 
     private String originalName;
   
-    private String name;
-
     @ManyToOne
     private User user; //email of the user that uploaded the file
 
@@ -28,7 +26,6 @@ public class File {
 
     public File(String originalName, User user) {
         this.originalName = originalName;
-        
         this.user = user;
     }
 
@@ -54,13 +51,5 @@ public class File {
         this.originalName = originalName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
 
 }

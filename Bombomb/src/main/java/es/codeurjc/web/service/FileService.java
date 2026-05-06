@@ -90,7 +90,7 @@ public class FileService {
     }
 
     // return true if the user is the owner (validation for admin in controller)
-    public Boolean isPdfFileOwner(File file, Principal principal) {
+    public Boolean isFileOwner(File file, Principal principal) {
         if (principal == null) {
             return false;
         }
@@ -180,7 +180,7 @@ public class FileService {
         if (file == null) {
             return null;
         }
-        Path filePath = Paths.get(System.getProperty("user.dir"), "files").resolve(file.getName());
+        Path filePath = Paths.get(System.getProperty("user.dir"), "files").resolve(file.getOriginalName());
 
         Resource resource = new UrlResource(filePath.toUri());
         if (!resource.exists()) {
@@ -199,7 +199,7 @@ public class FileService {
 
     public File getFileIfOwnerOrAdmin(long id, Principal principal) {
         File file = fileRepository.findById(id).orElse(null);
-        if (file == null || !(isPdfFileOwner(file, principal)|| userService.isAdminRole(userService.findByEmail(principal.getName()).orElseThrow()))) {
+        if (file == null || !(isFileOwner(file, principal)|| userService.isAdminRole(userService.findByEmail(principal.getName()).orElseThrow()))) {
             return null;
         }
         return file;

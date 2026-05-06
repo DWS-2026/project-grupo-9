@@ -76,8 +76,8 @@ public class FileService {
      * }
      */
 
-    public ResponseEntity<Object> getNotFoundImage() {
-        ClassPathResource notFoundFile = new ClassPathResource("static/files/notFound.png");
+    public ResponseEntity<Resource> getNotFoundImage() {
+        ClassPathResource notFoundFile = new ClassPathResource("static/images/notFound.png");
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(notFoundFile);
     }
 

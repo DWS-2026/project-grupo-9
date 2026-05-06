@@ -85,7 +85,9 @@ public class FileController {
         Resource resource = fileService.getFileResource(id, request.getUserPrincipal());
 
         if (resource == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            Resource notFoundResource = fileService.getNotFoundImage().getBody();
+            String contentType = fileService.getContentType(notFoundResource);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType).body(notFoundResource);
         }
 
         String contentType = fileService.getContentType(resource);

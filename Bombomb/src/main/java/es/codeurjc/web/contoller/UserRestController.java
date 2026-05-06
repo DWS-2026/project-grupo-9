@@ -175,9 +175,11 @@ public class UserRestController {
         
         if(actualUser.getEmail().equals(principal.getName())){
             Image image = userService.findById(id).orElseThrow().getImage();
-		    if (image.getBlobImage() == null) {//Only add image if it does not have one
-			    imageService.replaceImage(image.getId(), imageFile);
+		    
+            if (image.getBlobImage() != null) {//Only add image if it does not have one
+			    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
 		    }
+            imageService.replaceImage(image.getId(), imageFile);
 		    URI location = fromCurrentContextPath()
 				.path("/images/{imageId}/media")
 				.buildAndExpand(image.getId())

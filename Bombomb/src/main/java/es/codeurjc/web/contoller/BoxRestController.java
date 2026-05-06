@@ -228,20 +228,20 @@ public class BoxRestController {
 		return ResponseEntity.created(location).body(responseDTO);
 	}
 
-	@PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
-	public ResponseEntity<ImageDTO> createBoxImage(@PathVariable long id,
-			@RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, SerialException, SQLException {
+	@PostMapping(value = "/images", consumes = "multipart/form-data")
+	public ResponseEntity<ImageDTO> createBoxImage(@RequestParam MultipartFile imageFile, 
+		HttpServletRequest request) throws IOException, SerialException, SQLException {
 		if (imageFile.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		Box box = boxService.findById(id).orElseThrow();
 		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+		Box box = boxService.findBoxByStatusAndUserEmail(true, true, user.getEmail()).orElseThrow();
 		if(boxService.hasPermission(user, box, false)){
-			Image image = boxService.findByIdAndIsAvailable(id, true).orElseThrow().getImage();
-			if (image.getBlobImage() != null) {//Only add image if it does not have one
+			if (box.getImage() != null) {//Only add image if it does not have one
 			    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
 		    }
-            imageService.replaceImage(image.getId(), imageFile);
+			Image image = imageService.createImage(imageFile, "public");
+			boxService.setBoxImage(box, image);
 			URI location = fromCurrentContextPath()
 				.path("/images/{imageId}/media")
 				.buildAndExpand(image.getId())
@@ -249,7 +249,6 @@ public class BoxRestController {
 			return ResponseEntity.created(location).body(imageMapper.toDTO(image));
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
 	}
 
 	@PostMapping(value = "/{id}/files", consumes = "multipart/form-data")

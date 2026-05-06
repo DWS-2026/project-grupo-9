@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
 
@@ -81,11 +82,12 @@ public class ChocolateRestController {
 		if (imageFile.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		Image image = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow().getImage();
-		if (image.getBlobImage() != null) {//Only add image if it does not have one
+		Chocolate chocolate = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow();
+		if (chocolate.getImage()!=null) {//Only add image if it does not have one
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
 		}
-		imageService.replaceImage(image.getId(), imageFile);
+		chocolateService.save(chocolate, imageFile);
+		Image image = chocolate.getImage();
 		URI location = fromCurrentContextPath()
 				.path("/images/{imageId}/media")
 				.buildAndExpand(image.getId())

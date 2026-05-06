@@ -78,7 +78,7 @@ public class ImageRestController {
         Image image = imageService.findById(id).orElseThrow();
         if(imageService.hasEditPermision(principal, image)){
             imageService.replaceImage(id, imageFile);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(mapper.toDTO(image));
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

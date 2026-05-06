@@ -70,9 +70,9 @@ public class ChocolateRestController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ChocolateDTO deleteChocolate(@PathVariable long id) {
+	public ResponseEntity<ChocolateDTO> deleteChocolate(@PathVariable long id) {
 		chocolateService.deleteById(id);
-		return chocolateMapper.toDTO(chocolateService.findById(id).orElseThrow());
+		return ResponseEntity.ok(chocolateMapper.toDTO(chocolateService.findById(id).orElseThrow()));
 	}
 
 	@PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
@@ -82,9 +82,10 @@ public class ChocolateRestController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		Image image = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow().getImage();
-		if (image.getBlobImage() == null) {//Only add image if it does not have one
-			imageService.replaceImage(image.getId(), imageFile);
+		if (image.getBlobImage() != null) {//Only add image if it does not have one
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
 		}
+		imageService.replaceImage(image.getId(), imageFile);
 		URI location = fromCurrentContextPath()
 				.path("/images/{imageId}/media")
 				.buildAndExpand(image.getId())

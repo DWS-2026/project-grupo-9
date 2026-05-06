@@ -232,9 +232,10 @@ public class BoxRestController {
 		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		if(boxService.hasPermission(user, box, false)){
 			Image image = boxService.findByIdAndIsAvailable(id, true).orElseThrow().getImage();
-			if (image.getBlobImage() == null) {//Only add image if it does not have one
-				imageService.replaceImage(image.getId(), imageFile);
-			}
+			if (image.getBlobImage() != null) {//Only add image if it does not have one
+			    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
+		    }
+            imageService.replaceImage(image.getId(), imageFile);
 			URI location = fromCurrentContextPath()
 				.path("/images/{imageId}/media")
 				.buildAndExpand(image.getId())

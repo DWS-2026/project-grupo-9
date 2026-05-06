@@ -44,8 +44,8 @@ public class FileRestController {
     @GetMapping("/{id}/media")
     public ResponseEntity<Resource> getFileMedia(@PathVariable long id, HttpServletRequest request) throws SQLException, IOException {
         Principal principal = request.getUserPrincipal();
-        if(fileService.getFileIfOwnerOrAdmin(id, principal, principal.getName()) !=null){
-            Resource resource = fileService.getFileResource(id, principal, principal.getName());
+        if(fileService.getFileIfOwnerOrAdmin(id, principal) !=null){
+            Resource resource = fileService.getFileResource(id, principal);
 
             MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.IMAGE_JPEG);
             return ResponseEntity.ok().contentType(mediaType).body(resource);
@@ -67,7 +67,7 @@ public class FileRestController {
     public ResponseEntity<FileDTO> getFile(@PathVariable long id, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         File file = fileService.findById(id).orElseThrow();
-        if(fileService.getFileIfOwnerOrAdmin(id, principal, principal.getName()) != null){
+        if(fileService.getFileIfOwnerOrAdmin(id, principal) != null){
             return ResponseEntity.ok(fileMapper.toDTO(file));
         }
         

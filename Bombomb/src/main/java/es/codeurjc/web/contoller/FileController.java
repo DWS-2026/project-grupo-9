@@ -36,8 +36,6 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @Autowired
-    private UserService userService;
 
     /*
      * @PostMapping("/new_file")

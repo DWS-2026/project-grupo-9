@@ -83,7 +83,7 @@ public class UserRestController {
     }
 */
 
-    
+    //for admin
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> getUser(@PathVariable long id, HttpServletRequest request) {
         User user = userService.findById(id).orElseThrow();
@@ -96,9 +96,9 @@ public class UserRestController {
         }
 
     }
-   
+   //for users
     @GetMapping("/me")
-    public ResponseEntity<UserGetDTO> getUser(HttpServletRequest request) {
+    public ResponseEntity<UserGetDTO> getMe(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
                
@@ -112,7 +112,7 @@ public class UserRestController {
     }
 
     
-    //if the user is not admin, only can delete his own profile, if is admin can delete to all users profiles   
+    //for admin  
     @DeleteMapping("/{id}")
     public ResponseEntity<UserGetDTO> deleteUser(@PathVariable long id, HttpServletRequest request) {
         
@@ -127,6 +127,23 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
+    //for users
+
+    @DeleteMapping("/me")
+    public ResponseEntity<UserGetDTO> deleteMe(HttpServletRequest request) {
+        
+        Principal principal = request.getUserPrincipal();
+        User user = userService.findByEmail(principal.getName()).orElseThrow();
+        if (principal!=null) {
+            request.getSession().invalidate();
+            userService.delete(user);
+            return ResponseEntity.ok().build();
+        }else{
+ 
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
 
     @PostMapping("/")
     public ResponseEntity<UserGetDTO> createUser(@RequestBody UserPostDTO user) throws IOException {
@@ -147,7 +164,23 @@ public class UserRestController {
    
 
     //admin cannot edit other users profiles
-    
+    //for users
+
+    @PutMapping("/me")
+    public ResponseEntity<UserGetDTO> editUser(@RequestBody UserGetDTO updatedUser, HttpServletRequest request) throws IOException, SQLException{
+        Principal principal = request.getUserPrincipal();
+        User actualUser = userService.findByEmail(principal.getName()).orElseThrow();
+        
+        if(principal!=null){
+            userService.updateUser(actualUser,updatedUser);
+            return ResponseEntity.ok(mapper.toDTO(actualUser));
+        }else{
+            
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        }
+    }
+    /*
    @PutMapping("/{id}")
    public ResponseEntity<UserGetDTO> editUser(@PathVariable long id, @RequestBody UserGetDTO updatedUser, HttpServletRequest request) throws IOException, SQLException{
        
@@ -162,7 +195,7 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         }
-    }
+    }*/
     
     @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
 	public ResponseEntity<ImageDTO> createUserImage(@PathVariable long id,

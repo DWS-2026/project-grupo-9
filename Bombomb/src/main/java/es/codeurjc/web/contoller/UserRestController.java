@@ -172,7 +172,8 @@ public class UserRestController {
         User actualUser = userService.findByEmail(principal.getName()).orElseThrow();
         
         if(principal!=null){
-            userService.updateUser(actualUser,updatedUser);
+            userService.editUserProfile(updatedUser.email(), updatedUser.name(), updatedUser.surname(),
+             updatedUser.telephone(), updatedUser.description(), null);
             return ResponseEntity.ok(mapper.toDTO(actualUser));
         }else{
             

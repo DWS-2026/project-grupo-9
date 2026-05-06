@@ -111,37 +111,6 @@ public class UserService {
     //if email is already in use, return false, otherwise return true
     public boolean isEmailUnique(String email) {
         return !userRepository.findByEmail(email).isPresent();
-    }
-    //For update an user without having to pass all parameters
-    
-   public User updateUser(User actualUser, UserGetDTO userDTO) throws IOException, SQLException {
-
-    if(userDTO.name() != null){
-        actualUser.setName(userDTO.name());
-    }
-    if(userDTO.surname() != null){
-        actualUser.setSurname(userDTO.surname());
-    }
-    if(userDTO.description() != null){
-        actualUser.setDescription(htmlSanitizer.sanitize(userDTO.description()));
-    }
-    if(userDTO.telephone() != null){
-            actualUser.setTelephone(userDTO.telephone());
-    }
-    /*if (userDTO.image() != null && (!(userDTO.image().getBlobImage().length() == 0))) {
-            try {
-                actualUser.setImage(new Image(new SerialBlob(userDTO.image().getBlobImage()),actualUser.getEmail()));
-            } catch (Exception e) {
-                throw new IOException("Failed to create image blob", e);
-            }
-        }*/
-   
-    /*if(userDTO.image() != null){
-        actualUser.setImage(userDTO.image());
-    }*/
-
-        return userRepository.save(actualUser);
-    }
-  
+    }  
    
 }

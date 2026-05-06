@@ -104,11 +104,11 @@ public class OrderService {
     }
 
     public boolean hasPermisionToSee(String userEmail, long orderId){
-        Order cart = orderRepository.findByIdAndIsOpen(orderId, true).stream().findFirst().orElseThrow();
+        Order order = orderRepository.findById(orderId).orElseThrow();
         User user = userService.findByEmail(userEmail).get();
-        if (cart == null) {
+        if (order == null) {
 			return false;
-		} else if (cart.getUser().getEmail().equals(userEmail) || user.isThisRole("ADMIN")) {
+		} else if (order.getUser().getEmail().equals(userEmail) || user.isThisRole("ADMIN")) {
             return true;
 		}
         return false;

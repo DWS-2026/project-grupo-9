@@ -172,7 +172,8 @@ public class UserRestController {
         User actualUser = userService.findByEmail(principal.getName()).orElseThrow();
         
         if(principal!=null){
-            userService.updateUser(actualUser,updatedUser);
+            userService.editUserProfile(updatedUser.email(), updatedUser.name(), updatedUser.surname(),
+             updatedUser.telephone(), updatedUser.description(), null);
             return ResponseEntity.ok(mapper.toDTO(actualUser));
         }else{
             
@@ -197,30 +198,24 @@ public class UserRestController {
         }
     }*/
     
-    @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
-	public ResponseEntity<ImageDTO> createUserImage(@PathVariable long id,
-			@RequestParam MultipartFile imageFile, HttpServletRequest request) throws IOException, SerialException, SQLException {
+    @PostMapping(value = "/images", consumes = "multipart/form-data")
+	public ResponseEntity<ImageDTO> createUserImage(@RequestParam MultipartFile imageFile, 
+        HttpServletRequest request) throws IOException, SerialException, SQLException {
 		if (imageFile.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-        Principal principal = request.getUserPrincipal();
-        User actualUser = userService.findById(id).orElseThrow();
+        User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow(); 
+        if (user.getImage() != null) {//Only add image if it does not have one
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
+		}
+        userService.setNewImage(user, imageFile);
+        Image image = user.getImage();
+		URI location = fromCurrentContextPath()
+			.path("/images/{imageId}/media")
+			.buildAndExpand(image.getId())
+			.toUri();
+		return ResponseEntity.created(location).body(imageMapper.toDTO(image));
         
-        if(actualUser.getEmail().equals(principal.getName())){
-            Image image = userService.findById(id).orElseThrow().getImage();
-		    
-            if (image.getBlobImage() != null) {//Only add image if it does not have one
-			    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//Forbidden because you have to edit it
-		    }
-            imageService.replaceImage(image.getId(), imageFile);
-		    URI location = fromCurrentContextPath()
-				.path("/images/{imageId}/media")
-				.buildAndExpand(image.getId())
-				.toUri();
-		    return ResponseEntity.created(location).body(imageMapper.toDTO(image));
-        }
-
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
 	}
    

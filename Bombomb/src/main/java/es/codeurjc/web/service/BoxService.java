@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -82,19 +83,24 @@ public class BoxService {
 
     public void delete(Box box) {
         box.setIsAvailable(false);
-                List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
-                for(Order order : orders){
-                    order.removeBox(box);
-                }
-                boxRepository.save(box);
+        List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
+        for(Order order : orders){
+            order.removeBox(box);
+            }
+            boxRepository.save(box);
+    }
+    
+    public void setDefaultImageToBox(Box box, String owner) throws IOException, SerialException, SQLException{
+        ClassPathResource resource = new ClassPathResource("static/images/Boxes/box_red2.png");
+		byte[] bytes = resource.getInputStream().readAllBytes();
+		Image blob = new Image(new SerialBlob(bytes), owner);
+		this.setBoxImage(box, blob);
     }
     
     public void addCustomToCart(Box box, String userEmail) throws IOException, SQLException {
-		ClassPathResource resource = new ClassPathResource("static/images/Boxes/box_red2.png");
-		byte[] bytes = resource.getInputStream().readAllBytes();
-		Image blob = new Image(new SerialBlob(bytes), userEmail);
-		box.setImage(blob);
-
+		if(box.getImage()== null){
+            this.setDefaultImageToBox(box, userEmail);
+        }
 		Order cart = orderService.findByUserEmailAndIsOpen(userEmail, true).stream().findFirst().get();    
         cart.updateCart();
     }
@@ -116,17 +122,6 @@ public class BoxService {
         orderService.addBoxToCart(userEmail, box);
         return box;
     }
-    
-    public void createApiBox(Box box, User user) {
-        box.setIsOpenBox(true);
-        box.setChocolates(new ArrayList<>());
-        box.setMadeByAdmin(user.getRoles().contains("ADMIN"));
-        box.setImage(new Image(null, user.getEmail()));
-        boxRepository.save(box);
-        orderService.addBoxToCart(user.getEmail(), box);
-    }
-
-
 
     public void randomizeBox(Box box) {
         List<Chocolate> chocolates = box.getChocolates();
@@ -146,9 +141,16 @@ public class BoxService {
 		boxRepository.save(box); 
     }
 
-    public void closeBox(String name, Boolean madeByAdmin, float price, Box box) {
+    public void closeBox(String name, Boolean madeByAdmin, float price, Box box) throws SerialException, IOException, SQLException {
         if(name != null){
              box.setName(name);
+        }
+        if(box.getImage()==null){
+            if(madeByAdmin == true){
+                this.setDefaultImageToBox(box, "public");
+            }else{
+                this.setDefaultImageToBox(box, this.getBoxOwnerEmail(box));
+            }
         }
         box.setMadeByAdmin(madeByAdmin);
         box.setIsOpenBox(false);
@@ -156,4 +158,12 @@ public class BoxService {
         boxRepository.save(box);
         }
 
+        public String getBoxOwnerEmail(Box box){
+            return box.getOrders().getFirst().getUser().getEmail();//Get the first order because it is only going to be in one
+        }
+
+        public void setBoxImage(Box box, Image image){
+            box.setImage(image);
+            boxRepository.save(box);
+        }
 }

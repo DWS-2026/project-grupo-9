@@ -143,7 +143,7 @@ public class UserController {
 	public String newUser(Model model, User user, MultipartFile imageFile,HttpServletRequest request, @RequestParam String password, @RequestParam String description) throws IOException {
 		if (!imageFile.isEmpty()) {
 			try {
-				userService.setImage(user, imageFile);
+				userService.setNewImage(user, imageFile);
 			} catch (Exception e) {
 				throw new IOException("Failed to create image blob", e);
 			}

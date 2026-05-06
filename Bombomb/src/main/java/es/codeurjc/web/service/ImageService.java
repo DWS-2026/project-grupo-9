@@ -63,6 +63,12 @@ public class ImageService {
         image.setBlobImage(new SerialBlob(imageFile.getBytes()));
         imageRepository.save(image);
     }
+    
+    public Image createImage(MultipartFile imageFile, String owner) throws SerialException, SQLException, IOException{
+        Image image = new Image(new SerialBlob(imageFile.getBytes()), owner);
+        imageRepository.save(image);
+        return image;
+    }
 
     public Boolean hasPermision(Principal principal, Image image){
         String userEmail = null;

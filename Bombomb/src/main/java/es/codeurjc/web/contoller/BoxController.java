@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import java.util.ArrayList;
 
@@ -259,7 +260,7 @@ public class BoxController {
 	}
 
 	@PostMapping("/adminAddBox/{id}") 
-	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException {
+	public String adminAddBox(@PathVariable long id, @RequestParam MultipartFile imageFile, HttpServletRequest request, @RequestParam String name) throws IOException, SerialException, SQLException {
         Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if(!op.isPresent()){
 			return "redirect:/error/notFound";

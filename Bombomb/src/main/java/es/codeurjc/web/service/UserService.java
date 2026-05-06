@@ -45,7 +45,7 @@ public class UserService {
     	user.getRoles().add("USER");
         user.setDescription(htmlSanitizer.sanitize(description));
         user.addOrder(new Order(true));
-        user.setImage(new Image (null, user.getEmail()));
+        user.setImage(null);
         user.setEncodedPassword(passwordEncoder.encode(passwordString));
         userRepository.save(user);
     }
@@ -86,11 +86,7 @@ public class UserService {
             actualUser.setDescription(htmlSanitizer.sanitize(description));
         }
         if (imageFile != null && (!(imageFile.isEmpty()))) {
-            try {
-                actualUser.setImage(new Image(new SerialBlob(imageFile.getBytes()),actualUser.getEmail()));
-            } catch (Exception e) {
-                throw new IOException("Failed to create image blob", e);
-            }
+            imageService.replaceImage(actualUser.getImage().getId(), imageFile);
         }
         return userRepository.save(actualUser);
     }
@@ -98,10 +94,11 @@ public class UserService {
         return user.getRoles().contains("ADMIN");
     }
     
-    public void setImage(User user, MultipartFile imageFile) throws IOException {
+    public void setNewImage(User user, MultipartFile imageFile) throws IOException {//For seting a new image, not for replacing it
         if (!imageFile.isEmpty()) {
             try {
-                user.setImage(new Image(new SerialBlob(imageFile.getBytes()),user.getEmail()));
+                Image image = imageService.createImage(imageFile, user.getEmail());
+                user.setImage(image);
             } catch (Exception e) {
                 throw new IOException("Failed to create image blob", e);
             }

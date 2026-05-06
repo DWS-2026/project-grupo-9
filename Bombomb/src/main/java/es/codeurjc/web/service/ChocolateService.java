@@ -32,7 +32,7 @@ public class ChocolateService {
                 throw new IOException("Failed to create image blob", e);
             }
         }else{
-            chocolate.setImage(new Image(null, "public"));
+            chocolate.setImage(null);
         }
         chocolateRepository.save(chocolate);
     }

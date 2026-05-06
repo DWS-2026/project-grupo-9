@@ -109,11 +109,11 @@ public class FileService {
         file.setUser(user);
         fileRepository.save(file);
 
-        file.setName("file" + file.getId() + "." + FilenameUtils.getExtension(originalFile.getOriginalFilename()));
-        fileRepository.save(file);
+       // file.setName("file" + file.getId() + "." + FilenameUtils.getExtension(originalFile.getOriginalFilename()));
+        //fileRepository.save(file);
 
         box.setFile(file);
-        Path filePath = FILES_FOLDER.resolve(file.getName());
+        Path filePath = FILES_FOLDER.resolve(file.getOriginalName());
         originalFile.transferTo(filePath);
 
 	}
@@ -130,7 +130,7 @@ public class FileService {
         String mimeType = tika.detect(file.getInputStream());
         String normalizedFilename = FilenameUtils.normalize(file.getOriginalFilename());
 
-        return allowedMimeTypes.contains(mimeType) && normalizedFilename.equals(file.getOriginalFilename());
+        return allowedMimeTypes.contains(mimeType) && normalizedFilename!=null;
     }
    /* public boolean validateExtTika(InputStream file) throws IOException {
         String mimeType = tika.detect(file);

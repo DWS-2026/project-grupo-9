@@ -174,9 +174,9 @@ public class FileService {
     
 
   
-    public Resource getFileResource(long id, Principal principal, String email) throws IOException {
+    public Resource getFileResource(long id, Principal principal) throws IOException {
 
-        File file = getFileIfOwnerOrAdmin(id, principal, email);
+        File file = getFileIfOwnerOrAdmin(id, principal);
         if (file == null) {
             return null;
         }
@@ -197,9 +197,9 @@ public class FileService {
         return contentType != null ? contentType : "application/octet-stream";
     }
 
-    public File getFileIfOwnerOrAdmin(long id, Principal principal, String email) {
+    public File getFileIfOwnerOrAdmin(long id, Principal principal) {
         File file = fileRepository.findById(id).orElse(null);
-        if (file == null || !(isPdfFileOwner(file, principal)|| userService.isAdminRole(userService.findByEmail(email).orElseThrow()))) {
+        if (file == null || !(isPdfFileOwner(file, principal)|| userService.isAdminRole(userService.findByEmail(principal.getName()).orElseThrow()))) {
             return null;
         }
         return file;

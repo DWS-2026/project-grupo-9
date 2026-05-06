@@ -82,7 +82,7 @@ public class FileController {
     public ResponseEntity<Resource> serveFile(@PathVariable long id,
             HttpServletRequest request) throws IOException {
 
-        Resource resource = fileService.getFileResource(id, request.getUserPrincipal(), request.getUserPrincipal().getName());
+        Resource resource = fileService.getFileResource(id, request.getUserPrincipal());
 
         if (resource == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -96,8 +96,7 @@ public class FileController {
     @GetMapping("/viewFile/{id}")
     public String viewFile(@PathVariable long id, Model model, HttpServletRequest request) {
 
-        String email = request.getUserPrincipal().getName();
-        File file = fileService.getFileIfOwnerOrAdmin(id, request.getUserPrincipal(), email);
+        File file = fileService.getFileIfOwnerOrAdmin(id, request.getUserPrincipal());
 
         if (file == null) {
             return "redirect:/error/NotYourFile";

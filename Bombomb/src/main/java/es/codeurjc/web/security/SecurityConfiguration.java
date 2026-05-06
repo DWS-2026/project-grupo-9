@@ -59,25 +59,53 @@ public class SecurityConfiguration {
 		http.authenticationProvider(authenticationProvider());
 
 		http
-				.securityMatcher("/api/**")
+				.securityMatcher("/api/v1/**")
 				.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
 
 		http
 				.authorizeHttpRequests(authorize -> authorize
-						// PRIVATE ENDPOINTS
-						// Images
-						//.requestMatchers(HttpMethod.PUT, "/api/images/*/media").hasRole("USER")
-						//.requestMatchers(HttpMethod.DELETE, "/api/books/*/images/*").hasRole("USER")
-						// Books
-						//.requestMatchers(HttpMethod.POST, "/api/books/**").hasRole("USER")
-						//.requestMatchers(HttpMethod.PUT, "/api/books/**").hasRole("USER")
-						//.requestMatchers(HttpMethod.DELETE, "/api/books/**").hasRole("ADMIN")
-						// Shops
-						//.requestMatchers(HttpMethod.PUT, "/api/shops/**").hasRole("ADMIN")
-						//.requestMatchers(HttpMethod.PUT, "/api/shops/**").hasRole("ADMIN")
-						//.requestMatchers(HttpMethod.DELETE, "/api/shops/**").hasRole("ADMIN")
 						// PUBLIC ENDPOINTS
-						.anyRequest().permitAll());
+                        //auth
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()//login
+						// Images
+						.requestMatchers(HttpMethod.GET, "/api/v1/images/**").permitAll()
+						// Boxes
+                        .requestMatchers(HttpMethod.GET, "/api/v1/boxes/**").permitAll()
+						// Chocolates
+                        .requestMatchers(HttpMethod.GET, "/api/v1/chocolates/**").permitAll()
+                        //Users
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/").permitAll()
+
+						// PRIVATE ENDPOINTS
+                        //auth
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/logout").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/refresh").hasRole("USER")
+                        // Images
+						.requestMatchers(HttpMethod.PUT, "/api/v1/images/*/media").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/chocolates/*/images").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/boxes/*/images").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/*/images").hasRole("USER")
+                        //Boxes
+                        .requestMatchers(HttpMethod.POST, "/api/v1/boxes/").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/boxes/chocolates/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/boxes/isOpenBox").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/boxes/chocolates").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/boxes/*").hasRole("ADMIN")
+                        //Chocolates
+                        .requestMatchers(HttpMethod.POST, "/api/v1/chocolates/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/chocolates/*").hasRole("ADMIN")
+                        //Orders
+                        .requestMatchers(HttpMethod.GET, "/api/v1/orders/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/orders/boxes/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/orders/boxes/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/orders/isOpen").hasRole("USER")
+                        //Users
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/users/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/users/*").hasRole("USER")
+						);
+
 
 		// Disable Form login Authentication
 		http.formLogin(formLogin -> formLogin.disable());
@@ -126,7 +154,6 @@ public class SecurityConfiguration {
                     .requestMatchers("/editprofile").hasAnyRole("USER")
                     .requestMatchers("/delete/profile").hasAnyRole("USER")
                     .requestMatchers("/cart").hasAnyRole("USER")
-                    .requestMatchers("/customBox").hasAnyRole("USER")
                     .requestMatchers("/addChocolate/*").hasAnyRole("USER")
                     .requestMatchers("/emptyCustom").hasAnyRole("USER")
                     .requestMatchers("/order/close-cart").hasAnyRole("USER")

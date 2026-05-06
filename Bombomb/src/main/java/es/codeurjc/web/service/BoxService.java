@@ -82,11 +82,11 @@ public class BoxService {
 
     public void delete(Box box) {
         box.setIsAvailable(false);
-                List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
-                for(Order order : orders){
-                    order.removeBox(box);
-                }
-                boxRepository.save(box);
+        List <Order> orders = orderService.findByBoxesAndIsOpen(box, true);
+        for(Order order : orders){
+            order.removeBox(box);
+            }
+            boxRepository.save(box);
     }
     
     public void addCustomToCart(Box box, String userEmail) throws IOException, SQLException {
@@ -109,6 +109,7 @@ public class BoxService {
         return box.getChocolates().size() >= box.getSize();
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Box createBox(String name,float price, Image image, Boolean madeByAdmin, List<Chocolate> chocolates, String userEmail) {
         Box box= new Box(name, price, image, madeByAdmin, chocolates);
 		box.setIsOpenBox(true);
@@ -116,16 +117,7 @@ public class BoxService {
         orderService.addBoxToCart(userEmail, box);
         return box;
     }
-    
-    public void createApiBox(Box box, User user) {
-        box.setIsOpenBox(true);
-        box.setChocolates(new ArrayList<>());
-        box.setMadeByAdmin(user.getRoles().contains("ADMIN"));
-        box.setImage(new Image(null, user.getEmail()));
-        boxRepository.save(box);
-        orderService.addBoxToCart(user.getEmail(), box);
-    }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public void randomizeBox(Box box) {

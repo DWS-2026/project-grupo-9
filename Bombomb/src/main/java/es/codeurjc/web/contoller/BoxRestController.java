@@ -2,9 +2,11 @@ package es.codeurjc.web.contoller;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -210,10 +212,14 @@ public class BoxRestController {
 		if (existingBox.isPresent()) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
-
-		Box box = boxPostMapper.toDomain(boxDTO);
-		boxService.createApiBox(box, user);
-		if(isRandom != null && isRandom != false){ 
+		String boxName;
+		if(boxDTO.name() == null || boxDTO.name().isEmpty()){
+			boxName = isRandom != null && isRandom ? "Caja aleatoria" : "Caja personalizada";
+		}else{
+			boxName = boxDTO.name();
+		}
+		Box box = boxService.createBox(boxName, 0.0f, null, user.isThisRole("ADMIN"), new ArrayList<>(), user.getEmail()); 
+		if(isRandom){ 
 			boxService.randomizeBox(box);
 		}
 		BoxGetDTO responseDTO = boxGetMapper.toDTO(box);

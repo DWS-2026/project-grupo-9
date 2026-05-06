@@ -113,7 +113,7 @@ public class BoxRestController {
 				}
 				//the user is not the owner of the box and not admin
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}		 
+		}		 
 	}
     
 	
@@ -216,7 +216,7 @@ public class BoxRestController {
 			boxName = boxDTO.name();
 		}
 		Box box = boxService.createBox(boxName, 0.0f, null, user.isThisRole("ADMIN"), new ArrayList<>(), user.getEmail()); 
-		if(isRandom){ 
+		if(isRandom != null && isRandom){ 
 			boxService.randomizeBox(box);
 		}
 		BoxGetDTO responseDTO = boxGetMapper.toDTO(box);
@@ -248,27 +248,22 @@ public class BoxRestController {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}
 
-	@PostMapping(value = "/{id}/files", consumes = "multipart/form-data")
-	public ResponseEntity<FileDTO> createBoxFile(@PathVariable long id, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException, SerialException, SQLException {
+	@PostMapping(value = "/files", consumes = "multipart/form-data")
+	public ResponseEntity<FileDTO> createBoxFile( @RequestParam MultipartFile file, HttpServletRequest request) throws IOException, SerialException, SQLException {
 		if (file.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		Box box = boxService.findById(id).orElseThrow();
 		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		if(boxService.hasPermission(user, box, false)){
-			File fileBox = box.getFile();
-			if(fileBox == null){ //Only add file if it does not have one
-				fileService.uploadFile(file, user, box);
-			}
-			File fileBox2 = box.getFile();
-			URI location = fromCurrentContextPath()
-				.path("/images/{imageId}/media")
-				.buildAndExpand(fileBox2.getId())
-				.toUri();
-			return ResponseEntity.created(location).body(fileMapper.toDTO(fileBox2));
-		
+		Box box = boxService.findBoxByStatusAndUserEmail(true, true, user.getEmail()).orElseThrow();
+		File fileBox = box.getFile();
+		if(fileBox == null){ //Only add file if it does not have one
+			fileService.uploadFile(file, user, box);
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
+		File fileBox2 = box.getFile();
+		URI location = fromCurrentContextPath()
+			.path("/files/{fileBox2}/media")
+			.buildAndExpand(fileBox2.getId())
+			.toUri();
+		return ResponseEntity.created(location).body(fileMapper.toDTO(fileBox2));
 	}
 }

@@ -77,7 +77,7 @@ public class BoxService {
         if (user.isThisRole("ADMIN") && verifyAdmin) {
             return true;
         }
-        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmailAndMadeByAdmin(user.getEmail(), false);
+        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
         return ownedBoxes.contains(box);
     }
 

@@ -101,9 +101,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/orders/isOpen").hasRole("USER")
                         //Users
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/users/*").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/users/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/users/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasRole("ADMIN")
 						);
 
 

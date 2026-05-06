@@ -75,16 +75,6 @@ public class UserRestController {
         return mapper.toDTOs(userService.findAll());
     }
 
-    /*@GetMapping("/")
-    public Collection<UserGetDTO> getAllUsers(HttpServletRequest request) {
-        if(request.isUserInRole("ADMIN")){
-            return mapper.toDTOs(userService.findAll()); 
-        }else{
-            return mapper.toDTOs(userService.findByEmail(request.getUserPrincipal().getName()).stream().toList());
-        }
-    }
-*/
-
     //for admin
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> getUser(@PathVariable long id, HttpServletRequest request) {
@@ -204,7 +194,7 @@ public class UserRestController {
         User actualUser = userService.findByEmail(principal.getName()).orElseThrow();
         
         if(principal!=null){
-            userService.editUserProfile(updatedUser.email(), updatedUser.name(), updatedUser.surname(),
+            userService.editUserProfile(actualUser.getEmail(), updatedUser.name(), updatedUser.surname(),
              updatedUser.telephone(), updatedUser.description(), null);
             return ResponseEntity.ok(mapper.toDTO(actualUser));
         }else{
@@ -247,8 +237,7 @@ public class UserRestController {
 			.buildAndExpand(image.getId())
 			.toUri();
 		return ResponseEntity.created(location).body(imageMapper.toDTO(image));
-        
-
+    
 	}
    
 }  

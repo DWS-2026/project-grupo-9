@@ -101,22 +101,19 @@ public class BoxRestController {
 	@GetMapping("/{id}") 
 	public ResponseEntity<BoxGetDTO> getBox(@PathVariable long id, HttpServletRequest request) {
 		Box box = boxService.findById(id).orElseThrow();
-
-		if(request.getUserPrincipal() == null){ //not registered
-			if(box.getMadeByAdmin() && box.getIsAvailable() && !box.getIsOpenBox()){ //only sees available closed boxes made by admin
+		if(box.getMadeByAdmin() && box.getIsAvailable() && !box.getIsOpenBox()){ //only sees available closed boxes made by admin
 				return ResponseEntity.ok(boxGetMapper.toDTO(box));
 			}else{
+				if(request.getUserPrincipal() == null){ //not registered
+					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+				}
+				User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
+				if(boxService.hasPermission(user, box, true)){
+					return ResponseEntity.ok(boxGetMapper.toDTO(box));
+				}
+				//the user is not the owner of the box and not admin
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-		}
-
-		User user = userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
-		if(boxService.hasPermission(user, box, true)){
-			return ResponseEntity.ok(boxGetMapper.toDTO(box));
-		}
-		//the user is not the owner of the box and not admin
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		 
+			}		 
 	}
     
 	

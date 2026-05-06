@@ -67,7 +67,7 @@ public class BoxService {
     }
 
     public List<Box> findOwnedAndAdminBoxes(User user) {
-        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
+        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmailAndMadeByAdmin(user.getEmail(), false);
         List<Box> adminBoxes = boxRepository.findByMadeByAdminAndIsAvailableAndIsOpenBox(true, true, false);
         ownedBoxes.addAll(adminBoxes);
         return ownedBoxes;
@@ -77,7 +77,7 @@ public class BoxService {
         if (user.isThisRole("ADMIN") && verifyAdmin) {
             return true;
         }
-        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmail(user.getEmail());
+        List<Box> ownedBoxes = boxRepository.findByOrdersUserEmailAndMadeByAdmin(user.getEmail(), false);
         return ownedBoxes.contains(box);
     }
 

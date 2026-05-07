@@ -1,21 +1,16 @@
 package es.codeurjc.web.service;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.web.dto.ImageDTO;
-import es.codeurjc.web.dto.UserGetDTO;
 import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.model.User;

@@ -1,9 +1,6 @@
 package es.codeurjc.web.model;
 
-import java.sql.Blob;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

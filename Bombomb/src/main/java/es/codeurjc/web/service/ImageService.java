@@ -1,9 +1,7 @@
 package es.codeurjc.web.service;
 
 import es.codeurjc.web.model.Image;
-import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.ImageRepository;
-import es.codeurjc.web.repository.UserRepository;
 import es.codeurjc.web.repository.UserRepository;
 
 

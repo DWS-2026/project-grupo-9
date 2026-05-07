@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -29,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.dto.BoxGetDTO;
 import es.codeurjc.web.dto.BoxPostDTO;
-import es.codeurjc.web.dto.BoxPostMapper;
 import es.codeurjc.web.dto.FileDTO;
 import es.codeurjc.web.dto.FileMapper;
 import es.codeurjc.web.dto.ImageDTO;
@@ -57,9 +55,6 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 public class BoxRestController {
 	@Autowired
 	private BoxGetMapper boxGetMapper;
-
-	@Autowired
-	private BoxPostMapper boxPostMapper;
 
 	@Autowired
 	private ImageMapper imageMapper;

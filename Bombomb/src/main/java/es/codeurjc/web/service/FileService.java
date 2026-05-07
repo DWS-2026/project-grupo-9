@@ -4,45 +4,26 @@ import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.File;
 import es.codeurjc.web.model.User;
 import es.codeurjc.web.repository.FileRepository;
-import es.codeurjc.web.repository.ImageRepository;
-import es.codeurjc.web.repository.UserRepository;
-import es.codeurjc.web.repository.UserRepository;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Paths;
 import java.security.Principal;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.Tika;
 
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
-import es.codeurjc.web.service.UserService;
 
 
 @Service

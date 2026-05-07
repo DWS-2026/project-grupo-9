@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.User;
-import es.codeurjc.web.model.Image;
 import es.codeurjc.web.model.Order;
 import es.codeurjc.web.service.ImageService;
 import es.codeurjc.web.service.OrderService;

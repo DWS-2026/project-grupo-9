@@ -13,7 +13,6 @@ import javax.sql.rowset.serial.SerialException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.web.model.Box;
 import es.codeurjc.web.model.Chocolate;

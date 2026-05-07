@@ -384,7 +384,7 @@ Me he encargado de la clase Box (incluyendo su service y repositorio), de la fun
 ### **Documentación de la API REST**
 
 #### **Especificación OpenAPI**
-📄 **[Especificación OpenAPI (YAML)](/api-docs/api-docs.yaml)**
+📄 **[Especificación OpenAPI (YAML)](Bombomb/api-docs/api-docs.yaml)**
 
 #### **Documentación HTML**
 📖 **[Documentación API REST (HTML)](https://raw.githack.com/[usuario]/[repositorio]/main/api-docs/api-docs.html)**
@@ -435,7 +435,7 @@ Me he encargado de la parte de rest dirigida a las orders. También me he encarg
 
 ---
 
-#### **Alumno 3 - [Inés Uclés Ortiz]**
+#### **Alumno 3 - Inés Uclés Ortiz**
 
 Me he encargado de la parte de usuarios de la API REST, actualizar el diagrama de clases, hacer el html del texto enriquecido y añadirselo a los usuarios validando la entrada con el sanitizador creado por mi compañera, y de crear la entidad File con su servicio y repositorio, de esta entidad he hecho la subida de archivos, con lo que he tenido que incluir la libreria Tika para la validación de archivos.
 | Nº    | Commits      | Files      |

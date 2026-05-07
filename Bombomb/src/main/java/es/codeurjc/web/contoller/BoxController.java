@@ -155,22 +155,6 @@ public class BoxController {
 		return "redirect:/cart";
 	}
 
-	/*@PostMapping("/custom/{id}/add-to-cart") 
-    public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name) throws IOException, SQLException {	
-		String userEmail = request.getUserPrincipal().getName();
-        Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
-		if(!op.isPresent()){
-			return "redirect:/error/notFound";
-		}
-		if(!orderService.isBoxInCart(userEmail,id)){
-			return "redirect:/error/NotYourBox";
-		}
-		Box box = op.get();
-		boxService.closeBox(name, false, 19.99f, box);
-		boxService.addCustomToCart(box, userEmail);
-		boxService.save(box);
-		return "redirect:/cart";
-    }*/
 
 	@PostMapping("/custom/{id}/add-to-cart") 
     public String addCustomToCart(@PathVariable long id, HttpServletRequest request, @RequestParam String name,@RequestParam(required=false) MultipartFile file) throws IOException, SQLException {	

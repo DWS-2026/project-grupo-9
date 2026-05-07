@@ -196,22 +196,7 @@ public class UserRestController {
 
         }
     }
-    /*
-   @PutMapping("/{id}")
-   public ResponseEntity<UserGetDTO> editUser(@PathVariable long id, @RequestBody UserGetDTO updatedUser, HttpServletRequest request) throws IOException, SQLException{
-       
-        Principal principal = request.getUserPrincipal();
-        User actualUser = userService.findById(id).orElseThrow();
-        
-        if(actualUser.getEmail().equals(principal.getName())){
-            userService.updateUser(actualUser,updatedUser);
-            return ResponseEntity.ok(mapper.toDTO(actualUser));
-        }else{
-            
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
-        }
-    }*/
+   
     
     @PostMapping(value = "/images", consumes = "multipart/form-data")
 	public ResponseEntity<ImageDTO> createUserImage(@RequestParam MultipartFile imageFile, 

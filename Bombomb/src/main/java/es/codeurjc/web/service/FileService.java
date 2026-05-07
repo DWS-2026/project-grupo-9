@@ -31,14 +31,7 @@ public class FileService {
 
     private final Tika tika= new Tika();
     private final List <String> allowedMimeTypes= List.of("application/pdf","image/jpeg","image/png","image/gif","image/jpg");
-    /* 
-    private final Map<String, String> signatures = Map.of(
-    "gif", "474946383761",
-    "pdf", "255044462D",
-    "jpg", "FFD8FFE0",
-    "jpeg", "FFD8FFE0",
-    "png", "89504E470D0A1A0A"
-    );*/
+    
     @Autowired
     private FileRepository fileRepository;
     
@@ -48,17 +41,6 @@ public class FileService {
     @Autowired
     private BoxService boxService;
 
-    /*
-     * public ResponseEntity<Object> getFile(File file) throws SQLException {
-     * 
-     * InputStreamResource pdfFile = new
-     * InputStreamResource(file.getPdfFile().getBinaryStream());
-     * MediaType mediaType =
-     * MediaTypeFactory.getMediaType(pdfFile).orElse(MediaType.APPLICATION_PDF);
-     * 
-     * return ResponseEntity.ok().contentType(mediaType).body(pdfFile);
-     * }
-     */
 
     public ResponseEntity<Resource> getNotFoundImage() {
         ClassPathResource notFoundFile = new ClassPathResource("static/images/notFound.png");
@@ -93,9 +75,6 @@ public class FileService {
         file.setUser(user);
         fileRepository.save(file);
 
-       // file.setName("file" + file.getId() + "." + FilenameUtils.getExtension(originalFile.getOriginalFilename()));
-        //fileRepository.save(file);
-
         box.setFile(file);
         boxService.save(box);
         Path filePath = FILES_FOLDER.resolve(file.getOriginalName());
@@ -117,47 +96,7 @@ public class FileService {
 
         return allowedMimeTypes.contains(mimeType) && normalizedFilename!=null;
     }
-   /* public boolean validateExtTika(InputStream file) throws IOException {
-        String mimeType = tika.detect(file);
-        return allowedMimeTypes.contains(mimeType);
-    }*/
- 
-    /* 
-    public String fromBytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append(String.format("%02X", b));
-        }
-        return sb.toString();
-    }
-
-    public boolean validateExtensionFromBytes(InputStream file) throws IOException {
-        byte[] header = new byte[8];
-        int read = file.read(header);
-        if (read < 4) {
-            return false;
-        } else {
-            String hexHeader = fromBytesToHex(header);
-
-            // search for valid signature in the list of signatures
-            for (Map.Entry<String, String> entry : signatures.entrySet()) {
-                if (hexHeader.startsWith(entry.getValue())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    public Boolean isValidExtension(String filename) {
-        if (filename == null || !filename.contains(".")) {
-            return false;
-        }
-        String extension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
-        return signatures.containsKey(extension);
-    }*/
-    
-
+  
   
     public Resource getFileResource(long id, Principal principal) throws IOException {
 

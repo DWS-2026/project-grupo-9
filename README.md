@@ -421,17 +421,17 @@ Me he encargado del controlador rest de la entidad bombón y de la creación de 
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
+#### **Alumno 2 - Ángela Briceño Ramírez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de la parte de rest dirigida a las orders. También me he encargado de la parte de visualización de archivos en web. Además me he encargado de la grabación y subtitulación del vídeo.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Inicio de la parte rest de Orders](https://github.com/DWS-2026/project-grupo-9/commit/dac20604c25df279f281f26b0fb3e927087e9dbd)  | [OrderRestController.java](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/OrderRestController.java)   |
+|2| [Primera implementación funcional de endpoints de Order rest](https://github.com/DWS-2026/project-grupo-9/commit/487ce4c73a4ee983af6abffc6352398f9a182e1e)  | [OrderMapper.java](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/dto/OrderMapper.java)   |
+|3| [Cambios para cambiar a PATCH en los cerrados de cajas y orders](https://github.com/DWS-2026/project-grupo-9/commit/466f2f82ca8381c9bc8489b63c31fef0cb1dd9f6)  | [IsOpenRequest.java](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/dto/IsOpenRequest.java)   |
+|4| [Visualización de archivos en web](https://github.com/DWS-2026/project-grupo-9/commit/e75cf041a60cce2f7169323eb214c286a542cc61)  | [FileService.java](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/service/FileService.java)   |
+|5| [Vídeo](https://github.com/DWS-2026/project-grupo-9/commit/b90907ae6c4e763ed590b2b2d124db7f0e66f780)  | [Vídeo](https://www.youtube.com/watch?v=ecsSkMS3veU)   |
 
 ---
 

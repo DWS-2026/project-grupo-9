@@ -387,7 +387,7 @@ Me he encargado de la clase Box (incluyendo su service y repositorio), de la fun
 📄 **[Especificación OpenAPI (YAML)](Bombomb/api-docs/api-docs.yaml)**
 
 #### **Documentación HTML**
-📖 **[Documentación API REST (HTML)](https://raw.githack.com/[usuario]/[repositorio]/main/api-docs/api-docs.html)**
+📖 **[Documentación API REST (HTML)](https://raw.githack.com/DWS-2026/project-grupo-9/main/Bombomb/api-docs/api-docs.html)**
 
 > La documentación de la API REST se encuentra en la carpeta `/api-docs` del repositorio. Se ha generado automáticamente con SpringDoc a partir de las anotaciones en el código Java.
 
@@ -401,9 +401,9 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 | Rol | Usuario | Contraseña |
 |:---|:---|:---|
-| Administrador | admin | admin123 |
-| Usuario Registrado | user1 | user123 |
-| Usuario Registrado | user2 | user123 |
+| Administrador | admin@gmail.com | admin |
+| Usuario Registrado | user@gmail.com | user |
+| Usuario Registrado | mariasanchezsanchez@hotmail.com | pass |
 
 ### **Participación de Miembros en la Práctica 3**
 

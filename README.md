@@ -395,7 +395,7 @@ Me he encargado de la clase Box (incluyendo su service y repositorio), de la fun
 
 Diagrama actualizado incluyendo los @RestController y su relación con los @Service compartidos:
 
-![Diagrama de Clases Actualizado](images/complete-classes-diagram.png)
+![Diagrama de Clases Actualizado](ReadmeTemplateImages/classes-diagram-3-REST.drawio.png)
 
 #### **Credenciales de Usuarios de Ejemplo**
 
@@ -435,17 +435,16 @@ Me he encargado del controlador rest de la entidad bombón y de la creación de 
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
+#### **Alumno 3 - [Inés Uclés Ortiz]**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
-
+Me he encargado de la parte de usuarios de la API REST, actualizar el diagrama de clases, hacer el html del texto enriquecido y añadirselo a los usuarios validando la entrada con el sanitizador creado por mi compañera, y de crear la entidad File con su servicio y repositorio, de esta entidad he hecho la subida de archivos, con lo que he tenido que incluir la libreria Tika para la validación de archivos.
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Métodos GET y DELETE](https://github.com/DWS-2026/project-grupo-9/commit/37aef3ff8d6a47579f89b271feec3285ddb70565)  | [UserRestController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserRestController.java)   |
+|2| [Métodos PUT y POST en UserRestController](https://github.com/DWS-2026/project-grupo-9/commit/b140ad7a666f6b91684bbff9f69d87dd3e0220e0)  | [UserRestController](Bombomb/src/main/java/es/codeurjc/web/contoller/UserRestController.java)   |
+|3| [Nueva entidad File](https://github.com/DWS-2026/project-grupo-9/commit/ed7dc7138dd5e9e92a045314a8c3035fcab65772)  | [File](Bombomb/src/main/java/es/codeurjc/web/model/File.java)   |
+|4| [Libreria Tika y mover método de subida de archivos a BoxController](https://github.com/DWS-2026/project-grupo-9/commit/8e47384e20610ea9b87813aed67d8f58304cea07)  | [FileService](Bombomb/src/main/java/es/codeurjc/web/service/FileService.java)   |
+|5| [Diagrama de clases actualizado](https://github.com/DWS-2026/project-grupo-9/commit/ee5e8bd2ea3786be203e59b0a39b1df0c3707004)  | [classes-diagram-3-REST.png](ReadmeTemplateImages/classes-diagram-3-REST.drawio.png)   |
 
 ---
 

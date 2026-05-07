@@ -160,7 +160,7 @@ public class BoxRestController {
 			Box box = op.get();
 			if(boxService.hasPermission(userService.findByEmail(userEmail).get(), box, false)){
 				if(!boxService.isBoxFull(box)){ //box is not full
-					Optional<Chocolate> chocolate = chocolateService.findById(chocolateId); 
+					Optional<Chocolate> chocolate = chocolateService.findByIdAndIsAvailable(chocolateId, true); 
 					if(chocolate.isPresent()) {
 						boxService.addChocolateToBox(box, chocolate.get()); 
 						boxService.save(box);

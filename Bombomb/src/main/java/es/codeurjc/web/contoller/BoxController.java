@@ -65,10 +65,14 @@ public class BoxController {
 	}
 
 	@GetMapping("/product/{id}/image")
-	public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+	public ResponseEntity<Object> downloadImage(@PathVariable long id, HttpServletRequest request) throws SQLException {
 		Optional<Box> op = boxService.findByIdAndIsAvailable(id, true);
 		if (op.isPresent() && op.get().getImage() != null) {
-			return imageService.getImage(op.get().getImage());
+			if(imageService.hasPermision(request.getUserPrincipal(), op.get().getImage())){
+				return imageService.getImage(op.get().getImage());
+			}else{
+				return imageService.getNotFoundImage();
+			}
 		} else {
         	return imageService.getNotFoundImage();
 		}

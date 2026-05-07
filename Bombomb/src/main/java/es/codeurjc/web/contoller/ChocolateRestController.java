@@ -84,7 +84,7 @@ public class ChocolateRestController {
 		chocolateService.save(chocolate, imageFile);
 		Image image = chocolate.getImage();
 		URI location = fromCurrentContextPath()
-				.path("/images/{id}/media")
+				.path("/images/{imageId}/media")
 				.buildAndExpand(image.getId())
 				.toUri();
 		return ResponseEntity.created(location).body(imageMapper.toDTO(image));

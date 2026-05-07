@@ -64,6 +64,9 @@ public class FileService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BoxService boxService;
+
     /*
      * public ResponseEntity<Object> getFile(File file) throws SQLException {
      * 
@@ -113,6 +116,7 @@ public class FileService {
         //fileRepository.save(file);
 
         box.setFile(file);
+        boxService.save(box);
         Path filePath = FILES_FOLDER.resolve(file.getOriginalName());
         originalFile.transferTo(filePath);
 

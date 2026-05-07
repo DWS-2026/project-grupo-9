@@ -448,14 +448,14 @@ Me he encargado de la parte de usuarios de la API REST, actualizar el diagrama d
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
+#### **Alumno 4 - Sandra García Rodríguez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado de la parte de la implementación de Box y Files en la parte rest
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Creación de BoxDTO, BoxMapper y BoxRestController](https://github.com/DWS-2026/project-grupo-9/commit/82a4b5d317e06e0aee31a15937cd08a4c8196bd9)  | [BoxRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxRestController.java)   |
+|2| [Métodos GET y un DELETE en BoxRestController](https://github.com/DWS-2026/project-grupo-9/commit/39f9ae298ac966fc128ea6b4cbf8148c89b323ca)  | [BoxRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxRestController.java)   |
+|3| [Métodos DELETE de vacíar lista de bombones y POST en BoxRestController](https://github.com/DWS-2026/project-grupo-9/commit/0d24ab82984d0ed7978a5d4aca4bb59fea014aa2)  | [BoxRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxRestController.java)   |
+|4| [Métodos PATCH (cerrar caja) y PUT (añadir bombón a la caja) en BoxRestController](https://github.com/DWS-2026/project-grupo-9/commit/0448913dc2b2333c4bceeb880334ee2c6d4690be)  | [BoxRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxRestController.java)   |
+|5| [FileDTO, FileMapper, FileRestController y POST de files en BoxRestController](https://github.com/DWS-2026/project-grupo-9/commit/cfc7e8ef8ee4c68a0042b597fd4242cd5a44de65)  | [FileRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/FileRestController.java)   |

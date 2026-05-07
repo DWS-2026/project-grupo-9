@@ -250,14 +250,27 @@ public class BoxRestController {
 
 	@PostMapping(value = "/files", consumes = "multipart/form-data")
 	public ResponseEntity<FileDTO> createBoxFile( @RequestParam MultipartFile file, HttpServletRequest request) throws IOException, SerialException, SQLException {
-		if (file.isEmpty()) {
+		if (file == null || file.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		User user =  userService.findByEmail(request.getUserPrincipal().getName()).orElseThrow();
 		Box box = boxService.findBoxByStatusAndUserEmail(true, true, user.getEmail()).orElseThrow();
 		File fileBox = box.getFile();
 		if(fileBox == null){ //Only add file if it does not have one
-			fileService.uploadFile(file, user, box);
+			
+			String filename = file.getOriginalFilename();
+
+			if(!fileService.isValidExtension(filename)) {
+            	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        	}
+        	
+            if (fileService.validateExtTika(file)) {
+           
+            	fileService.uploadFile(file, user, box);
+				
+        	} else {
+            	return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        	}
 		}
 		File fileBox2 = box.getFile();
 		URI location = fromCurrentContextPath()

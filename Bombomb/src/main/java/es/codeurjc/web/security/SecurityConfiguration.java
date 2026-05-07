@@ -83,8 +83,13 @@ public class SecurityConfiguration {
                         // Images
 						.requestMatchers(HttpMethod.PUT, "/api/v1/images/*/media").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/v1/chocolates/*/images").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/boxes/*/images").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users/*/images").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/boxes/images").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/images").hasRole("USER")
+                        //Files
+                        .requestMatchers(HttpMethod.POST, "/api/v1/boxes/files").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/files/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/files/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/files/*/media").hasRole("USER")
                         //Boxes
                         .requestMatchers(HttpMethod.POST, "/api/v1/boxes/").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/boxes/chocolates/*").hasRole("USER")

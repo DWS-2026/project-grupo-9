@@ -407,17 +407,17 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ### **Participación de Miembros en la Práctica 3**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Ainoa Acosta Sánchez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Me he encargado del controlador rest de la entidad bombón y de la creación de la entidad Image, así como cambiar el proyecto para que sea compatible con ella y crear su controlador rest. También he ayudado con los controladores Rest de cajas y usuarios, con la entidad file y su inclusión tanto en la web como la API REST y he creado el sanitizador de html.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Creación ChocolateRestController](https://github.com/DWS-2026/project-grupo-9/commit/2f8c923e714d4deb1410f1d7ef776976299e8c72)  | [ChocolateRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/ChocolateRestController.java)   |
+|2| [Creación ImageService](https://github.com/DWS-2026/project-grupo-9/commit/52dd338534111790af3264fbcd43b3bebe28acde)  | [ImageService](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/service/ImageService.java)   |
+|3| [Creación ImageRestController e Image](https://github.com/DWS-2026/project-grupo-9/commit/803759ab211a1dfb5e9729f143926017f2cb1b5c)  | [ImageRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/ImageRestController.java)   |
+|4| [Post Image en todos los controladores](https://github.com/DWS-2026/project-grupo-9/commit/7ce4f3598b09e14862cfd205f9e5aed1b281d462)  | [PostImage en BoxRestController](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/contoller/BoxRestController.java)   |
+|5| [Sanitizador de Html](https://github.com/DWS-2026/project-grupo-9/commit/5b9a47243528b5ef9c02f48e197edcfae6663f96)  | [HtmlSanitizerService](https://github.com/DWS-2026/project-grupo-9/blob/main/Bombomb/src/main/java/es/codeurjc/web/service/HtmlSanitizerService.java)   |
 
 ---
 

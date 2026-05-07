@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
 
@@ -28,7 +27,6 @@ import es.codeurjc.web.dto.ChocolateMapper;
 import es.codeurjc.web.dto.ImageDTO;
 import es.codeurjc.web.dto.ImageMapper;
 import es.codeurjc.web.service.ChocolateService;
-import es.codeurjc.web.service.ImageService;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentContextPath;
@@ -39,9 +37,6 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 public class ChocolateRestController {
 	@Autowired
 	private ChocolateService chocolateService;
-
-	@Autowired
-	private ImageService imageService;
 
 	@Autowired
 	private ChocolateMapper chocolateMapper;
@@ -79,7 +74,7 @@ public class ChocolateRestController {
 	@PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
 	public ResponseEntity<ImageDTO> createChocolateImage(@PathVariable long id,
 			@RequestParam MultipartFile imageFile) throws IOException, SerialException, SQLException {
-		if (imageFile.isEmpty()) {
+		if (imageFile == null || imageFile.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		Chocolate chocolate = chocolateService.findByIdAndIsAvailable(id, true).orElseThrow();
@@ -89,7 +84,7 @@ public class ChocolateRestController {
 		chocolateService.save(chocolate, imageFile);
 		Image image = chocolate.getImage();
 		URI location = fromCurrentContextPath()
-				.path("/images/{imageId}/media")
+				.path("/images/{id}/media")
 				.buildAndExpand(image.getId())
 				.toUri();
 		return ResponseEntity.created(location).body(imageMapper.toDTO(image));

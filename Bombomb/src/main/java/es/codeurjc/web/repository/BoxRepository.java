@@ -32,6 +32,7 @@ Optional<Box> findBoxByStatusAndUserEmail(
         Optional<Box> findByIdAndIsAvailableAndMadeByAdmin(long id, Boolean isAvailable, Boolean madeByAdmin);
         List<Box> findByIsAvailable(boolean isAvailable);
         List <Box> findByMadeByAdminAndIsAvailable(Boolean madeByAdmin, Boolean isAvailable);
+        List<Box> findByOrdersUserEmailAndMadeByAdmin(String email, Boolean madeByAdmin);
         List<Box> findByOrdersUserEmail(String email);
         List<Box> findByMadeByAdminAndIsAvailableAndIsOpenBox(Boolean madeByAdmin, Boolean isAvailable, Boolean isOpenBox);
 
